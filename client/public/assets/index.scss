@@ -1,0 +1,141 @@
+$color-background: #F2F3F5;
+$color-text: #333333;
+$color-brand: #5752D5;
+// $color-third: #574B4F;
+// $color-second: #EFEAE1;
+// $color-border: #EEEEEE;
+// $color-navbar: rgba(255,255,255,0.5); //4E4A47
+
+.app{
+    min-height: 100vh;
+    background-size: cover;
+}
+
+body{
+    background: $color-background;
+    color: $color-text;
+    font-family: 'Open Sans', sans-serif;
+}
+
+header{
+    height: 65px;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    position: relative; // Display box-shadow
+}
+
+.navbar, .main, .hero{
+    width: 960px;
+    margin: auto;
+}
+
+.hero{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+
+    .h2{
+        font-family: 'Nanum Pen Script', cursive;
+        font-size: 2.5rem;
+        color: $color-brand;
+    }
+
+    .h5{
+        margin-bottom: 50px;
+        color: $color-text;
+        font-weight: 600; // Semibold
+    }
+}
+
+.splash{
+    background: url('/images/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 300px;
+}
+
+main{
+    margin-top: 20px !important;
+    // background: pink
+}
+
+#logo{}
+
+.salary-to{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 0 28px;
+}
+
+.ml5{ margin-left: 5px; }
+.mr-5{ margin-right: -5px; }
+.mt20{ margin-top: 20px; }
+.
+
+.signup{
+    background: #FFFFFF;
+    margin-top: .8rem;
+    width: 50%;
+}
+
+// Specre Override //
+
+.card{
+    background: none;
+    border: 0;
+}
+
+.card .card-header,
+.card .card-body{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.card-title{
+    color: $color-brand;
+}
+
+.step{
+    // margin: 20px auto;
+    margin: 0;
+}
+
+.form-switch{
+    padding-right: 0;
+}
+
+.switch-input{
+    // background: pink;
+    display: flex;
+    margin-left: 5px;
+}
+
+.btn.btn-link{
+    color: #525252;
+}
+
+.divider-vert[data-content]::after,
+.divider[data-content]::after{
+    background: $color-background;
+}
+
+// RichTextEditor Override //
+
+.RichTextEditor__root___2QXK-,
+.public-DraftEditor-content{ // Multi-line text area
+    min-height: 200px !important;
+}
+
+.RichTextEditor__editor___1QqIU .RichTextEditor__paragraph___3NTf9{
+    margin: 0 !important;
+}
+
+ul{ // DO NOT MOVE IT UP! and NO !important =)
+    list-style: disc; // Fix, default is "disc inside"
+}
