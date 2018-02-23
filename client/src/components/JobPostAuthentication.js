@@ -7,7 +7,7 @@ class JobPostAuthentication extends Component{
     render(){
         console.log("JobPostAuthentication-props",this.props);
         return(
-            <div className="card">
+            <div className="card pt08">
                 <div className="columns">
                     <div className="column">
                         <Signup />

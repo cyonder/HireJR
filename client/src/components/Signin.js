@@ -5,21 +5,19 @@ class Signin extends Component{
         return(
             <form>
                 <div className="form-group">
-                    <label className="form-label" for="input-example-1">Email</label>
-                    <input className="form-input" type="text" id="input-example-1" placeholder="Email"/>
+                    <label className="form-label" for="signin-email">Email</label>
+                    <input className="form-input" type="text" id="signin-email" placeholder="Email"/>
                 </div>
                 <div className="form-group">
-                    <label className="form-label" for="input-example-2">Password</label>
-                    <input className="form-input" type="password" id="input-example-2" placeholder="Password"/>
+                    <label className="form-label" for="signin-pasword">Password</label>
+                    <input className="form-input" type="password" id="signin-pasword" placeholder="Password"/>
                 </div>
-                <div className="form-group">
-                    <label className="form-checkbox">
-                        <input type="checkbox"/>
+                <div className="fcs">
+                    <button className="btn btn-primary">Sign in</button>
+                    <label className="form-checkbox remember-me">
+                        <input type="checkbox" name="remember-me"/>
                         <i className="form-icon"></i> Remember me
                     </label>
-                </div>
-                <div className="form-group">
-                    <button className="btn btn-primary">Sign in</button>
                 </div>
             </form>
         );

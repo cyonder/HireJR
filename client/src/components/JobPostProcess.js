@@ -45,7 +45,7 @@ class JobPostProcess extends Component{
                 return <JobPostCard
                             details = { this.state.details }
                             saveValues = { this.saveValues } />;
-            case '/jobs/new/signup':
+            case '/jobs/new/authentication':
                 return <JobPostAuthentication />;
             case '/jobs/new/confirmation':
                 return <JobPostConfirmation />;
@@ -56,6 +56,7 @@ class JobPostProcess extends Component{
 
     render(){
         console.log("JobPostProcess-props:", this.props);
+        
         return(
             <div>
                 <Steps {...this.props} />

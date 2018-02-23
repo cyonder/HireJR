@@ -58,10 +58,18 @@ main {
 .mt20 {
   margin-top: 20px; }
 
+.pt08 {
+  padding-top: 0.8rem; }
+
 .signup {
   background: #FFFFFF;
   margin-top: .8rem;
   width: 50%; }
+
+.fcs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; }
 
 .card {
   background: none;
@@ -76,7 +84,7 @@ main {
   color: #5752D5; }
 
 .step {
-  margin: 0; }
+  margin-bottom: 15px; }
 
 .form-switch {
   padding-right: 0; }
@@ -85,8 +93,14 @@ main {
   display: flex;
   margin-left: 5px; }
 
+.remember-me {
+  padding-right: 0; }
+
 .btn.btn-link {
   color: #525252; }
+
+.form-input-hint {
+  margin: .2rem 0 .4rem 0; }
 
 .divider-vert[data-content]::after,
 .divider[data-content]::after {

@@ -1,9 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const http = require('http');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 const cors = require('cors');
 
-require('./models/Job');
+require('./models/user');
+require('./models/job');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/HireJR', (err, db) => {
@@ -16,11 +19,11 @@ mongoose.connect('mongodb://localhost:27017/HireJR', (err, db) => {
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(morgan('combined'));
+app.use(bodyParser.json({ type: '*/*' }));
 
-app.get('/', (req, res) => {
-    res.send({ hi: 'there' });
-});
+require('./routes/authRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT);
+const server = http.createServer(app);
+server.listen(PORT);

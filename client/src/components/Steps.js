@@ -18,10 +18,10 @@ class Steps extends Component{
                         className="tooltip tooltip-bottom"
                         data-tooltip="Describe the job">Description</Link>
                 </li>
-                <li className={pathname === '/jobs/new/signup' ? 'step-item active' : 'step-item'}>
-                    <Link to="/jobs/new/signup"
+                <li className={pathname === '/jobs/new/authentication' ? 'step-item active' : 'step-item'}>
+                    <Link to="/jobs/new/authentication"
                         className="tooltip tooltip-bottom"
-                        data-tooltip="Create an account">Sign Up</Link>
+                        data-tooltip="Sign up/Sign into an account">Authentication</Link>
                 </li>
                 <li className={pathname === '/jobs/new/confirmation' ? 'step-item active' : 'step-item'}>
                     <Link to="/jobs/new/confirmation"

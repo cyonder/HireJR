@@ -44,6 +44,7 @@ class TextEditor extends Component{
                 value={this.state.value}
                 onChange={this.onChange}
                 toolbarConfig={toolbarConfig}
+                className="form-group"
             />
         );
     }

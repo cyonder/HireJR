@@ -5,23 +5,23 @@ class Signup extends Component{
         return(
             <form>
                 <div className="form-group">
-                    <label className="form-label" for="input-first">First Name</label>
-                    <input className="form-input" type="text" id="input-first" placeholder="Cagdas"/>
+                    <label className="form-label" htmlFor="signup-first">First Name</label>
+                    <input className="form-input" type="text" id="signup-first" placeholder="Cagdas"/>
                 </div>
                 <div className="form-group">
-                    <label className="form-label" for="input-last">Last Name</label>
-                    <input className="form-input" type="text" id="input-last" placeholder="Yonder"/>
+                    <label className="form-label" htmlFor="signup-last">Last Name</label>
+                    <input className="form-input" type="text" id="signup-last" placeholder="Yonder"/>
                 </div>
                 <div className="form-group">
-                    <label className="form-label" for="input-email">Email</label>
-                    <input className="form-input" type="text" id="input-email" placeholder="cagdasyonder@gmail.com"/>
+                    <label className="form-label" htmlFor="signup-email">Email</label>
+                    <input className="form-input" type="text" id="signup-email" placeholder="cagdasyonder@gmail.com"/>
                 </div>
                 <div className="form-group">
-                    <label className="form-label" for="input-password">Password</label>
-                    <input className="form-input" type="pasword" id="input-password" placeholder="Min. length 8 character"/>
+                    <label className="form-label" htmlFor="signup-password">Password</label>
+                    <input className="form-input" type="pasword" id="signup-password" placeholder="Min. length 8 character"/>
                 </div>
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block">Sign up</button>
+                    <button className="btn btn-success btn-block">Sign up</button>
                 </div>
             </form>
         );

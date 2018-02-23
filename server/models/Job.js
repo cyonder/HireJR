@@ -7,4 +7,5 @@ const jobSchema = new Schema({
     isActive: Boolean
 });
 
-mongoose.model('jobs', jobSchema);
+const ModelClass = mongoose.model('job', jobSchema);
+module.exports = ModelClass;
