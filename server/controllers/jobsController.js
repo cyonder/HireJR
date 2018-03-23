@@ -3,7 +3,8 @@ const Job = require('../models/job');
 exports.create = (req, res) => {
     // const job = new Job(req.body);
     const {
-        position, companyName, companyWebsite, city, province, schedule, skills, description
+        position, companyName, companyWebsite, city, province, schedule, skills, description,
+        question1, choices1, question2, choices2, question3, choices3, applyThrough, internal, external
     } = req.body;
 
     const job = new Job({
@@ -14,7 +15,16 @@ exports.create = (req, res) => {
         province,
         schedule,
         skills: skills.split(',').map(skill => skill.trim()),
-        description
+        description,
+        applyThrough,
+        internal,
+        external,
+        question1,
+        choices1: choices1.split(',').map(choice => choice.trim()),
+        question2,
+        choices2: choices2.split(',').map(choice => choice.trim()),
+        question3,
+        choices3: choices3.split(',').map(choice => choice.trim()),
     });
 
     job.save((err, data) => {

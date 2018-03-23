@@ -11,7 +11,7 @@ class WizardFormConfirmationPage extends Component{
         return(
             <div>
                 <JobPost formValues={formValues} {...this.props} />
-                <div className="fcs">
+                <div className="fcs mt4rem">
                     <button className="btn" type="button"
                         onClick={previousPage}>Previous</button>
                     <button className="btn btn-primary" type="button"

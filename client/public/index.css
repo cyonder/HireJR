@@ -1,11 +1,16 @@
 .app {
   min-height: 100vh;
-  background-size: cover; }
+  background-size: cover;
+  display: flex;
+  flex-direction: column; }
 
 body {
   background: #F2F3F5;
   color: #333333;
   font-family: 'Open Sans', sans-serif; }
+
+.main {
+  flex-grow: 1; }
 
 header {
   height: 65px;
@@ -15,6 +20,10 @@ header {
   padding: 5px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   position: relative; }
+
+footer {
+  background: #FFFFFF;
+  margin-top: 20px; }
 
 .hero {
   display: flex;
@@ -45,6 +54,12 @@ main {
   justify-content: center;
   align-items: center; }
 
+.mb4rem {
+  margin-bottom: .4rem; }
+
+.mt4rem {
+  margin-top: .4rem; }
+
 .mr5 {
   margin-right: 5px; }
 
@@ -56,6 +71,9 @@ main {
 
 .mt20 {
   margin-top: 20px; }
+
+.mb20 {
+  margin-bottom: 20px; }
 
 .pt08 {
   padding-top: 0.8rem; }
@@ -73,6 +91,9 @@ main {
 .menu {
   transform: none;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+
+.menu-item .icon {
+  margin-right: 5px; }
 
 .card {
   margin-bottom: 10px;
@@ -129,3 +150,6 @@ main {
 
 ul {
   list-style: disc; }
+
+.d-block {
+  display: block !important; }

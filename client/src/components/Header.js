@@ -23,8 +23,8 @@ class Header extends Component{
                     <div className="navbar-section">
                         <Link to="/jobs" className="btn btn-link">All Jobs</Link>
                         <Link to="/jobs/new" className="btn btn-link">Post a Job</Link>
-                        <Link to="/insights" className="btn btn-link">Insights</Link>
-                        <Link to="/companies" className="btn btn-link">Companies</Link>
+                        <Link to="/insights" className="btn btn-link disabled">Insights</Link>
+                        <Link to="/companies" className="btn btn-link disabled">Companies</Link>
                     </div>
                     <div className="navbar-center">
                         <img src="/images/spectre-logo.svg" alt="Spectre Logo"/>

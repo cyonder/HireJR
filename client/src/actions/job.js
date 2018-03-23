@@ -19,7 +19,6 @@ export const createJobSuccess = job => {
 };
 
 export const fetchJobsSuccess = jobs => {
-    console.log("jobs:",jobs);
     return {
         type: FETCH_JOBS,
         payload: jobs

@@ -9,6 +9,7 @@ import Signup from './Signup';
 import Signin from './Signin';
 import Signout from './Signout';
 import Header from './Header';
+import Footer from './Footer';
 import Dashboard from './Dashboard';
 
 import RequireAuthentication from './RequireAuthentication'; // HOC
@@ -76,6 +77,7 @@ class App extends Component{
                         <Route component={NoMatch} />
                     </Switch>
                 </main>
+                <Footer />
             </div>
         );
     }

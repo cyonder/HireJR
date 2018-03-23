@@ -34,7 +34,7 @@ class WizardFormSecondPage extends Component{
         return(
             <div className="card no-bg">
                 <div className="card-header">
-                    <div className="card-title h5">Create a Job Post</div>
+                    <div className="card-title h5">Add Description</div>
                     <div className="card-subtitle text-gray">
                         We offer and promote opportunities for
                         Junior and Entry-Level Developers

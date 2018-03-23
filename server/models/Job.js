@@ -10,7 +10,19 @@ const jobSchema = new Schema({
     schedule: String,
     skills: [String],
     description: String,
-    isActive: Boolean
+    isActive: {
+        type: Boolean,
+        default: true
+    },
+    applyThrough: String,
+    internal: String,
+    external: String,
+    question1: String,
+    choices1: [String],
+    question2: String,
+    choices2: [String],
+    question3: String,
+    choices3: [String],
 });
 
 const ModelClass = mongoose.model('job', jobSchema);
