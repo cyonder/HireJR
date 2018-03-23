@@ -1,33 +1,35 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+
+const STEPS = [
+    { pageNo: 1, page: 'details', label: 'Details', tooltip: 'Enter the job details' },
+    { pageNo: 2, page: 'description', label: 'Description', tooltip: 'Describe the job' },
+    { pageNo: 3, page: 'authentication', label: 'Authentication', tooltip: 'Sign up/Sign into an account' },
+    { pageNo: 4, page: 'confirmation', label: 'Confirmation', tooltip: 'Review your entries' }
+];
 
 class Steps extends Component{
-    render(){
-        const { pathname } = this.props.location;
-        console.log("Steps-props:", this.props);
+    renderSteps(){
+        const { page } = this.props;
+        let authenticated = localStorage.getItem('authentication_token');
 
+        return Object.keys(STEPS).map((item, index) => {
+            if(STEPS[item].page === 'authentication' && authenticated) return null;
+            return(
+                <li key={index}
+                    className={STEPS[item].pageNo === page ? 'step-item active' : 'step-item'}>
+                    <a href="#"
+                        className="tooltip tooltip-bottom"
+                        data-tooltip={STEPS[item].tooltip}>{STEPS[item].label}</a>
+                </li>
+            );
+        });
+    }
+
+    render(){
         return(
             <ul className="step">
-                <li className={pathname === '/jobs/new' ? 'step-item active' : 'step-item'}>
-                    <Link to="/jobs/new"
-                        className="tooltip tooltip-bottom"
-                        data-tooltip="Enter the job details">Details</Link>
-                </li>
-                <li className={pathname === '/jobs/new/description' ? 'step-item active' : 'step-item'}>
-                    <Link to="/jobs/new/description"
-                        className="tooltip tooltip-bottom"
-                        data-tooltip="Describe the job">Description</Link>
-                </li>
-                <li className={pathname === '/jobs/new/authentication' ? 'step-item active' : 'step-item'}>
-                    <Link to="/jobs/new/authentication"
-                        className="tooltip tooltip-bottom"
-                        data-tooltip="Sign up/Sign into an account">Authentication</Link>
-                </li>
-                <li className={pathname === '/jobs/new/confirmation' ? 'step-item active' : 'step-item'}>
-                    <Link to="/jobs/new/confirmation"
-                        className="tooltip tooltip-bottom"
-                        data-tooltip="Review your entries">Confirmation</Link>
-                </li>
+                { this.renderSteps() }
             </ul>
         );
     }

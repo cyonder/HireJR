@@ -27,10 +27,10 @@ header{
     position: relative; // Display box-shadow
 }
 
-.navbar, .main, .hero{
-    width: 960px;
-    margin: auto;
-}
+// .navbar, .main, .hero{
+//     width: 960px;
+//     margin: auto;
+// }
 
 .hero{
     display: flex;
@@ -75,6 +75,7 @@ main{
     // padding: 0 28px;
 }
 
+.mr5{ margin-right: 5px; }
 .ml5{ margin-left: 5px; }
 .mr-5{ margin-right: -5px; }
 .mt20{ margin-top: 20px; }
@@ -94,15 +95,42 @@ main{
 
 // Specre Override //
 
+.menu{
+    transform: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
 .card{
+    margin-bottom: 10px;
+    border: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.no-bg{ // Don't move it above .card
     background: none;
     border: 0;
+    box-shadow: none;
+
+    .divider-vert[data-content]::after,
+    .divider[data-content]::after{
+        background: none;
+    }
 }
 
 .card .card-header,
 .card .card-body{
-    padding-left: 0;
-    padding-right: 0;
+    // padding-left: 0;
+    // padding-right: 0;
+}
+
+.hne{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.card-subtitle{
+    a{color: #ACB3C3;}
 }
 
 .card-title{
@@ -137,10 +165,7 @@ main{
     margin: .2rem 0 .4rem 0;
 }
 
-.divider-vert[data-content]::after,
-.divider[data-content]::after{
-    background: $color-background;
-}
+.icon{ color: $color-brand }
 
 // RichTextEditor Override //
 
@@ -155,4 +180,12 @@ main{
 
 ul{ // DO NOT MOVE IT UP! and NO !important =)
     list-style: disc; // Fix, default is "disc inside"
+}
+
+.col-8{
+    // background: pink;
+}
+
+.col-4{
+    // background: lightblue;
 }

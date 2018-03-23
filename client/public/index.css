@@ -16,10 +16,6 @@ header {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   position: relative; }
 
-.navbar, .main, .hero {
-  width: 960px;
-  margin: auto; }
-
 .hero {
   display: flex;
   justify-content: center;
@@ -49,6 +45,9 @@ main {
   justify-content: center;
   align-items: center; }
 
+.mr5 {
+  margin-right: 5px; }
+
 .ml5 {
   margin-left: 5px; }
 
@@ -71,14 +70,30 @@ main {
   align-items: center;
   justify-content: space-between; }
 
-.card {
-  background: none;
-  border: 0; }
+.menu {
+  transform: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
-.card .card-header,
-.card .card-body {
-  padding-left: 0;
-  padding-right: 0; }
+.card {
+  margin-bottom: 10px;
+  border: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+
+.no-bg {
+  background: none;
+  border: 0;
+  box-shadow: none; }
+  .no-bg .divider-vert[data-content]::after,
+  .no-bg .divider[data-content]::after {
+    background: none; }
+
+.hne {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.card-subtitle a {
+  color: #ACB3C3; }
 
 .card-title {
   color: #5752D5; }
@@ -102,9 +117,8 @@ main {
 .form-input-hint {
   margin: .2rem 0 .4rem 0; }
 
-.divider-vert[data-content]::after,
-.divider[data-content]::after {
-  background: #F2F3F5; }
+.icon {
+  color: #5752D5; }
 
 .RichTextEditor__root___2QXK-,
 .public-DraftEditor-content {

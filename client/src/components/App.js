@@ -1,42 +1,27 @@
 import React, { Component } from 'react';
-import { Route, Switch, Link, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Index from './Index';
 import JobIndex from './JobIndex';
-import JobPostProcess from './JobPostProcess';
+import WizardForm from './WizardForm';
+import JobPost from './JobPost';
 import Signup from './Signup';
 import Signin from './Signin';
+import Signout from './Signout';
+import Header from './Header';
+import Dashboard from './Dashboard';
+
+import RequireAuthentication from './RequireAuthentication'; // HOC
+const AuthDashboard = RequireAuthentication(Dashboard);
 
 const NoMatch = () => {
     return <span>Page Not Found</span>
 }
 
-const Header = () => {
-    return(
-        <header>
-            <div className="navbar">
-                <div className="navbar-section">
-                    <Link to="/jobs" className="btn btn-link">All Jobs</Link>
-                    <Link to="/jobs/new" className="btn btn-link">Post a Job</Link>
-                    <Link to="/insights" className="btn btn-link">Insights</Link>
-                    <Link to="/companies" className="btn btn-link">Companies</Link>
-                </div>
-                <div className="navbar-center">
-                    <img src="/images/spectre-logo.svg" alt="Spectre Logo"/>
-                </div>
-                <div className="navbar-section">
-                    <Link to="/signup" className="btn btn-link">Sign up</Link>
-                    <Link to="/signin" className="btn btn-link">Sign in</Link>
-                </div>
-            </div>
-        </header>
-    );
-}
-
 const Hero = () => {
     return(
         <div className="splash">
-            <div className="hero">
+            <div className="hero container grid-lg">
                 <div className="text-center">
                     <div className="h2">Find Your First Developer Job</div>
                     <div className="h5">Jobs for Junior/Entry Level Programmers</div>
@@ -62,7 +47,7 @@ class App extends Component{
                 <Route exact path="/" render={
                     () => <Hero />
                 }/>
-                <main className="main">
+                <main className="main container grid-lg">
                     <Switch>
                         <Route exact path="/" render={
                             () => <Index {...this.props} />
@@ -71,13 +56,22 @@ class App extends Component{
                             () => <JobIndex {...this.props} />
                         }/>
                         <Route path="/jobs/new" render={
-                            () => <JobPostProcess {...this.props} />
+                            () => <WizardForm {...this.props} />
+                        }/>
+                        <Route path="/jobs/:id" render={
+                            () => <JobPost {...this.props} />
                         }/>
                         <Route exact path="/signup" render={
                             () => <Signup {...this.props} />
                         }/>
                         <Route exact path="/signin" render={
                             () => <Signin {...this.props} />
+                        }/>
+                        <Route exact path="/signout" render={
+                            () => <Signout {...this.props} />
+                        }/>
+                        <Route exact path="/dashboard" render={
+                            () => <AuthDashboard {...this.props} />
                         }/>
                         <Route component={NoMatch} />
                     </Switch>

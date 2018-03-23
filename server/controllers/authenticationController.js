@@ -12,6 +12,8 @@ exports.signin = (req, res, next) => {
 }
 
 exports.signup = (req, res, next) => {
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password;
 
@@ -28,6 +30,8 @@ exports.signup = (req, res, next) => {
         }
 
         const user = new User({
+            firstName: firstName,
+            lastName: lastName,
             email: email,
             password: password
         });

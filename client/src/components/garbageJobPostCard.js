@@ -6,7 +6,6 @@ import JobPostDescription from './JobPostDescription';
 
 class JobPostCard extends Component{
     render(){
-        console.log("JobPostCard-props:", this.props);
         return(
             <div className="card">
                 <div className="card-header">

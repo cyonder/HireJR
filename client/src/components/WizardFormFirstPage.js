@@ -30,10 +30,9 @@ const validate = values => {
     return errors;
 };
 
-class JobPostForm extends Component{
+class WizardFormFirstPage extends Component{
     constructor(){
         super();
-        this.onSubmit = this.onSubmit.bind(this);
         this.state = {
             provinces:[
                 { 'short':'AB', 'name':'Alberta' },
@@ -98,15 +97,11 @@ class JobPostForm extends Component{
         );
     }
 
-    onSubmit(values){
-        console.log(values);
-    }
-
     renderForm(){
         const { handleSubmit } = this.props;
 
         return(
-            <form onSubmit={handleSubmit(this.onSubmit)} className="form-horizontal">
+            <form onSubmit={handleSubmit} className="form-horizontal">
                 <Field name="position"
                     label="Position"
                     placeholder="Jr. Rails Developer"
@@ -155,36 +150,6 @@ class JobPostForm extends Component{
                     )}
                 </Field>
 
-                <div className="form-group">
-                    <div className="col-3 col-sm-12">
-                        <label className="form-label" htmlFor="input-salary">Salary Range</label>
-                    </div>
-                    <div className="col-3 col-sm-12 mr-5">
-                        <div className="input-group">
-                            <span className="input-group-addon text-primary">$</span>
-                            <input className="form-input" type="text" id="input-salary" placeholder="50,000.00"/>
-                        </div>
-                    </div>
-                    <div className="col-1 col-sm-12 salary-to text-primary"><i className="icon icon-resize-horiz"></i></div>
-                    <div className="col-3 col-sm-12">
-                        <div className="input-group">
-                            <span className="input-group-addon text-primary">$</span>
-                            <input className="form-input" type="text" placeholder="65,000.00"/>
-                        </div>
-                    </div>
-                    <div className="col-2 col-sm-12 ml5">
-                        <div className="form-group">
-                            <select className="form-select">
-                                <option>Yearly</option>
-                                <option>Monthly</option>
-                                <option>Weekly</option>
-                                <option>Daily</option>
-                                <option>Hourly</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
                 <Field name="skills"
                     label="Skills"
                     placeholder="HTML, CSS, JavaScript, React JS, Ruby on Rails, etc."
@@ -197,34 +162,31 @@ class JobPostForm extends Component{
     }
 
     render(){
-        console.log("JobPostForm-props:",this.props);
-        return this.renderForm();
+        return(
+            <div className="card no-bg">
+                <div className="card-header">
+                    <div className="card-title h5">Create a Job Post</div>
+                    <div className="card-subtitle text-gray">
+                        We offer and promote opportunities for
+                        Junior and Entry-Level Developers
+                    </div>
+                </div>
+                <div className="card-body">
+                    { this.renderForm() }
+                </div>
+            </div>
+        );
     }
 }
 
-// export default JobPostForm;
+const mapStateToProps = state => {
+    return{};
+}
+
 export default reduxForm({
-    form: 'jobPostForm',
-    // destroyOnUnmount: false,
-    validate
+    form: 'wizardForm',
+    destroyOnUnmount: false,
+    // validate
 })(
-    connect(null)(JobPostForm)
+    connect(mapStateToProps)(WizardFormFirstPage)
 );
-
-// <div className="col-3 col-sm-12 switch-input">
-//     <div className="form-group float-right">
-//         <label className="form-switch">
-//             <input type="checkbox" name="remote"/>
-//             <i className="form-icon"></i> This position is Remote
-//         </label>
-//     </div>
-// </div>
-
-// <div className="col-3 col-sm-12 switch-input">
-//     <div className="form-group float-right">
-//         <label className="form-switch">
-//             <input type="checkbox" name="degree"/>
-//             <i className="form-icon"></i> Related degree required
-//         </label>
-//     </div>
-// </div>

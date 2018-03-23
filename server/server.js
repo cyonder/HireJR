@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 
+const routes = require('./routes');
+
 require('./models/user');
 require('./models/job');
 
@@ -22,7 +24,7 @@ app.use(cors());
 app.use(morgan('combined'));
 app.use(bodyParser.json({ type: '*/*' }));
 
-require('./routes/authRoutes')(app);
+app.use('/api', routes);
 
 const PORT = process.env.PORT || 5000;
 const server = http.createServer(app);

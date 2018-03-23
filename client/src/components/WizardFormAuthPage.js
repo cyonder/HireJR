@@ -3,18 +3,17 @@ import React, { Component } from 'react';
 import Signup from './Signup';
 import Signin from './Signin';
 
-class JobPostAuthentication extends Component{
+class WizardFormAuthPage extends Component{
     render(){
-        console.log("JobPostAuthentication-props",this.props);
         return(
-            <div className="card pt08">
+            <div className="card no-bg pt08">
                 <div className="columns">
                     <div className="column">
-                        <Signup />
+                        <Signup {...this.props}/>
                     </div>
-                    <div className="divider-vert" data-content="OR"></div>
+                    <div className="divider-vert no-bg" data-content="OR"></div>
                     <div className="column">
-                        <Signin />
+                        <Signin {...this.props}/>
                     </div>
                 </div>
             </div>
@@ -22,4 +21,4 @@ class JobPostAuthentication extends Component{
     }
 }
 
-export default JobPostAuthentication;
+export default WizardFormAuthPage;

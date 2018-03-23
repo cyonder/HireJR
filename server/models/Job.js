@@ -2,8 +2,14 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const jobSchema = new Schema({
-    jobTitle: String,
-    jobDescription: String,
+    position: String,
+    companyName: String,
+    companyWebsite: String,
+    city: String,
+    province: String,
+    schedule: String,
+    skills: [String],
+    description: String,
     isActive: Boolean
 });
 
