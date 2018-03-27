@@ -1,0 +1,63 @@
+.app{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body{
+    background: $color-app-background;
+    color: $color-text;
+    font-family: 'Open Sans', sans-serif;
+}
+
+main{
+    flex-grow: 1;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+header{
+    height: 65px;
+    background: $color-component-background;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: $box-shadow;
+    position: relative; // Display box-shadow
+}
+
+footer{
+    height: 40px;
+    background: $color-component-background;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+header, footer{
+    .btn.btn-link{ color: #525252; }
+}
+
+#logo{}
+
+.flex-center-between{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.with-no-background{
+    background: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+// Used in: PostJobFormTwo, PostJobConfirmation, PostJobFormAuth
+.mt8{ margin-top: .8rem }
+// Used in: PostJobFormOne
+.mr8{ margin-right: .8rem }
+// Used in: JobPost
+.mb8{ margin-bottom: .8rem }
+// Used in: JobPostFormTwo
+.ml8{ margin-left: .8rem }
+
+.mt10{ margin-top: 10px }

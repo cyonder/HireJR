@@ -1,11 +1,13 @@
 const express = require('express');
 
 const authRoutes = require('./authRoutes');
-const jobRoutes = require('./jobRoutes');
+const employerRoutes = require('./employerRoutes');
+const jobPostRoutes = require('./jobPostRoutes');
 
 const router = express.Router();
 
 router.use('/', authRoutes);
-router.use('/', jobRoutes);
+router.use('/', jobPostRoutes);
+router.use('/', employerRoutes);
 
 module.exports = router;

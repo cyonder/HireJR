@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import mongoose from 'mongoose';
 import moment from 'moment';
 
-import { fetchJobs } from '../actions/job';
+import { fetchJobPosts } from '../actions/jobPost';
 
 class JobIndex extends Component{
     componentDidMount(){
-        this.props.fetchJobs();
+        this.props.fetchJobPosts();
     }
 
     renderSkills(skills){
@@ -19,16 +19,16 @@ class JobIndex extends Component{
 
     renderJobs(){
         const jobs = this.props.jobs;
+        if(!jobs) return 'loading...';
 
         return Object.keys(jobs).map((key, index) => {
-            let timeStamp = mongoose.Types.ObjectId(jobs[key]._id).getTimestamp();
-            let createdAt = moment(timeStamp).fromNow();
+            let createdAt = moment(jobs[key].createdAt).fromNow(true);
 
             return(
-                <div className="card" key={index}>
+                <div className="card mb8" key={index}>
                     <div className="card-header">
-                        <div className="fcs">
-                            <span className="card-title h5">
+                        <div className="card-title flex-center-between">
+                            <span className="h5">
                                 <Link to={`/jobs/${jobs[key]._id}`}>{jobs[key].position}</Link>
                             </span>
                             <span>{`${jobs[key].city}, ${jobs[key].province}`}</span>
@@ -40,8 +40,8 @@ class JobIndex extends Component{
                             </span>
                         </div>
                     </div>
-                    <div className="card-body hne">
-                        {jobs[key].description}
+                    <div className="card-body text-ellipsis">
+                        { jobs[key].description }
                     </div>
                     <div className="card-footer">
                         { this.renderSkills(jobs[key].skills) }
@@ -52,9 +52,7 @@ class JobIndex extends Component{
     }
 
     render(){
-        return(
-            <div>{this.renderJobs()}</div>
-        );
+        return this.renderJobs();
     }
 }
 
@@ -64,4 +62,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps, { fetchJobs })(JobIndex);
+export default connect(mapStateToProps, { fetchJobPosts })(JobIndex);

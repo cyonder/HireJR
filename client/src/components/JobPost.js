@@ -4,24 +4,25 @@ import { withRouter } from 'react-router';
 import mongoose from 'mongoose';
 import moment from 'moment';
 
-import { findJob } from '../actions/job';
+import { findJobPost } from '../actions/jobPost';
 
 class JobPost extends Component{
     componentDidMount(){
         if(this.props.match.params.id){
-            this.props.findJob(this.props.match.params.id);
+            this.props.findJobPost(this.props.match.params.id);
         }
     }
 
     renderDescription(details){
         if(!details) return false;
+        // let a = details.description.replace(/(?:\n)/g, '<br />');
         return(
             <div className="card">
                 <div className="card-header">
                     <div className="card-title h3">{details.position}</div>
                     <div className="card-subtitle text-gray">{details.companyName}</div>
                 </div>
-                <div className="card-body">
+                <div className="card-body job-post-description">
                     {details.description}
                 </div>
             </div>
@@ -31,8 +32,8 @@ class JobPost extends Component{
     renderMenu(job){
         if(!job)return false
         let active;
-        let timeStamp = mongoose.Types.ObjectId(job._id).getTimestamp();
-        let createdAt = moment(timeStamp).fromNow(true);
+
+        let createdAt = moment(job.createdAt).fromNow(true);
 
         if(job.isActive){
             active = 'Active'
@@ -83,10 +84,10 @@ class JobPost extends Component{
 
         if(this.props.formValues){
             details = this.props.formValues;
-            activeClass = 'btn btn-primary btn-block mb4rem disabled';
+            activeClass = 'btn btn-primary btn-block mb8 disabled';
         }else{
             details = this.props.job;
-            activeClass = 'btn btn-primary btn-block mb4rem'
+            activeClass = 'btn btn-primary btn-block mb8'
         }
 
         if(details){
@@ -103,7 +104,7 @@ class JobPost extends Component{
             <div className="columns">
                 <div className="column col-8">{ this.renderDescription(details) }</div>
                 <div className="column col-4">
-                    <a href={buttonTarget} target="_BLANK" className={activeClass}>{buttonLabel}</a>
+                    <a href={buttonTarget} target="_blank" className={activeClass}>{buttonLabel}</a>
                     { this.renderMenu(details) }
                 </div>
             </div>
@@ -118,5 +119,5 @@ const mapStateToProps = state => {
 }
 
 export default withRouter(
-    connect(mapStateToProps, { findJob })(JobPost)
+    connect(mapStateToProps, { findJobPost })(JobPost)
 );

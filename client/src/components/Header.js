@@ -3,7 +3,16 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class Header extends Component{
-    renderLinks(){
+    renderNavLinks(){
+        return [
+            <Link to="/dashboard" className="btn btn-link" key={1}>Dashboard</Link>,
+            <Link to="/jobs" className="btn btn-link" key={2}>All Jobs</Link>,
+            <Link to="/candidates" className="btn btn-link" key={3}>All Candidates</Link>,
+            <Link to="/jobs/new" className="btn btn-link" key={4}>Post a Job</Link>
+        ];
+    }
+
+    renderAuthLinks(){
         if(this.props.authenticated){
             return [
                 <Link to="/signout" className="btn btn-link" key={1}>Sign out</Link>
@@ -21,16 +30,13 @@ class Header extends Component{
             <header>
                 <div className="navbar container grid-lg">
                     <div className="navbar-section">
-                        <Link to="/jobs" className="btn btn-link">All Jobs</Link>
-                        <Link to="/jobs/new" className="btn btn-link">Post a Job</Link>
-                        <Link to="/insights" className="btn btn-link disabled">Insights</Link>
-                        <Link to="/companies" className="btn btn-link disabled">Companies</Link>
+                        { this.renderNavLinks() }
                     </div>
                     <div className="navbar-center">
-                        <img src="/images/spectre-logo.svg" alt="Spectre Logo"/>
+                        <img id="logo" src="/images/spectre-logo.svg" alt="Spectre Logo"/>
                     </div>
                     <div className="navbar-section">
-                        { this.renderLinks() }
+                        { this.renderAuthLinks() }
                     </div>
                 </div>
             </header>

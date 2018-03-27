@@ -4,8 +4,9 @@ export const DEAUTHENTICATE_USER = 'deauthenticate_user';
 export const SIGNUP_USER_ERROR = 'signup_user_error';
 export const SIGNIN_USER_ERROR = 'signin_user_error';
 
-export const FETCH_JOBS = 'fetch_jobs';
-export const FIND_JOB = 'find_job';
-export const CREATE_JOB = 'create_job';
-export const DELETE_JOB = 'delete_job';
-export const UPDATE_JOB = 'update_job'
+// JOB POST
+export const FETCH_JOB_POSTS = 'fetch_job_posts';
+export const FIND_JOB_POST = 'find_job_post';
+export const CREATE_JOB_POST = 'create_job_post';
+export const DELETE_JOB_POST = 'delete_job_post';
+export const UPDATE_JOB_POST = 'update_job_post';

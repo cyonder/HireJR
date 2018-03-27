@@ -1,0 +1,48 @@
+.card{
+    box-shadow: $box-shadow;
+    border: 0;
+    &:last-of-type{
+        margin-bottom: 0; // This will remove class mb8 in JobIndex
+    }
+}
+
+.card-title{ color: $color-brand }
+
+.menu{
+    transform: none;
+    box-shadow: $box-shadow;
+    .icon{ margin-right: 5px; }
+}
+
+.form-horizontal{ padding: 0 }
+
+.step .step-item a{
+    cursor: default;
+}
+
+.form-input-hint{
+    margin: .2rem 0 .4rem 0;
+}
+
+.divider-vert[data-content]::after{
+    background: $color-app-background;
+}
+
+.divider[data-content]::after{
+    background: $color-component-background;
+}
+
+.icon{ color: $color-brand }
+.icon.icon-search{ color: white }
+.icon.icon-delete{ color: white }
+
+// RichTextEditor Override
+
+// .RichTextEditor__root___2QXK-,
+// .public-DraftEditor-content{ // Multi-line text area
+//     min-height: 200px !important;
+// }
+//
+// .RichTextEditor__editor___1QqIU .RichTextEditor__paragraph___3NTf9{
+//     margin: 0 !important;
+// }

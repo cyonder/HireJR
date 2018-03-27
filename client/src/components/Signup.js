@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import isEmail from 'sane-email-validation';
+import isEmail from 'validator/lib/isEmail';
 
 import { signupUser } from '../actions/authentication';
 
@@ -11,9 +11,11 @@ const validate = values => {
     if(!values.firstName){
         errors.firstName = 'Required';
     }
+
     if(!values.lastName){
         errors.lastName = 'Required';
     }
+
     if(!values.email){
         errors.email = 'Required';
     }else if(!isEmail(values.email)){
@@ -30,6 +32,10 @@ const validate = values => {
         errors.passwordConfirmation = 'Required';
     }else if(values.passwordConfirmation !== values.password){
         errors.passwordConfirmation = 'Passwords must match';
+    }
+
+    if(!values.role){
+        errors.role = 'Required';
     }
 
     return errors;
@@ -49,17 +55,31 @@ class Signup extends Component{
         }
     }
 
+    renderSwitchField({ input, meta, label, type }){
+        return(
+            <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
+                <label className="form-switch">
+                    <input {...input} type={type} />
+                    <i className="form-icon"></i> {label}
+                </label>
+                {meta.error && meta.touched &&
+                    <span className="form-input-hint"> {meta.error}</span>
+                }
+            </div>
+        );
+    }
+
     renderTextField({ input, meta, label, id, placeholder, type }){
         return(
             <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
-                <label className="form-label" htmlFor={id}>{label}</label>
+                <label className="form-label d-inline" htmlFor={id}>{label}</label>
                 <input {...input}
                     className="form-input"
                     type={type}
                     id={id}
                     placeholder={placeholder}/>
                 {meta.error && meta.touched &&
-                    <p className="form-input-hint">{meta.error}</p>
+                    <span className="form-input-hint"> {meta.error}</span>
                 }
             </div>
         );
@@ -70,8 +90,9 @@ class Signup extends Component{
 
         delete values.passwordConfirmation; // No need to send conf. to server
         this.props.signupUser(values, () => {
-            if(pathname === '/jobs/new/authentication'){
-                this.props.history.push('/jobs/new/confirmation');
+            if(pathname === '/jobs/new'){
+                this.props.setPage(3);
+                // this.props.history.push('/jobs/new/confirmation');
             }else{
                 this.props.history.push('/dashboard');
             }
@@ -118,10 +139,22 @@ class Signup extends Component{
                     type="password"
                     component={this.renderTextField} />
 
+                <Field name="role"
+                    label="I'm a jr developer"
+                    type="radio"
+                    value="developer"
+                    component={this.renderSwitchField}  />
+
+                <Field name="role"
+                    label="I'm an employer looking for jr's"
+                    type="radio"
+                    value="employer"
+                    component={this.renderSwitchField} />
+
                 { this.renderAlert() }
 
                 <div className="form-group">
-                    <button type="submit" className="btn btn-success btn-block">Sign up</button>
+                    <button type="submit" className="btn btn-primary btn-block">Sign up</button>
                 </div>
             </form>
         );

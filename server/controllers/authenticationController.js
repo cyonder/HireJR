@@ -4,7 +4,10 @@ const config = require('../../config');
 
 const tokenForUser = user => {
     const timeStamp = new Date().getTime();
-    return jwt.encode({ sub: user.id, iat: timeStamp }, config.secret);
+    return jwt.encode({
+        sub: user.id,
+        iat: timeStamp
+    }, config.secret);
 }
 
 exports.signin = (req, res, next) => {
@@ -16,6 +19,7 @@ exports.signup = (req, res, next) => {
     const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password;
+    const role = req.body.role;
 
     // Check if email syntax is valid!
     if(!email || !password){
@@ -33,7 +37,8 @@ exports.signup = (req, res, next) => {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            password: password
+            password: password,
+            role: role
         });
 
         user.save(err => {

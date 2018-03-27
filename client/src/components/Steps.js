@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 
 const STEPS = [
-    { pageNo: 1, page: 'details', label: 'Details', tooltip: 'Enter the job details' },
-    { pageNo: 2, page: 'description', label: 'Description', tooltip: 'Describe the job' },
+    { pageNo: 1, page: 'details', label: 'Job Details', tooltip: 'Enter the job details' },
+    { pageNo: 2, page: 'description', label: 'Job Description', tooltip: 'Describe the job' },
     { pageNo: 3, page: 'authentication', label: 'Authentication', tooltip: 'Sign up/Sign into an account' },
     { pageNo: 4, page: 'confirmation', label: 'Confirmation', tooltip: 'Review your entries' }
 ];
@@ -18,8 +18,7 @@ class Steps extends Component{
             return(
                 <li key={index}
                     className={STEPS[item].pageNo === page ? 'step-item active' : 'step-item'}>
-                    <a href="#"
-                        className="tooltip tooltip-bottom"
+                    <a className="tooltip tooltip-bottom"
                         data-tooltip={STEPS[item].tooltip}>{STEPS[item].label}</a>
                 </li>
             );

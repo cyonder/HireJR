@@ -20,6 +20,9 @@ let store = createStore(rootReducer, compose(
 const token = localStorage.getItem(AUTHENTICATION_TOKEN);
 if(token){ store.dispatch({ type: AUTHENTICATE_USER }) }
 
+const sessionToken = sessionStorage.getItem(AUTHENTICATION_TOKEN);
+if(sessionToken){ store.dispatch({ type: AUTHENTICATE_USER }) }
+
 ReactDOM.render(
     <Root store={store}/>,
     document.getElementById('root')

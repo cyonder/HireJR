@@ -8,7 +8,10 @@ const cors = require('cors');
 const routes = require('./routes');
 
 require('./models/user');
-require('./models/job');
+require('./models/candidate');
+require('./models/employer');
+require('./models/jobPost');
+require('./models/jobApplication');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/HireJR', (err, db) => {

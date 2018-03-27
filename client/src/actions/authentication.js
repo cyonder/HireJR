@@ -26,17 +26,29 @@ export const signinError = error => {
     };
 }
 
-export const signinUser = ({ email, password }, callback) => {
+export const signinUser = ({ email, password, rememberMe }, callback) => {
     return dispatch => {
         axios.post(`${ROOT_API_URL}/signin`, { email, password })
             .then(response => {
                 dispatch({ type: AUTHENTICATE_USER });
-                // If rememberMe is true, set localStorage.
+
                 localStorage.setItem(AUTHENTICATION_TOKEN, response.data.token);
+
+                // if(rememberMe){
+                //     localStorage.setItem(AUTHENTICATION_TOKEN, response.data.token);
+                // }else{
+                //     sessionStorage.setItem(AUTHENTICATION_TOKEN, response.data.token);
+                // }
+                // callback();
             })
             .then( () => callback() ) // Re-direct
-            .catch(() => {
-                dispatch(signinError('Bad login info'));
+            .catch(error => {
+                if(error.response.data){
+                    dispatch(signinError(error.response.data));
+                    // dispatch(signinError('Bad login info'));
+                }else{
+                    console.error("Something went wrong");
+                }
             });
 
     }
@@ -51,7 +63,11 @@ export const signupUser = (user, callback) => {
             })
             .then( () => callback() ) // Sign in user and re-direct to "/dashboard"
             .catch(error => {
-                dispatch(signupError(error.response.data.error));
+                if(error.response.data){
+                    dispatch(signupError(error.response.data));
+                }else{
+                    console.error("Something went wrong");
+                }
             })
     };
 };

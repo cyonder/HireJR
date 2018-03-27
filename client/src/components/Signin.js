@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { signinUser } from '../actions/authentication';
 
+let checkboxStyle = { paddingRight: 0 }
+
 class Signin extends Component{
     constructor(){
         super();
@@ -27,16 +29,30 @@ class Signin extends Component{
         );
     }
 
-    onSubmit({ loginID, loginPassword}){
+    renderCheckboxField({ input, label, type }){
+        return(
+            <label className="form-checkbox" style={checkboxStyle}>
+                <input {...input}
+                    type={type} />
+                <i className="form-icon"></i> {label}
+            </label>
+        );
+    }
+
+    onSubmit({ loginID, loginPassword, rememberMe}){
         const { pathname } = this.props.location;
 
-        this.props.signinUser({ email: loginID, password: loginPassword }, () => {
-            if(pathname === '/jobs/new'){
-                this.props.history.push('/jobs/new/confirmation');
-            }else{
-                this.props.history.push('/dashboard');
-            }
-        });
+        this.props.signinUser({
+                email: loginID,
+                password: loginPassword,
+                rememberMe: rememberMe
+            }, () => {
+                if(pathname === '/jobs/new'){
+                    this.props.setPage(3);
+                }else{
+                    this.props.history.push('/dashboard');
+                }
+            });
     }
 
     renderForm(){
@@ -58,12 +74,13 @@ class Signin extends Component{
 
                 { this.renderAlert() }
 
-                <div className="fcs">
+                <div className="flex-center-between">
                     <button type="submit" className="btn btn-primary">Sign in</button>
-                    <label className="form-checkbox remember-me">
-                        <input type="checkbox" name="remember-me"/>
-                        <i className="form-icon"></i> Remember me
-                    </label>
+                    <Field name="rememberMe"
+                        label="Remember me"
+                        type="checkbox"
+                        component={this.renderCheckboxField} />
+
                 </div>
             </form>
         );

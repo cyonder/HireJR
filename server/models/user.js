@@ -10,7 +10,13 @@ const userSchema = new Schema({
         unique: true,
         lowercase: true
     },
-    password: String
+    password: String,
+    role: {
+        type: String,
+        enum: ['developer', 'employer']
+    }
+}, {
+    timestamps: true
 });
 
 userSchema.pre('save', function(next){ // Don't use arrow function!
@@ -35,5 +41,5 @@ userSchema.methods.comparePassword = function(candidatePassword, callback){ // D
     });
 }
 
-const ModelClass = mongoose.model('user', userSchema);
+const ModelClass = mongoose.model('User', userSchema);
 module.exports = ModelClass;
