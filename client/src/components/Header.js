@@ -4,12 +4,18 @@ import { Link } from 'react-router-dom';
 
 class Header extends Component{
     renderNavLinks(){
-        return [
-            <Link to="/dashboard" className="btn btn-link" key={1}>Dashboard</Link>,
-            <Link to="/jobs" className="btn btn-link" key={2}>All Jobs</Link>,
-            <Link to="/candidates" className="btn btn-link" key={3}>All Candidates</Link>,
-            <Link to="/jobs/new" className="btn btn-link" key={4}>Post a Job</Link>
-        ];
+        if(this.props.role === 'employer'){
+            return [
+                <Link to="/dashboard" className="btn btn-link" key={1}>Dashboard</Link>,
+                <Link to="/candidates" className="btn btn-link" key={2}>All Candidates</Link>,
+                <Link to="/jobs/new" className="btn btn-link" key={3}>Post a Job</Link>
+            ];
+        }else{
+            return [
+                <Link to="/dashboard" className="btn btn-link" key={1}>Dashboard</Link>,
+                <Link to="/jobs" className="btn btn-link" key={2}>All Jobs</Link>,
+            ];
+        }
     }
 
     renderAuthLinks(){
@@ -46,7 +52,8 @@ class Header extends Component{
 
 const mapStateToProps = state => {
     return{
-        authenticated: state.authentication.authenticated
+        authenticated: state.authentication.authenticated,
+        role: state.user.role
     };
 };
 

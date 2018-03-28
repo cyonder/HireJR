@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { signinUser } from '../actions/authentication';
+import { findCurrentUser } from '../actions/user';
 
 let checkboxStyle = { paddingRight: 0 }
 
@@ -42,11 +43,9 @@ class Signin extends Component{
     onSubmit({ loginID, loginPassword, rememberMe}){
         const { pathname } = this.props.location;
 
-        this.props.signinUser({
-                email: loginID,
-                password: loginPassword,
-                rememberMe: rememberMe
-            }, () => {
+        this.props.signinUser({ email: loginID, password: loginPassword, rememberMe: rememberMe },
+            () => {
+                this.props.findCurrentUser();
                 if(pathname === '/jobs/new'){
                     this.props.setPage(3);
                 }else{
@@ -100,5 +99,5 @@ const mapStateToProps = state => {
 export default reduxForm({
     form: 'signinForm'
 })(
-    connect(mapStateToProps, { signinUser })(Signin)
+    connect(mapStateToProps, { signinUser, findCurrentUser })(Signin)
 );

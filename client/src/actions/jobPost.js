@@ -47,7 +47,7 @@ export const createJobPost = (values, callback) => {
 export const fetchJobPosts = () => {
     return dispatch => {
         axios.get(`${ROOT_API_URL}/jobs`, {
-                headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+                headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN) }
             })
             .then(response => {
                 dispatch( fetchJobPostsSuccess(response.data) );
@@ -63,7 +63,3 @@ export const findJobPost = id => {
             })
     }
 }
-
-
-// Find an employee where _userId equals to current user _id
-// Fetch jobPosts with employer._jobPostIds

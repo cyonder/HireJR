@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import isEmail from 'validator/lib/isEmail';
 
 import { signupUser } from '../actions/authentication';
+import { findCurrentUser } from '../actions/user';
 
 const validate = values => {
     const errors = {};
@@ -88,11 +89,11 @@ class Signup extends Component{
     onSubmit(values){
         const { pathname } = this.props.location;
 
-        delete values.passwordConfirmation; // No need to send conf. to server
+        delete values.passwordConfirmation;
         this.props.signupUser(values, () => {
+            this.props.findCurrentUser();
             if(pathname === '/jobs/new'){
                 this.props.setPage(3);
-                // this.props.history.push('/jobs/new/confirmation');
             }else{
                 this.props.history.push('/dashboard');
             }
@@ -142,7 +143,7 @@ class Signup extends Component{
                 <Field name="role"
                     label="I'm a jr developer"
                     type="radio"
-                    value="developer"
+                    value="candidate"
                     component={this.renderSwitchField}  />
 
                 <Field name="role"
@@ -175,5 +176,5 @@ export default reduxForm({
     form: 'signupForm',
     validate
 })(
-    connect(mapStateToProps, { signupUser })(Signup)
+    connect(mapStateToProps, { signupUser, findCurrentUser })(Signup)
 );

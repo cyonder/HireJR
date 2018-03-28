@@ -11,7 +11,7 @@ export default function authenticationReducer(state = {}, action){
             return { ...state, authenticated: true, signupError: '', signinError: ''};
 
         case DEAUTHENTICATE_USER:
-            return { ...state, authenticated: false };
+            return { ...state, authenticated: false, user: '' };
 
         case SIGNUP_USER_ERROR:
             return { ...state, signupError: action.payload };

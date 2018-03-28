@@ -10,7 +10,7 @@ import Signin from './Signin';
 import Signout from './Signout';
 import Header from './Header';
 import Footer from './Footer';
-import Dashboard from './Dashboard';
+import Dashboard from './Boards/Dashboard';
 import CandidateIndex from './CandidateIndex';
 
 import RequireAuthentication from './RequireAuthentication'; // HOC
@@ -51,8 +51,8 @@ class App extends Component{
                         <Route exact path="/signout" render={
                             () => <div className="container grid-xs"><Signout {...this.props} /></div>
                         }/>
-                        <Route exact path="/dashboard" render={
-                            () => <div className="container grid-lg"><AuthDashboard {...this.props} /></div>
+                        <Route path="/dashboard" render={
+                            () => <AuthDashboard {...this.props} />
                         }/>
                         <Route component={NoMatch} />
                     </Switch>

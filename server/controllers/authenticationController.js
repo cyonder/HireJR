@@ -11,7 +11,9 @@ const tokenForUser = user => {
 }
 
 exports.signin = (req, res, next) => {
-    res.send({ token: tokenForUser(req.user) });
+    res.send({
+        token: tokenForUser(req.user)
+    });
 }
 
 exports.signup = (req, res, next) => {
@@ -23,14 +25,18 @@ exports.signup = (req, res, next) => {
 
     // Check if email syntax is valid!
     if(!email || !password){
-        return res.status(422).send({ error: 'You must provide email and password!' });
+        return res.status(422).send({
+            error: 'You must provide email and password!'
+        });
     }
 
     User.findOne({ email: email }, (err, existingUser) => {
         if(err){ return next(err); }
 
         if(existingUser){
-            return res.status(422).send({ error: 'Email is in use!' });
+            return res.status(422).send({
+                error: 'Email is in use!'
+            });
         }
 
         const user = new User({
@@ -41,10 +47,12 @@ exports.signup = (req, res, next) => {
             role: role
         });
 
-        user.save(err => {
+        user.save((err, data) => {
             if(err){ return next(err); }
 
-            res.json({ token: tokenForUser(user) });
+            res.json({
+                token: tokenForUser(user)
+            });
         });
     });
 }

@@ -6,6 +6,10 @@
     }
 }
 
+.panel{
+    background: $color-component-background;
+}
+
 .card-title{ color: $color-brand }
 
 .menu{
@@ -30,6 +34,12 @@
 
 .divider[data-content]::after{
     background: $color-component-background;
+}
+
+.panel{
+    .tab{
+        margin-bottom: 0;
+    }
 }
 
 .icon{ color: $color-brand }

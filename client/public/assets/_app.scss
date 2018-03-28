@@ -42,3 +42,40 @@
     white-space: pre-wrap;
     word-break: break-all;
 }
+
+.holder{
+    margin-bottom: .8rem;
+    padding: .8rem;
+    background: $color-component-background;
+    box-shadow: $box-shadow;
+}
+
+.holder-title{
+    font-weight: 600;
+    color: $color-brand;
+}
+
+.btn.btn-warning{
+    background: $color-warning;
+    border-color: darken($color-warning, 3%);
+    color: #FFFFFF;
+    &:focus {
+        box-shadow: 0 0 0 .1rem rgba($color-warning, .2);
+    }
+    &:focus, &:hover {
+        background: darken($color-warning, 2%);
+        border-color: darken($color-warning, 5%);
+        color: #FFFFFF;
+    }
+    &:active, &.active {
+        background: darken($color-warning, 7%);
+        border-color: darken($color-warning, 10%);
+        color: #FFFFFF;
+    }
+    &.loading {
+        &::after {
+            border-bottom-color: #FFFFFF;
+            border-left-color: #FFFFFF;
+        }
+    }
+}

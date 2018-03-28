@@ -9,7 +9,7 @@ const employerSchema = new Schema({
     companyName: String,
     companyWebsite: String,
     _jobPostIds: [
-        { type : Schema.Types.ObjectId, ref: 'JobPost' }
+        { type: Schema.Types.ObjectId, ref: 'JobPost' }
     ]
 }, {
     timestamps: true

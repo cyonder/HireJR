@@ -13,7 +13,15 @@ const userSchema = new Schema({
     password: String,
     role: {
         type: String,
-        enum: ['developer', 'employer']
+        enum: ['candidate', 'employer']
+    },
+    _employerId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Employer'
+    },
+    _candidateId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Candidate'
     }
 }, {
     timestamps: true

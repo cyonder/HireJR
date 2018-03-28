@@ -102,7 +102,9 @@ class JobPost extends Component{
 
         return(
             <div className="columns">
-                <div className="column col-8">{ this.renderDescription(details) }</div>
+                <div className="column col-8">
+                    { this.renderDescription(details) }
+                </div>
                 <div className="column col-4">
                     <a href={buttonTarget} target="_blank" className={activeClass}>{buttonLabel}</a>
                     { this.renderMenu(details) }
