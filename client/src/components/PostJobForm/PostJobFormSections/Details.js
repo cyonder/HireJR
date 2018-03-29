@@ -1,10 +1,38 @@
 import React, { Component } from 'react';
-import { Field } from 'redux-form';
+import { Field, FormSection, Fields } from 'redux-form';
 
 import { renderTextField } from '../../Fields/TextFields';
 import { renderSelectField } from '../../Fields/SelectFields';
 
+const style = { marginBottom: 0, paddingRight: '.4rem' }
+
 class JobDetails extends Component{
+    renderSalaryFields(fields){
+        return(
+            <div className="d-flex">
+                <div className={fields.salary.paymentCycle.meta.error ? 'has-error col-4 col-sm-12' : 'col-4 col-sm-12 form-group'}  style={style}>
+                    <select {...fields.salary.paymentCycle.input} className="form-select">
+                        <option value="">Payment Cycle</option>
+                        <option value="Yearly">Yearly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Daily">Daily</option>
+                    </select>
+                    {fields.salary.paymentCycle.meta.error ? <p className="form-input-hint">{fields.salary.paymentCycle.meta.error}</p> : false}
+                </div>
+                <div className="col-8 col-sm-12 form-group">
+                    <div className={fields.salary.from.meta.error && fields.salary.from.meta.touched ? 'has-error mr4' : 'mr4'}>
+                        <input {...fields.salary.from.input} className="form-input" placeholder="from" type="text"/>
+                        {fields.salary.from.meta.error ? <p className="form-input-hint">{fields.salary.from.meta.error}</p> : false}
+                    </div>
+                    <div>
+                        <input {...fields.salary.to.input} className="form-input" placeholder="to" type="text"/>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     render(){
         return(
             <div className="card with-no-background">
@@ -64,6 +92,9 @@ class JobDetails extends Component{
                         placeholder="HTML, CSS, JavaScript, React JS, Ruby on Rails, etc."
                         id="input-skills"
                         component={renderTextField} />
+
+                    <Fields names={[ 'salary.from', 'salary.to', 'salary.paymentCycle' ]}
+                        component={this.renderSalaryFields}/>
                 </div>
             </div>
         );

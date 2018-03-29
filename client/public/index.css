@@ -3176,6 +3176,12 @@ header .btn.btn-link, footer .btn.btn-link {
 .ml8 {
   margin-left: .8rem; }
 
+.mr4 {
+  margin-right: .4rem; }
+
+.ml4 {
+  margin-left: .4rem; }
+
 .mt10 {
   margin-top: 10px; }
 
@@ -3196,6 +3202,12 @@ header .btn.btn-link, footer .btn.btn-link {
     margin-bottom: 50px;
     color: #333333;
     font-weight: 400; }
+
+.auth-form {
+  padding: .8rem;
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: .1rem; }
 
 .job-form-questions {
   display: block !important; }
@@ -3218,6 +3230,11 @@ header .btn.btn-link, footer .btn.btn-link {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .holder-title {
+  font-weight: 600;
+  color: #5752D5; }
+
+.menu-header {
+  text-align: center;
   font-weight: 600;
   color: #5752D5; }
 
@@ -3275,6 +3292,9 @@ header .btn.btn-link, footer .btn.btn-link {
 .panel .tab {
   margin-bottom: 0; }
 
+.empty {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+
 .icon {
   color: #5752D5; }
 
@@ -3283,3 +3303,6 @@ header .btn.btn-link, footer .btn.btn-link {
 
 .icon.icon-delete {
   color: white; }
+
+.d-block {
+  display: block !important; }

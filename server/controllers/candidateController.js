@@ -8,14 +8,16 @@ exports.createEducation = (req, res) => {
         });
     }
 
-    Candidate.findOneAndUpdate({_userId: req.user._id},
+    console.log(req.user);
+
+    Candidate.findOneAndUpdate({_userId: req.user.id},
         { $push: { education: req.body } },
         { new: true },
         (err, candidate) => {
             if(err){ console.log(err) }
             if(!candidate){
                 const candidate = new Candidate({
-                    _userId: req.user._id,
+                    _userId: req.user.id,
                     education: req.body,
                 });
 
@@ -27,7 +29,7 @@ exports.createEducation = (req, res) => {
                         });
                     }
 
-                    User.findByIdAndUpdate(req.user._id,
+                    User.findByIdAndUpdate(req.user.id,
                         { _candidateId: data._id },
                         err => {
                             if(err){ console.log(err) }
@@ -47,15 +49,16 @@ exports.createWorkExperience = (req, res) => {
         });
     }
 
-    Candidate.findOneAndUpdate({_userId: req.user._id},
-        {
-            $push: { workExperience: req.body }
+    Candidate.findOneAndUpdate({_userId: req.user.id},
+        { $push:
+            { workExperience: req.body }
         },
+        { new: true },
         (err, candidate) => {
             if(err){ console.log(err) }
             if(!candidate){
                 const candidate = new Candidate({
-                    _userId: req.user._id,
+                    _userId: req.user.id,
                     workExperience: req.body,
                 });
 
@@ -67,12 +70,114 @@ exports.createWorkExperience = (req, res) => {
                         });
                     }
 
-                    User.findByIdAndUpdate(req.user._id,
+                    User.findByIdAndUpdate(req.user.id,
                         { _candidateId: data._id },
                         err => {
                             if(err){ console.log(err) }
                         }
                     );
+                    res.send(data);
+                });
+            }else{
+                res.send(candidate);
+            }
+        }
+    )
+}
+
+exports.createProject = (req, res) => {
+    if(!req.body){
+        return res.status(400).send({
+            message: "Project can not be empty"
+        });
+    }
+
+    const { projectName, url, skills, description } = req.body;
+
+    Candidate.findOneAndUpdate({_userId: req.user.id},
+        { $push:
+            { projects:
+                {
+                    projectName,
+                    url,
+                    skills: skills.split(',').map(skill => skill.trim()),
+                    description
+                }
+            }
+        },
+        { new: true },
+        (err, candidate) => {
+            if(err){ console.log(err) }
+            if(!candidate){
+                const candidate = new Candidate({
+                    _userId: req.user.id,
+                    projects: {
+                        projectName,
+                        url,
+                        skills: skills.split(',').map(skill => skill.trim()),
+                        description
+                    }
+                });
+
+                candidate.save((err, data) => {
+                    if(err){
+                        console.log(err);
+                        res.status(500).send({
+                            message: "Some error occurred while creating the project!"
+                        });
+                    }
+
+                    User.findByIdAndUpdate(req.user.id,
+                        { _candidateId: data._id },
+                        err => {
+                            if(err){ console.log(err) }
+                        }
+                    );
+
+                    res.send(data);
+                });
+            }else{
+                res.send(candidate);
+            }
+        }
+    )
+}
+
+exports.updateAbout = (req, res) => {
+    if(!req.body){
+        return res.status(400).send({
+            message: "About can not be empty"
+        });
+    }
+
+    const { city, province, portfolioUrl, githubUrl, linkedInUrl, summary, careerObjective } = req.body;
+
+    Candidate.findOneAndUpdate({_userId: req.user.id},
+        { $set: { about: req.body } },
+        { new: true },
+        (err, candidate) => {
+            if(err){ console.log(err) }
+            if(!candidate){
+                const candidate = new Candidate({
+                    _userId: req.user.id,
+                    about: req.body,
+                });
+
+                candidate.save((err, data) => {
+                    if(err){
+                        console.log(err);
+                        res.status(500).send({
+                            message: "Some error occurred while updating the candidate!"
+                        });
+                    }
+
+                    User.findByIdAndUpdate(req.user.id,
+                        { _candidateId: data._id },
+                        err => {
+                            if(err){ console.log(err) }
+                        }
+                    );
+
                     res.send(data);
                 });
             }else{

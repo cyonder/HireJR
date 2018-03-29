@@ -26,6 +26,13 @@
     }
 }
 
+.auth-form{
+    padding: .8rem;
+    background: $color-component-background;
+    box-shadow: $box-shadow;
+    border-radius: .1rem;
+}
+
 .post-job-form{}
 
 .job-form-questions{ display: block !important }
@@ -51,6 +58,12 @@
 }
 
 .holder-title{
+    font-weight: 600;
+    color: $color-brand;
+}
+
+.menu-header{
+    text-align: center;
     font-weight: 600;
     color: $color-brand;
 }

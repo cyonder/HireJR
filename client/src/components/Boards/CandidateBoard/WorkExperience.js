@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import { renderTextField } from '../../Fields/TextFields';
+import { renderTextField, renderSimpleTextareaField } from '../../Fields/TextFields';
 
-class Education extends Component{
+class WorkExperience extends Component{
     constructor(){
         super();
         this.state = {
@@ -21,24 +21,23 @@ class Education extends Component{
     }
 
     onSubmit(values){
-        this.props.createEducation(values, () => {
+        this.props.createWorkExperience(values, () => {
             this.props.notify();
             this.props.reset();
         })
     }
 
-    renderEducation(){
-        const education = this.props.candidate.education;
-        return Object.keys(education).map((key, index) => {
+    renderWorkExperience(){
+        const workExperience = this.props.candidate.workExperience;
+        return Object.keys(workExperience).map((key, index) => {
             return(
                 <div className="holder" key={index}>
                     <div className="flex-center-between">
-                        <span className="holder-title">{education[key].schoolName}</span>
-                        <span className="">{`${education[key].startYear}-${education[key].endYear}`}</span>
+                        <span className="holder-title">{workExperience[key].companyName}</span>
+                        <span className="">{`${workExperience[key].startYear}-${workExperience[key].endYear}`}</span>
                     </div>
                     <div className="flex-center-between">
-                        <span className="text-italic">{education[key].field}</span>
-                        <span>{education[key].degree}</span>
+                        <span className="text-italic">{workExperience[key].title}</span>
                     </div>
                 </div>
             )
@@ -52,22 +51,16 @@ class Education extends Component{
         return(
             <form onSubmit={ handleSubmit(this.onSubmit) } className="form-horizontal">
                 <div className={this.state.displayForm ? 'd-block mb8' : 'd-none'}>
-                    <Field name="schoolName"
-                        label="School Name"
-                        placeholder="Seneca College"
-                        id="input-school-name"
+                    <Field name="companyName"
+                        label="Company Name"
+                        placeholder="Apple inc."
+                        id="input-company-name"
                         component={renderTextField} />
 
-                    <Field name="degree"
-                        label="Degree"
-                        placeholder="Bachelors"
-                        id="input-degree"
-                        component={renderTextField} />
-
-                    <Field name="field"
-                        label="Field of Study"
-                        placeholder="Programming"
-                        id="input-field"
+                    <Field name="title"
+                        label="Title"
+                        placeholder="Marketing Specialist"
+                        id="input-title"
                         component={renderTextField} />
 
                     <Field name="startYear"
@@ -81,12 +74,15 @@ class Education extends Component{
                         placeholder="Blank if current"
                         id="input-end-year"
                         component={renderTextField} />
-                </div>
 
+                    <Field name="summary"
+                        placeholder="Summary..."
+                        component={renderSimpleTextareaField} />
+                </div>
                 <button type={this.state.displayForm ? "button" : "submit"}
                     className={activeClass}
                     onClick={this.handleClick}>{ !this.state.displayForm ?
-                    'Add Education' : 'Save' }
+                    'Add Work Experience' : 'Save' }
                 </button>
             </form>
         )
@@ -98,8 +94,8 @@ class Education extends Component{
                 <div className="empty-icon">
                     <i className="icon icon-3x icon-edit"></i>
                 </div>
-                <p className="empty-title h5">You haven't added any education</p>
-                <p className="empty-subtitle">Show off your degrees and certifications</p>
+                <p className="empty-title h5">You haven't added any work experience</p>
+                <p className="empty-subtitle">Highlight your experience</p>
             </div>,
             <div key={2}>
                 {this.renderForm()}
@@ -108,11 +104,11 @@ class Education extends Component{
     }
 
     render(){
-        if(!this.props.candidate || !this.props.candidate['education'].length > 0) return this.renderEmptyState();
+        if(!this.props.candidate || !this.props.candidate['workExperience'].length > 0) return this.renderEmptyState();
 
         return(
             <div>
-                {this.renderEducation()}
+                {this.renderWorkExperience()}
                 {this.renderForm()}
             </div>
         )
@@ -120,5 +116,5 @@ class Education extends Component{
 }
 
 export default reduxForm({
-    form: 'postEducationForm'
-})(Education);
+    form: 'postWorkExperienceForm'
+})(WorkExperience);

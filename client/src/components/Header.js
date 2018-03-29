@@ -10,10 +10,15 @@ class Header extends Component{
                 <Link to="/candidates" className="btn btn-link" key={2}>All Candidates</Link>,
                 <Link to="/jobs/new" className="btn btn-link" key={3}>Post a Job</Link>
             ];
-        }else{
+        }else if(this.props.authenticated){
             return [
                 <Link to="/dashboard" className="btn btn-link" key={1}>Dashboard</Link>,
                 <Link to="/jobs" className="btn btn-link" key={2}>All Jobs</Link>,
+                <Link to="/job-applications" className="btn btn-link" key={3}>My Applications</Link>
+            ];
+        }else{
+            return [
+                <Link to="/jobs" className="btn btn-link" key={1}>All Jobs</Link>,
             ];
         }
     }
@@ -21,7 +26,8 @@ class Header extends Component{
     renderAuthLinks(){
         if(this.props.authenticated){
             return [
-                <Link to="/signout" className="btn btn-link" key={1}>Sign out</Link>
+                <Link to="/settings" className="btn btn-link" key={1}>Settings</Link>,
+                <Link to="/signout" className="btn btn-link" key={2}>Sign out</Link>
             ];
         }else{
             return [

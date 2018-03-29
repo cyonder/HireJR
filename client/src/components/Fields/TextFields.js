@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const renderTextField = ({ input, meta, label, id, placeholder, shouldHide }) => {
+export const renderTextField = ({ input, meta, label, id, placeholder, type, shouldHide }) => {
     if(shouldHide === false) return false;
     return(
         <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
@@ -12,7 +12,8 @@ export const renderTextField = ({ input, meta, label, id, placeholder, shouldHid
                     type="text"
                     className="form-input"
                     placeholder={placeholder}
-                    id={id}/>
+                    id={id}
+                    type={type}/>
                 {meta.error && meta.touched &&
                     <p className="form-input-hint">{meta.error}</p>
                 }
@@ -25,6 +26,16 @@ export const renderSimpleTextField = ({input, placeholder, shouldHide}) => {
     if(shouldHide === false) return false;
     return(
         <input {...input} className="form-input" type="text" placeholder={placeholder} />
+    );
+}
+
+export const renderSimpleTextareaField = ({input, placeholder, shouldHide}) => {
+    if(shouldHide === false) return false;
+    return(
+        <textarea {...input}
+            className="form-input"
+            placeholder={placeholder}
+            rows="4" />
     );
 }
 

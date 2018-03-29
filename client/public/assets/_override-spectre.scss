@@ -42,9 +42,15 @@
     }
 }
 
+.empty{
+    box-shadow: $box-shadow;
+}
+
 .icon{ color: $color-brand }
 .icon.icon-search{ color: white }
 .icon.icon-delete{ color: white }
+
+.d-block{ display: block !important }
 
 // RichTextEditor Override
 

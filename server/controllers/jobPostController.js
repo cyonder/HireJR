@@ -21,11 +21,6 @@ exports.create = (req, res) => {
         description, questions
     });
 
-    // Save jobPost.
-    // Check if req.user._id exists in employer collection as _userId,
-    // if exist push jobPost._id into _jobPostIds,
-    // else create employer record with companyName and companyWebsite
-
     jobPost.save((err, jobPost) => {
         if(err){
             console.log(err);

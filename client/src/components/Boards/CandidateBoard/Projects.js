@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import { renderTextField } from '../../Fields/TextFields';
+// import { createProject } from '../../../actions/candidate';
 
-class Education extends Component{
+import { renderTextField, renderSimpleTextareaField } from '../../Fields/TextFields';
+
+class Projects extends Component{
     constructor(){
         super();
         this.state = {
@@ -21,24 +23,29 @@ class Education extends Component{
     }
 
     onSubmit(values){
-        this.props.createEducation(values, () => {
+        this.props.createProject(values, () => {
             this.props.notify();
             this.props.reset();
         })
     }
 
-    renderEducation(){
-        const education = this.props.candidate.education;
-        return Object.keys(education).map((key, index) => {
+    renderSkills(skills){
+        return skills.map((skill, index) => {
+            return <span className="chip" key={index}>{skill}</span>
+        });
+    }
+
+    renderProjects(){
+        const projects = this.props.candidate.projects;
+        return Object.keys(projects).map((key, index) => {
             return(
                 <div className="holder" key={index}>
                     <div className="flex-center-between">
-                        <span className="holder-title">{education[key].schoolName}</span>
-                        <span className="">{`${education[key].startYear}-${education[key].endYear}`}</span>
+                        <span className="holder-title">{projects[key].projectName}</span>
+                        <span className="">{`${projects[key].url}`}</span>
                     </div>
                     <div className="flex-center-between">
-                        <span className="text-italic">{education[key].field}</span>
-                        <span>{education[key].degree}</span>
+                        <span className="text-italic">{this.renderSkills(projects[key].skills)}</span>
                     </div>
                 </div>
             )
@@ -52,41 +59,32 @@ class Education extends Component{
         return(
             <form onSubmit={ handleSubmit(this.onSubmit) } className="form-horizontal">
                 <div className={this.state.displayForm ? 'd-block mb8' : 'd-none'}>
-                    <Field name="schoolName"
-                        label="School Name"
-                        placeholder="Seneca College"
-                        id="input-school-name"
+                    <Field name="projectName"
+                        label="Project Name"
+                        placeholder="StudentValley"
+                        id="input-project-name"
                         component={renderTextField} />
 
-                    <Field name="degree"
-                        label="Degree"
-                        placeholder="Bachelors"
-                        id="input-degree"
+                    <Field name="url"
+                        label="URL"
+                        placeholder="http://"
+                        id="input-url"
                         component={renderTextField} />
 
-                    <Field name="field"
-                        label="Field of Study"
-                        placeholder="Programming"
-                        id="input-field"
+                    <Field name="skills"
+                        label="Languages"
+                        placeholder="PHP, JavaScript, HTML"
+                        id="input-languages"
                         component={renderTextField} />
 
-                    <Field name="startYear"
-                        label="Start Year"
-                        placeholder=""
-                        id="input-start-year"
-                        component={renderTextField} />
-
-                    <Field name="endYear"
-                        label="End Year"
-                        placeholder="Blank if current"
-                        id="input-end-year"
-                        component={renderTextField} />
+                    <Field name="description"
+                        placeholder="description..."
+                        component={renderSimpleTextareaField} />
                 </div>
-
                 <button type={this.state.displayForm ? "button" : "submit"}
                     className={activeClass}
                     onClick={this.handleClick}>{ !this.state.displayForm ?
-                    'Add Education' : 'Save' }
+                    'Add Project' : 'Save' }
                 </button>
             </form>
         )
@@ -98,8 +96,8 @@ class Education extends Component{
                 <div className="empty-icon">
                     <i className="icon icon-3x icon-edit"></i>
                 </div>
-                <p className="empty-title h5">You haven't added any education</p>
-                <p className="empty-subtitle">Show off your degrees and certifications</p>
+                <p className="empty-title h5">You haven't added any projects</p>
+                <p className="empty-subtitle">Show off your live apps and websites</p>
             </div>,
             <div key={2}>
                 {this.renderForm()}
@@ -108,11 +106,11 @@ class Education extends Component{
     }
 
     render(){
-        if(!this.props.candidate || !this.props.candidate['education'].length > 0) return this.renderEmptyState();
+        if(!this.props.candidate || !this.props.candidate['projects'].length > 0) return this.renderEmptyState();
 
         return(
             <div>
-                {this.renderEducation()}
+                {this.renderProjects()}
                 {this.renderForm()}
             </div>
         )
@@ -120,5 +118,5 @@ class Education extends Component{
 }
 
 export default reduxForm({
-    form: 'postEducationForm'
-})(Education);
+    form: 'postProjectForm'
+})(Projects);

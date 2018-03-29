@@ -86,7 +86,7 @@ class Signin extends Component{
     }
 
     render(){
-        return this.renderForm();
+        return <div className="auth-form">{this.renderForm()}</div>
     }
 }
 

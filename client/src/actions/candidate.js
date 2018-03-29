@@ -9,7 +9,7 @@ import {
     UPDATE_CANDIDATE
 } from '../constants/actionTypes';
 
-export const createEducationSuccess = candidate => {
+export const updateCandidateSuccess = candidate => {
     return {
         type: UPDATE_CANDIDATE,
         payload: candidate
@@ -23,7 +23,46 @@ export const createEducation = (values, callback) => {
             })
             .then(response => {
                 let candidate = response.data;
-                dispatch(createEducationSuccess(candidate));
+                dispatch(updateCandidateSuccess(candidate));
+                callback();
+            })
+    }
+};
+
+export const createWorkExperience = (values, callback) => {
+    return dispatch => {
+        axios.post(`${ROOT_API_URL}/candidate/workexperience`, values, {
+                headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+            })
+            .then(response => {
+                let candidate = response.data;
+                dispatch(updateCandidateSuccess(candidate));
+                callback();
+            })
+    }
+};
+
+export const createProject = (values, callback) => {
+    return dispatch => {
+        axios.post(`${ROOT_API_URL}/candidate/projects`, values, {
+                headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+            })
+            .then(response => {
+                let candidate = response.data;
+                dispatch(updateCandidateSuccess(candidate));
+                callback();
+            })
+    }
+};
+
+export const updateAbout = (values, callback) => {
+    return dispatch => {
+        axios.post(`${ROOT_API_URL}/candidate/about`, values, {
+                headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+            })
+            .then(response => {
+                let candidate = response.data;
+                dispatch(updateCandidateSuccess(candidate));
                 callback();
             })
     }

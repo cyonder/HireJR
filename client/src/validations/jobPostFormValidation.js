@@ -52,11 +52,33 @@ export default function jobPostFormValidation(values){
     }else{
         if(values.applyThrough === 'internal'){
             if(!values.internal){
-                errors.internal = 'Required'
+                errors.internal = 'Required';
             }
         }else if(values.applyThrough === 'external'){
             if(!values.external){
-                errors.external = 'Required'
+                errors.external = 'Required';
+            }
+        }
+    }
+
+    if(values.salary){
+        if(values.salary.paymentCycle){
+            if(!values.salary.from){
+                errors.salary = {
+                    from: 'Required',
+                }
+            }
+        }else{
+            if(values.salary.to){
+                errors.salary = {
+                    from: 'Required',
+                    paymentCycle: 'Required'
+                }
+            }
+            if(values.salary.from){
+                errors.salary = {
+                    paymentCycle: 'Required',
+                }
             }
         }
     }

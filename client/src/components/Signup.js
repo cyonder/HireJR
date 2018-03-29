@@ -6,6 +6,8 @@ import isEmail from 'validator/lib/isEmail';
 import { signupUser } from '../actions/authentication';
 import { findCurrentUser } from '../actions/user';
 
+import { renderTextField } from './Fields/TextFields';
+
 const validate = values => {
     const errors = {};
 
@@ -62,29 +64,30 @@ class Signup extends Component{
                 <label className="form-switch">
                     <input {...input} type={type} />
                     <i className="form-icon"></i> {label}
+                    {meta.error && meta.touched &&
+                        <span className="form-input-hint ml4">{meta.error}</span>
+                    }
                 </label>
-                {meta.error && meta.touched &&
-                    <span className="form-input-hint"> {meta.error}</span>
-                }
+
             </div>
         );
     }
 
-    renderTextField({ input, meta, label, id, placeholder, type }){
-        return(
-            <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
-                <label className="form-label d-inline" htmlFor={id}>{label}</label>
-                <input {...input}
-                    className="form-input"
-                    type={type}
-                    id={id}
-                    placeholder={placeholder}/>
-                {meta.error && meta.touched &&
-                    <span className="form-input-hint"> {meta.error}</span>
-                }
-            </div>
-        );
-    }
+    // renderTextField({ input, meta, label, id, placeholder, type }){
+    //     return(
+    //         <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
+    //             <label className="form-label d-inline" htmlFor={id}>{label}</label>
+    //             <input {...input}
+    //                 className="form-input"
+    //                 type={type}
+    //                 id={id}
+    //                 placeholder={placeholder}/>
+    //             {meta.error && meta.touched &&
+    //                 <span className="form-input-hint"> {meta.error}</span>
+    //             }
+    //         </div>
+    //     );
+    // }
 
     onSubmit(values){
         const { pathname } = this.props.location;
@@ -104,41 +107,41 @@ class Signup extends Component{
         const { handleSubmit } = this.props;
 
         return(
-            <form onSubmit={ handleSubmit(this.onSubmit) } >
+            <form onSubmit={ handleSubmit(this.onSubmit) } className="form-horizontal">
                 <Field name="firstName"
                     label="First Name"
                     placeholder="Cagdas"
                     id="signup-firstname"
                     type="text"
-                    component={this.renderTextField} />
+                    component={renderTextField} />
 
                 <Field name="lastName"
                     label="Last Name"
                     placeholder="Yonder"
                     id="signup-lastname"
                     type="text"
-                    component={this.renderTextField} />
+                    component={renderTextField} />
 
                 <Field name="email"
                     label="Email"
                     placeholder="cagdasyonder@gmail.com"
                     id="signup-email"
                     type="text"
-                    component={this.renderTextField} />
+                    component={renderTextField} />
 
                 <Field name="password"
                     label="Password"
                     placeholder="Min. length 8 character"
                     id="signup-password"
                     type="password"
-                    component={this.renderTextField} />
+                    component={renderTextField} />
 
                 <Field name="passwordConfirmation"
-                    label="Password Confirmation"
+                    label="Confirmation"
                     placeholder="Re-type your password"
                     id="signup-password-confirmation"
                     type="password"
-                    component={this.renderTextField} />
+                    component={renderTextField} />
 
                 <Field name="role"
                     label="I'm a jr developer"
@@ -162,7 +165,7 @@ class Signup extends Component{
     }
 
     render(){
-        return this.renderForm();
+        return <div className="auth-form">{this.renderForm()}</div>
     }
 }
 

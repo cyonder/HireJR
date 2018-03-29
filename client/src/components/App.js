@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
+import { ToastContainer, style } from 'react-toastify';
+
 import Home from './Home';
 import JobIndex from './JobIndex';
 import PostJobForm from './PostJobForm/PostJobForm';
@@ -16,6 +18,10 @@ import CandidateIndex from './CandidateIndex';
 import RequireAuthentication from './RequireAuthentication'; // HOC
 const AuthDashboard = RequireAuthentication(Dashboard);
 
+style({
+    colorSuccess: "#37AC46"
+})
+
 const NoMatch = () => {
     return <span>Page Not Found</span>
 }
@@ -25,6 +31,7 @@ class App extends Component{
         return(
             <div className="app">
                 <Header />
+                <ToastContainer autoClose={1500} />
                 <main>
                     <Switch>
                         <Route exact path="/" render={
