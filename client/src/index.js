@@ -8,34 +8,33 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers/rootReducer';
 import Root from './components/Root';
 
-import { AUTHENTICATE_USER } from './constants/actionTypes';
-import { AUTHENTICATION_TOKEN } from './constants/config';
+import { AUTHENTICATE_USER, FIND_CURRENT_USER } from './constants/actionTypes';
+import { AUTHENTICATION_TOKEN, CURRENT_USER } from './constants/config';
 
 import registerServiceWorker from './registerServiceWorker';
 
-const persistConfig = {
-  key: 'root',
-  storage,
-}
-
-const persistedReducer = persistReducer(persistConfig, rootReducer)
-
-let store = createStore(persistedReducer, compose(
+let store = createStore(rootReducer, compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f
 ));
-
-let persistor = persistStore(store);
 
 // Get the token, if the token exist, auto authenticate the user
 const token = localStorage.getItem(AUTHENTICATION_TOKEN);
 if(token){ store.dispatch({ type: AUTHENTICATE_USER }) }
 
+const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER))
+if(currentUser){
+    store.dispatch({
+        type: FIND_CURRENT_USER,
+        payload: currentUser
+    })
+}
+
 // const sessionToken = sessionStorage.getItem(AUTHENTICATION_TOKEN);
 // if(sessionToken){ store.dispatch({ type: AUTHENTICATE_USER }) }
 
 ReactDOM.render(
-    <Root store={store} persistor={persistor}/>,
+    <Root store={store} />,
     document.getElementById('root')
 );
 

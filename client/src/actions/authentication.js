@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import {
     ROOT_API_URL,
-    AUTHENTICATION_TOKEN
+    AUTHENTICATION_TOKEN,
+    CURRENT_USER
 } from '../constants/config.js';
 
 import {
@@ -65,6 +66,7 @@ export const signupUser = (user, callback) => {
 
 export const signoutUser = () => {
     localStorage.removeItem(AUTHENTICATION_TOKEN);
+    localStorage.removeItem(CURRENT_USER);
     return{ type: DEAUTHENTICATE_USER };
 };
 

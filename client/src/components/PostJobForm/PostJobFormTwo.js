@@ -21,7 +21,7 @@ class PostJobFormTwo extends Component{
         return(
             <form onSubmit={handleSubmit}>
                 <Description title={this.state.formSections[3].title}
-                                subtitle={this.state.formSections[3].subtitle} />
+                            subtitle={this.state.formSections[3].subtitle} />
                 <div className="flex-center-between">
                     <button className="btn ml8" type="button" onClick={previousPage}>Previous</button>
                     <button className="btn btn-primary mr8" type="submit">Next</button>
@@ -37,6 +37,6 @@ class PostJobFormTwo extends Component{
 
 export default reduxForm({
     form: 'postJobForm',
-    destroyOnUnmount: false,
+    // destroyOnUnmount: false,
     // validate: (values) => jobPostFormValidation(values)
 })(PostJobFormTwo);

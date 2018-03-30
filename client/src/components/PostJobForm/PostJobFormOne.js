@@ -49,7 +49,6 @@ class PostJobFormOne extends Component{
     }
 
     renderForm(){
-        console.log(this.props.postJobForm);
         const { handleSubmit } = this.props;
         return(
             <form onSubmit={handleSubmit} className="form-horizontal">
@@ -72,8 +71,7 @@ class PostJobFormOne extends Component{
                     <Questions
                         title={this.state.formSections[2].title}
                         subtitle={this.state.formSections[2].subtitle}
-                        postJobForm={this.props.postJobForm} /> : false
-                }
+                        postJobForm={this.props.postJobForm} /> : null }
 
                 <button type="submit" className="btn btn-primary float-right mr8">Next</button>
             </form>

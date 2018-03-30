@@ -16,13 +16,16 @@ export const findCurrentUserSuccess = user => {
     }
 }
 
-export const findCurrentUser = () => {
+export const findCurrentUser = (callback) => {
     return dispatch => {
         axios.get(`${ROOT_API_URL}/current_user`, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN) }
         })
         .then(response => {
-            dispatch(findCurrentUserSuccess(response.data))
+            let currentUser = response.data;
+            delete currentUser.password;
+            dispatch(findCurrentUserSuccess(currentUser));
+            callback(response.data);
         })
     }
 }

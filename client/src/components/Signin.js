@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import Card from './Card';
 
+import { CURRENT_USER } from '../constants/config.js'
+
 import { renderTextFieldWithLabel } from './Fields/TextFields';
 import { renderCheckField } from './Fields/ControlFields';
 
@@ -21,7 +23,9 @@ class Signin extends Component{
 
         this.props.signinUser({ email: loginID, password: loginPassword, rememberMe: rememberMe },
             () => {
-                this.props.findCurrentUser();
+                this.props.findCurrentUser(currentUser => {
+                    localStorage.setItem(CURRENT_USER, JSON.stringify(currentUser))
+                });
                 if(pathname === '/jobs/new'){
                     this.props.setPage(3);
                 }else{
@@ -65,7 +69,8 @@ class Signin extends Component{
 
 const mapStateToProps = state => {
     return{
-        errorMessage: state.authentication.signinError
+        errorMessage: state.authentication.signinError,
+        user: state.user
     }
 }
 

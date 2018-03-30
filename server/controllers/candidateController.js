@@ -8,8 +8,6 @@ exports.createEducation = (req, res) => {
         });
     }
 
-    console.log(req.user);
-
     Candidate.findOneAndUpdate({_userId: req.user.id},
         { $push: { education: req.body } },
         { new: true },

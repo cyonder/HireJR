@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import Card from './Card';
 
+import { CURRENT_USER } from '../constants/config.js'
+
 import signupValidation from '../validations/signupValidation';
 
 import { signupUser } from '../actions/authentication';
@@ -31,7 +33,9 @@ class Signup extends Component{
 
         delete values.passwordConfirmation;
         this.props.signupUser(values, () => {
-            this.props.findCurrentUser();
+            this.props.findCurrentUser(currentUser => {
+                localStorage.setItem(CURRENT_USER, JSON.stringify(currentUser))
+            });
             if(pathname === '/jobs/new'){
                 this.props.setPage(3);
             }else{

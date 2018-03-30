@@ -52,8 +52,8 @@ exports.create = (req, res) => {
                             User.findByIdAndUpdate(req.user._id, {
                                 _employerId: data._id
                             }, err => {
-                                    if(err){ console.log(err) }
-                                });
+                                if(err){ console.log(err) }
+                            });
                             // res.send(data);
                         });
                     }

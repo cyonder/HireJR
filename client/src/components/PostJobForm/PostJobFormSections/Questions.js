@@ -5,18 +5,16 @@ import { renderQuestionFieldArray } from '../../Fields/CustomFields';
 
 import Card from '../../Card';
 
-// Uncomment if typeof, go /signout, go /jobs/new
-
 class Questions extends Component{
     render(){
-        if( typeof this.props.postJobForm['values.questions'] === 'undefined') return false;
+        if(!this.props.postJobForm) return false;
 
         return(
             <Card title={this.props.title}
                 subtitle={this.props.subtitle}
                 noBackground={true}>
                 <FieldArray name="questions" component={renderQuestionFieldArray}
-                            reduxQuestions={this.props.postJobForm['values.questions']}/>
+                            reduxQuestions={this.props.postJobForm['values'] ? this.props.postJobForm['values'].questions : null } />
             </Card>
         );
     }

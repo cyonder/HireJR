@@ -8,6 +8,8 @@ import PostJobConfirmation from './PostJobConfirmation';
 
 import { postJobFormSteps } from '../../data/postJobFormSteps.json';
 
+// import { AUTHENTICATION_TOKEN } from '../constants/config.js';
+
 class PostJobForm extends Component{
     constructor(){
         super();
