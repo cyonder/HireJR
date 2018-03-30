@@ -3238,6 +3238,14 @@ header .btn.btn-link, footer .btn.btn-link {
   font-weight: 600;
   color: #5752D5; }
 
+.popover-button {
+  background: white;
+  color: black;
+  border: 1px solid black;
+  padding: 0 .4rem;
+  margin-left: .4rem;
+  cursor: help; }
+
 .btn.btn-warning {
   background: #ffb700;
   border-color: #f0ac00;

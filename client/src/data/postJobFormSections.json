@@ -1,0 +1,8 @@
+{
+    "postJobFormSections": [
+        { "title": "Create a Job Post", "subtitle": "We offer and promote opportunities for Junior and Entry-Level Developers" },
+        { "title": "How to Apply?", "subtitle": "You have two options when it comes to accepting job applications. Either through Hirejr or a separate website." },
+        { "title": "Custom Questions", "subtitle": "Ask candidates to answer up to five questions when submitting an application through Hirejr." },
+        { "title": "Add Description", "subtitle": "We offer and promote opportunities for Junior and Entry-Level Developers" }
+    ]
+}

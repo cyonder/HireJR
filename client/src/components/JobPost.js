@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import mongoose from 'mongoose';
+
 import moment from 'moment';
+
+import Card from './Card';
 
 import { findJobPost } from '../actions/jobPost';
 
@@ -15,19 +17,14 @@ class JobPost extends Component{
 
     renderDescription(details){
         if(!details) return false;
-        // let a = details.description.replace(/(?:\n)/g, '<br />');
         return(
-            <div className="card">
-                <div className="card-header">
-                    <div className="card-title h3">{details.position}</div>
-                    <div className="card-subtitle text-gray">{details.companyName}</div>
-                </div>
-                <div className="card-body job-post-description">
-                    {details.description}
-                </div>
-            </div>
+            <Card title={details.position}
+                    subtitle={details.companyName}>
+                    <div className="job-post-description">{details.description}</div>
+            </Card>
         )
     }
+
 
     renderMenu(job){
         if(!job)return false

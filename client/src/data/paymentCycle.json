@@ -1,0 +1,9 @@
+{
+    "paymentCycle": [
+        { "value": "",        "label": "Payment Cycle" },
+        { "value": "Yearly",  "label": "Yearly" },
+        { "value": "Monthly", "label": "Monthly" },
+        { "value": "Weekly",  "label": "Weekly" },
+        { "value": "Daily",   "label": "Daily" }
+    ]
+}

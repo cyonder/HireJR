@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import { renderTextField, renderSimpleTextareaField } from '../../Fields/TextFields';
+import EmptyState from '../../EmptyState';
+
+import { renderHorizontalTextField } from '../../Fields/TextFields';
+import { renderTextAreaFieldWithLabelAndPopover } from '../../Fields/TextAreaFields';
 
 class WorkExperience extends Component{
     constructor(){
         super();
-        this.state = {
-            displayForm: false
-        }
+        this.state = { displayForm: false }
+
         this.handleClick = this.handleClick.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -45,39 +46,46 @@ class WorkExperience extends Component{
     }
 
     renderForm(){
-        const activeClass = this.state.displayForm ? 'btn btn-success btn-block' : 'btn btn-primary btn-block'
+        const activeClass = this.state.displayForm ? 'btn btn-success btn-block mt8' : 'btn btn-primary btn-block mt8'
         const { handleSubmit } = this.props;
 
         return(
             <form onSubmit={ handleSubmit(this.onSubmit) } className="form-horizontal">
                 <div className={this.state.displayForm ? 'd-block mb8' : 'd-none'}>
                     <Field name="companyName"
+                        type="text"
                         label="Company Name"
                         placeholder="Apple inc."
                         id="input-company-name"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="title"
+                        type="text"
                         label="Title"
                         placeholder="Marketing Specialist"
                         id="input-title"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="startYear"
+                        type="text"
                         label="Start Year"
                         placeholder=""
                         id="input-start-year"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="endYear"
+                        type="text"
                         label="End Year"
                         placeholder="Blank if current"
                         id="input-end-year"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="summary"
+                        rows="4"
+                        label="Summary"
                         placeholder="Summary..."
-                        component={renderSimpleTextareaField} />
+                        id="input-summary"
+                        component={renderTextAreaFieldWithLabelAndPopover} />
                 </div>
                 <button type={this.state.displayForm ? "button" : "submit"}
                     className={activeClass}
@@ -90,13 +98,11 @@ class WorkExperience extends Component{
 
     renderEmptyState(){
         return[
-            <div className={this.state.displayForm ? 'd-none' : 'd-block empty mb8'} key={1}>
-                <div className="empty-icon">
-                    <i className="icon icon-3x icon-edit"></i>
-                </div>
-                <p className="empty-title h5">You haven't added any work experience</p>
-                <p className="empty-subtitle">Highlight your experience</p>
-            </div>,
+            <EmptyState title="You haven't added any work experience"
+                        subtitle="Highlight your experience"
+                        icon="icon-edit"
+                        shouldHide={this.state.displayForm ? true : false}
+                        key={1}/>,
             <div key={2}>
                 {this.renderForm()}
             </div>

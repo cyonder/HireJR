@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import About from './CandidateBoard/About';
 import Education from './CandidateBoard/Education';
@@ -52,7 +52,7 @@ class CandidateBoard extends Component{
     render(){
         let initialValues;
 
-        if(typeof this.props.candidate != "undefined"){
+        if(typeof this.props.candidate !== "undefined"){
             initialValues = this.props.candidate.about;
         }else{
             initialValues = null;

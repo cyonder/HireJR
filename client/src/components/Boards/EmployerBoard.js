@@ -2,10 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-class EmployerBoard extends Component{
-    renderJobPosts(){
-        const jobPosts = this.props.employer._jobPostIds;
+import EmptyState from '../EmptyState';
 
+class EmployerBoard extends Component{
+    renderTabs(){
+        return(
+            <ul className="tab tab-block">
+                <li className="tab-item active">
+                    <a href="#">All</a>
+                </li>
+                <li className="tab-item">
+                    <a href="#">Active</a>
+                </li>
+                <li className="tab-item">
+                    <a href="#">Non-Active</a>
+                </li>
+            </ul>
+        )
+    }
+
+    renderJobPosts(){
+        /* position, city, province */
+        const jobPosts = this.props.employer._jobPostIds;
         return Object.keys(jobPosts).map((key, index) => {
             return(
                 <div className="tile tile-centered mb8" key={index}>
@@ -41,26 +59,13 @@ class EmployerBoard extends Component{
                     <div className="panel-title h4">{panelTitle}</div>
                 </div>
                 <div className="panel-body">
-                    {this.renderJobPosts()}
+                    { (!this.props.employer || !this.props.employer['_jobPostIds'].length > 0) ?
+                    <EmptyState title="You have no posted jobs"
+                                icon="icon-edit"/> :
+                    this.renderJobPosts() }
                 </div>
                 <div className="panel-nav">{this.renderTabs()}</div>
             </div>
-        )
-    }
-
-    renderTabs(){
-        return(
-            <ul className="tab tab-block">
-                <li className="tab-item active">
-                    <a href="#">All</a>
-                </li>
-                <li className="tab-item">
-                    <a href="#">Active</a>
-                </li>
-                <li className="tab-item">
-                    <a href="#">Non-Active</a>
-                </li>
-            </ul>
         )
     }
 
@@ -73,7 +78,7 @@ const mapStateToProps = state => {
     return {
         firstName: state.user.firstName,
         lastName: state.user.lastName,
-        employer: state.user._employerId
+        employer: state.user.employer
     }
 }
 

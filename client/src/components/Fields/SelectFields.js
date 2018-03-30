@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const renderSelectField = ({ input, meta, label, id, children }) => {
+export const renderHorizontalSelectField = ({ input, meta, label, id, children }) => {
     return(
         <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
             <div className="col-4 col-sm-12">
@@ -18,11 +18,10 @@ export const renderSelectField = ({ input, meta, label, id, children }) => {
     );
 }
 
-export const renderSimpleSelectField = ({input}) => {
+export const renderSelectField = ({input, children}) => {
     return(
         <select {...input} className="form-select">
-            <option value="open-ended">Open-Ended</option>
-            <option value="multiple-choice">Multiple-Choice</option>
+            {children}
         </select>
     )
 }

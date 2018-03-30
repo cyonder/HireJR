@@ -1,0 +1,18 @@
+{
+    "provinces": [
+        { "short": "",   "value": "",                       "label": "Choose a province" },
+        { "short": "AB", "value": "Alberta",                "label": "Alberta" },
+        { "short": "BC", "value": "British Columbia",       "label": "British Columbia" },
+        { "short": "MB", "value": "Manitoba",               "label": "Manitoba" },
+        { "short": "NB", "value": "New Brunswick",          "label": "New Brunswick" },
+        { "short": "NL", "value": "Newfoundland and Labrador",  "label": "Newfoundland and Labrador" },
+        { "short": "NS", "value": "Nova Scotia",            "label": "Nova Scotia" },
+        { "short": "NU", "value": "Nunavut",                "label": "Nunavut" },
+        { "short": "NT", "value": "Northwest Territories",  "label": "Northwest Territories" },
+        { "short": "ON", "value": "Ontario",                "label": "Ontario" },
+        { "short": "PE", "value": "Prince Edward Island",   "label": "Prince Edward Island" },
+        { "short": "QC", "value": "Quebec",                 "label": "Quebec" },
+        { "short": "SK", "value": "Saskatchewan",           "label": "Saskatchewan" },
+        { "short": "YT", "value": "Yukon",                  "label": "Yukon"}
+    ]
+}

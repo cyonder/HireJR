@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Popover extends Component{
-    render(){
-        return(
-            <div class="popover popover-right">
-                <button class="btn btn-primary">!</button>
-                <div class="popover-container">
-                    <div class="card">
-                        <div class="card-body">
-                            The career objective is helpful if you’re not applying to a specific job posting, but instead are sending out unsolicited applications to potential employers.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-}
+import Card from './Card';
+
+const Popover = (props) => (
+    <div className="popover popover-right">
+        <span className="popover-button rounded">?</span>
+        <div className="popover-container">
+            <Card>
+                {props.content}
+            </Card>
+        </div>
+    </div>
+)
 
 export default Popover;

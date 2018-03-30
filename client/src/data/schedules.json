@@ -1,0 +1,10 @@
+{
+    "schedules": [
+        { "value": "",          "label": "Choose a schedule" } ,
+        { "value": "Full Time", "label": "Full Time" },
+        { "value": "Part Time", "label": "Part Time" },
+        { "value": "Intern",    "label": "Intern" },
+        { "value": "Contract",  "label": "Contract" },
+        { "value": "N/A",       "label": "N/A" }
+    ]
+}

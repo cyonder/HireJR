@@ -68,6 +68,15 @@
     color: $color-brand;
 }
 
+.popover-button{
+    background: white;
+    color: black;
+    border: 1px solid black;
+    padding: 0 .4rem;
+    margin-left: .4rem;
+    cursor: help;
+}
+
 .btn.btn-warning{
     background: $color-warning;
     border-color: darken($color-warning, 3%);

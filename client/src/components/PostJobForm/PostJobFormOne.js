@@ -8,45 +8,22 @@ import Questions from './PostJobFormSections/Questions';
 
 import jobPostFormValidation from '../../validations/jobPostFormValidation';
 
+import { postJobFormSections } from '../../data/postJobFormSections.json';
+import { provinces } from '../../data/provinces.json';
+import { schedules } from '../../data/schedules.json';
+import { applyOptions } from '../../data/applyOptions.json';
+import { paymentCycle } from '../../data/paymentCycle.json';
+
 class PostJobFormOne extends Component{
     constructor(){
         super();
         this.state = {
-            formSections: [
-                { 'title': 'Create a Job Post', 'subtitle': 'We offer and promote opportunities for Junior and Entry-Level Developers' },
-                { 'title': 'How to Apply?', 'subtitle': 'You have two options when it comes to accepting job applications. Either through Hirejr or a separate website.' },
-                { 'title': 'Custom Questions', 'subtitle': 'Ask candidates to answer up to five questions when submitting an application through Hirejr.' },
-            ],
-            provinces:[
-                { 'short': '',   'value': '',                       'label': 'Choose a province' },
-                { 'short': 'AB', 'value': 'Alberta',                'label': 'Alberta' },
-                { 'short': 'BC', 'value': 'British Columbia',       'label': 'British Columbia' },
-                { 'short': 'MB', 'value': 'Manitoba',               'label': 'Manitoba' },
-                { 'short': 'NB', 'value': 'New Brunswick',          'label': 'New Brunswick' },
-                { 'short': 'NL', 'value': 'Newfoundland and Labrador',  'label': 'Newfoundland and Labrador' },
-                { 'short': 'NS', 'value': 'Nova Scotia',            'label': 'Nova Scotia' },
-                { 'short': 'NU', 'value': 'Nunavut',                'label': 'Nunavut' },
-                { 'short': 'NT', 'value': 'Northwest Territories',  'label': 'Northwest Territories' },
-                { 'short': 'ON', 'value': 'Ontario',                'label': 'Ontario' },
-                { 'short': 'PE', 'value': 'Prince Edward Island',   'label': 'Prince Edward Island' },
-                { 'short': 'QC', 'value': 'Quebec',                 'label': 'Quebec' },
-                { 'short': 'SK', 'value': 'Saskatchewan',           'label': 'Saskatchewan' },
-                { 'short': 'YT', 'value': 'Yukon',                  'label': 'Yukon'}
-            ],
-            schedules: [
-                { 'value': '',          'label': 'Choose a schedule' } ,
-                { 'value': 'Full Time', 'label': 'Full Time' },
-                { 'value': 'Part Time', 'label': 'Part Time' },
-                { 'value': 'Intern',    'label': 'Intern' },
-                { 'value': 'Contract',  'label': 'Contract' },
-                { 'value': 'N/A',       'label': 'N/A' },
-            ],
-            applyOptions: [
-                { 'value': '',         'label': 'Choose an application option'},
-                { 'value': 'internal', 'label': 'Hire jr (we\'ll notify you via email)'},
-                { 'value': 'external', 'label': 'Separate Website'},
-            ],
-            displayInternal: false,
+            formSections: postJobFormSections,
+            provinces: provinces,
+            schedules: schedules,
+            applyOptions: applyOptions,
+            paymentCycle: paymentCycle,
+            displayInternal: true,
             displayExternal: false
         }
         this.handleApplicationOptionChange = this.handleApplicationOptionChange.bind(this);
@@ -72,15 +49,16 @@ class PostJobFormOne extends Component{
     }
 
     renderForm(){
+        console.log(this.props.postJobForm);
         const { handleSubmit } = this.props;
-
         return(
             <form onSubmit={handleSubmit} className="form-horizontal">
                 <Details
                     title={this.state.formSections[0].title}
                     subtitle={this.state.formSections[0].subtitle}
                     provinces={this.state.provinces}
-                    schedules={this.state.schedules} />
+                    schedules={this.state.schedules}
+                    paymentCycle={this.state.paymentCycle} />
 
                 <ApplyThrough
                     title={this.state.formSections[1].title}
@@ -116,7 +94,7 @@ const mapStateToProps = state => {
 export default reduxForm({
     form: 'postJobForm',
     destroyOnUnmount: false,
-    validate: (values) => jobPostFormValidation(values)
+    // validate: (values) => jobPostFormValidation(values)
 })(
     connect(mapStateToProps)(PostJobFormOne)
 );

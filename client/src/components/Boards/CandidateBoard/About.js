@@ -1,25 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import { renderTextField } from '../../Fields/TextFields';
-
-import Popover from '../../Popover';
+import { renderHorizontalTextField } from '../../Fields/TextFields';
+import { renderTextAreaFieldWithLabelAndPopover } from '../../Fields/TextAreaFields';
 
 class About extends Component{
-    renderTextArea({input, placeholder, id, label}){
-        return(
-            <div className="form-group d-block">
-                <label className="form-label" htmlFor={id}>{label}</label>
-                <textarea {...input}
-                    className="form-input"
-                    placeholder={placeholder}
-                    id={id}
-                    rows="4" />
-            </div>
-        );
-    }
-
     onSubmit(values){
         this.props.updateAbout(values, () => {
             this.props.notify();
@@ -33,46 +18,55 @@ class About extends Component{
         return(
             <form onSubmit={ handleSubmit(this.onSubmit.bind(this)) } className="form-horizontal">
                 <Field name="city"
+                    type="text"
                     label="City"
                     placeholder="Toronto"
                     id="input-city"
-                    component={renderTextField} />
+                    component={renderHorizontalTextField} />
 
                 <Field name="province"
+                    type="text"
                     label="Province"
                     placeholder="Ontario"
                     id="input-province"
-                    component={renderTextField} />
+                    component={renderHorizontalTextField} />
 
                 <Field name="portfolioUrl"
+                    type="text"
                     label="Portfolio"
                     placeholder="http://"
                     id="input-portfolio"
-                    component={renderTextField} />
+                    component={renderHorizontalTextField} />
 
                 <Field name="githubUrl"
+                    type="text"
                     label="Github"
                     placeholder="http://"
-                    id="input-province"
-                    component={renderTextField} />
+                    id="input-github"
+                    component={renderHorizontalTextField} />
 
                 <Field name="linkedInUrl"
+                    type="text"
                     label="LinkedIn"
                     placeholder="http://"
                     id="input-linkedin"
-                    component={renderTextField} />
+                    component={renderHorizontalTextField} />
 
                 <Field name="summary"
-                    placeholder="summary..."
+                    rows="4"
                     label="Summary"
+                    placeholder="summary..."
+                    popover="Summary provides a brief, focused overview of what your specialties are as an employee, and serves as an introduction to the rest of your resume."
                     id="input-summary"
-                    component={this.renderTextArea} />
+                    component={renderTextAreaFieldWithLabelAndPopover} />
 
                 <Field name="careerObjective"
-                    placeholder="career objective..."
+                    rows="4"
                     label="Career Objective"
+                    placeholder="career objective..."
+                    popover="Career objective is helpful if you’re not applying to a specific job posting, but instead are sending out unsolicited applications to potential employers."
                     id="input-career-objective"
-                    component={this.renderTextArea} />
+                    component={renderTextAreaFieldWithLabelAndPopover} />
 
                 <button type="submit" className="btn btn-success btn-block mt8">Save</button>
             </form>

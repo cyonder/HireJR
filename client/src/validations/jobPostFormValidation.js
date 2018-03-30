@@ -19,7 +19,7 @@ export default function jobPostFormValidation(values){
             protocols: ['http','https'],
             require_protocol: true
         })){
-            errors.companyWebsite = "Don\'t forget to add 'http or https' protocol";
+            errors.companyWebsite = "Don't forget to add 'http or https' protocol";
         }
     }
 

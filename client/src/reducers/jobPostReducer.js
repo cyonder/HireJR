@@ -1,9 +1,7 @@
 import {
     FIND_JOB_POST,
     FETCH_JOB_POSTS,
-    CREATE_JOB_POST,
-    DELETE_JOB_POST,
-    UPDATE_JOB_POST
+    CREATE_JOB_POST
 } from '../constants/actionTypes';
 
 const initialState = {

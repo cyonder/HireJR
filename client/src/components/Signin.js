@@ -2,42 +2,18 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
+import Card from './Card';
+
+import { renderTextFieldWithLabel } from './Fields/TextFields';
+import { renderCheckField } from './Fields/ControlFields';
+
 import { signinUser } from '../actions/authentication';
 import { findCurrentUser } from '../actions/user';
-
-let checkboxStyle = { paddingRight: 0 }
 
 class Signin extends Component{
     constructor(){
         super();
         this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    renderAlert(){
-        if(this.props.errorMessage){
-            return(
-                <span>{ this.props.errorMessage }</span>
-            );
-        }
-    }
-
-    renderTextField({ input, meta, label, id, type }){
-        return(
-            <div className="form-group">
-                <label className="form-label" htmlFor={id}>{label}</label>
-                <input {...input} className="form-input" type={type} id={id} />
-            </div>
-        );
-    }
-
-    renderCheckboxField({ input, label, type }){
-        return(
-            <label className="form-checkbox" style={checkboxStyle}>
-                <input {...input}
-                    type={type} />
-                <i className="form-icon"></i> {label}
-            </label>
-        );
     }
 
     onSubmit({ loginID, loginPassword, rememberMe}){
@@ -60,33 +36,30 @@ class Signin extends Component{
         return(
             <form onSubmit={handleSubmit(this.onSubmit)}>
                 <Field name="loginID"
+                    type="text"
                     label="Email"
                     id="signin-email"
-                    type="text"
-                    component={this.renderTextField}/>
+                    component={renderTextFieldWithLabel}/>
 
                 <Field name="loginPassword"
+                    type="password"
                     label="Password"
                     id="signin-password"
-                    type="password"
-                    component={this.renderTextField}/>
-
-                { this.renderAlert() }
+                    component={renderTextFieldWithLabel}/>
 
                 <div className="flex-center-between">
                     <button type="submit" className="btn btn-primary">Sign in</button>
                     <Field name="rememberMe"
-                        label="Remember me"
                         type="checkbox"
-                        component={this.renderCheckboxField} />
-
+                        label="Remember me"
+                        component={renderCheckField} />
                 </div>
             </form>
         );
     }
 
     render(){
-        return <div className="auth-form">{this.renderForm()}</div>
+        return <Card>{this.renderForm()}</Card>
     }
 }
 

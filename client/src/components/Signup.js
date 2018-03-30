@@ -1,48 +1,16 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import isEmail from 'validator/lib/isEmail';
+
+import Card from './Card';
+
+import signupValidation from '../validations/signupValidation';
 
 import { signupUser } from '../actions/authentication';
 import { findCurrentUser } from '../actions/user';
 
-import { renderTextField } from './Fields/TextFields';
-
-const validate = values => {
-    const errors = {};
-
-    if(!values.firstName){
-        errors.firstName = 'Required';
-    }
-
-    if(!values.lastName){
-        errors.lastName = 'Required';
-    }
-
-    if(!values.email){
-        errors.email = 'Required';
-    }else if(!isEmail(values.email)){
-        errors.email = 'Incorrect format for the email';
-    }
-
-    if(!values.password){
-        errors.password = 'Required';
-    }else if(values.password.length < 8){
-        errors.password = 'Password should be at least 8 characters long'
-    }
-
-    if(!values.passwordConfirmation){
-        errors.passwordConfirmation = 'Required';
-    }else if(values.passwordConfirmation !== values.password){
-        errors.passwordConfirmation = 'Passwords must match';
-    }
-
-    if(!values.role){
-        errors.role = 'Required';
-    }
-
-    return errors;
-}
+import { renderHorizontalTextField } from './Fields/TextFields';
+import { renderSwitchField } from './Fields/ControlFields';
 
 class Signup extends Component{
     constructor(){
@@ -57,37 +25,6 @@ class Signup extends Component{
             );
         }
     }
-
-    renderSwitchField({ input, meta, label, type }){
-        return(
-            <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
-                <label className="form-switch">
-                    <input {...input} type={type} />
-                    <i className="form-icon"></i> {label}
-                    {meta.error && meta.touched &&
-                        <span className="form-input-hint ml4">{meta.error}</span>
-                    }
-                </label>
-
-            </div>
-        );
-    }
-
-    // renderTextField({ input, meta, label, id, placeholder, type }){
-    //     return(
-    //         <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
-    //             <label className="form-label d-inline" htmlFor={id}>{label}</label>
-    //             <input {...input}
-    //                 className="form-input"
-    //                 type={type}
-    //                 id={id}
-    //                 placeholder={placeholder}/>
-    //             {meta.error && meta.touched &&
-    //                 <span className="form-input-hint"> {meta.error}</span>
-    //             }
-    //         </div>
-    //     );
-    // }
 
     onSubmit(values){
         const { pathname } = this.props.location;
@@ -113,47 +50,47 @@ class Signup extends Component{
                     placeholder="Cagdas"
                     id="signup-firstname"
                     type="text"
-                    component={renderTextField} />
+                    component={renderHorizontalTextField} />
 
                 <Field name="lastName"
                     label="Last Name"
                     placeholder="Yonder"
                     id="signup-lastname"
                     type="text"
-                    component={renderTextField} />
+                    component={renderHorizontalTextField} />
 
                 <Field name="email"
                     label="Email"
                     placeholder="cagdasyonder@gmail.com"
                     id="signup-email"
                     type="text"
-                    component={renderTextField} />
+                    component={renderHorizontalTextField} />
 
                 <Field name="password"
                     label="Password"
                     placeholder="Min. length 8 character"
                     id="signup-password"
                     type="password"
-                    component={renderTextField} />
+                    component={renderHorizontalTextField} />
 
                 <Field name="passwordConfirmation"
                     label="Confirmation"
                     placeholder="Re-type your password"
                     id="signup-password-confirmation"
                     type="password"
-                    component={renderTextField} />
+                    component={renderHorizontalTextField} />
 
                 <Field name="role"
+                    type="radio"
                     label="I'm a jr developer"
-                    type="radio"
                     value="candidate"
-                    component={this.renderSwitchField}  />
+                    component={renderSwitchField} />
 
                 <Field name="role"
-                    label="I'm an employer looking for jr's"
                     type="radio"
+                    label="I'm an employer looking for jr's"
                     value="employer"
-                    component={this.renderSwitchField} />
+                    component={renderSwitchField} />
 
                 { this.renderAlert() }
 
@@ -165,7 +102,7 @@ class Signup extends Component{
     }
 
     render(){
-        return <div className="auth-form">{this.renderForm()}</div>
+        return <Card>{this.renderForm()}</Card>
     }
 }
 
@@ -177,7 +114,7 @@ const mapStateToProps = state => {
 
 export default reduxForm({
     form: 'signupForm',
-    validate
+    validate: (values) => signupValidation(values)
 })(
     connect(mapStateToProps, { signupUser, findCurrentUser })(Signup)
 );

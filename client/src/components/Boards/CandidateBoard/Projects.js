@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-// import { createProject } from '../../../actions/candidate';
+import EmptyState from '../../EmptyState';
 
-import { renderTextField, renderSimpleTextareaField } from '../../Fields/TextFields';
+import { renderHorizontalTextField } from '../../Fields/TextFields';
+import { renderTextAreaFieldWithLabelAndPopover } from '../../Fields/TextAreaFields';
 
 class Projects extends Component{
     constructor(){
         super();
-        this.state = {
-            displayForm: false
-        }
+        this.state = { displayForm: false }
+        
         this.handleClick = this.handleClick.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -53,33 +52,39 @@ class Projects extends Component{
     }
 
     renderForm(){
-        const activeClass = this.state.displayForm ? 'btn btn-success btn-block' : 'btn btn-primary btn-block'
+        const activeClass = this.state.displayForm ? 'btn btn-success btn-block mt8' : 'btn btn-primary btn-block mt8'
         const { handleSubmit } = this.props;
 
         return(
             <form onSubmit={ handleSubmit(this.onSubmit) } className="form-horizontal">
                 <div className={this.state.displayForm ? 'd-block mb8' : 'd-none'}>
                     <Field name="projectName"
+                        type="text"
                         label="Project Name"
                         placeholder="StudentValley"
                         id="input-project-name"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="url"
+                        type="text"
                         label="URL"
                         placeholder="http://"
                         id="input-url"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="skills"
+                        type="text"
                         label="Languages"
                         placeholder="PHP, JavaScript, HTML"
                         id="input-languages"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="description"
+                        rows="4"
+                        label="Description"
                         placeholder="description..."
-                        component={renderSimpleTextareaField} />
+                        id="input-description"
+                        component={renderTextAreaFieldWithLabelAndPopover} />
                 </div>
                 <button type={this.state.displayForm ? "button" : "submit"}
                     className={activeClass}
@@ -92,13 +97,11 @@ class Projects extends Component{
 
     renderEmptyState(){
         return[
-            <div className={this.state.displayForm ? 'd-none' : 'd-block empty mb8'} key={1}>
-                <div className="empty-icon">
-                    <i className="icon icon-3x icon-edit"></i>
-                </div>
-                <p className="empty-title h5">You haven't added any projects</p>
-                <p className="empty-subtitle">Show off your live apps and websites</p>
-            </div>,
+            <EmptyState title="You haven't added any projects"
+                        subtitle="Show off your live apps and websites"
+                        icon="icon-edit"
+                        shouldHide={this.state.displayForm ? true : false}
+                        key={1}/>,
             <div key={2}>
                 {this.renderForm()}
             </div>

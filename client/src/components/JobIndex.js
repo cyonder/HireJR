@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import mongoose from 'mongoose';
+
 import moment from 'moment';
 
 import { fetchJobPosts } from '../actions/jobPost';

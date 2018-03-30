@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import { renderTextField } from '../../Fields/TextFields';
+import EmptyState from '../../EmptyState';
+
+import { renderHorizontalTextField } from '../../Fields/TextFields';
 
 class Education extends Component{
     constructor(){
         super();
-        this.state = {
-            displayForm: false
-        }
+        this.state = { displayForm: false }
+
         this.handleClick = this.handleClick.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -46,41 +46,46 @@ class Education extends Component{
     }
 
     renderForm(){
-        const activeClass = this.state.displayForm ? 'btn btn-success btn-block' : 'btn btn-primary btn-block'
+        const activeClass = this.state.displayForm ? 'btn btn-success btn-block mt8' : 'btn btn-primary btn-block mt8'
         const { handleSubmit } = this.props;
 
         return(
             <form onSubmit={ handleSubmit(this.onSubmit) } className="form-horizontal">
                 <div className={this.state.displayForm ? 'd-block mb8' : 'd-none'}>
                     <Field name="schoolName"
+                        type="text"
                         label="School Name"
                         placeholder="Seneca College"
                         id="input-school-name"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="degree"
+                        type="text"
                         label="Degree"
                         placeholder="Bachelors"
                         id="input-degree"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="field"
+                        type="text"
                         label="Field of Study"
                         placeholder="Programming"
                         id="input-field"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="startYear"
+                        type="text"
                         label="Start Year"
                         placeholder=""
                         id="input-start-year"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
 
                     <Field name="endYear"
+                        type="text"
                         label="End Year"
                         placeholder="Blank if current"
                         id="input-end-year"
-                        component={renderTextField} />
+                        component={renderHorizontalTextField} />
                 </div>
 
                 <button type={this.state.displayForm ? "button" : "submit"}
@@ -94,19 +99,17 @@ class Education extends Component{
 
     renderEmptyState(){
         return[
-            <div className={this.state.displayForm ? 'd-none' : 'd-block empty mb8'} key={1}>
-                <div className="empty-icon">
-                    <i className="icon icon-3x icon-edit"></i>
-                </div>
-                <p className="empty-title h5">You haven't added any education</p>
-                <p className="empty-subtitle">Show off your degrees and certifications</p>
-            </div>,
+            <EmptyState title="You haven't added any education"
+                        subtitle="Show off your degrees and certifications"
+                        icon="icon-edit"
+                        shouldHide={this.state.displayForm ? true : false}
+                        key={1}/>,
             <div key={2}>
                 {this.renderForm()}
             </div>
         ]
     }
-
+    
     render(){
         if(!this.props.candidate || !this.props.candidate['education'].length > 0) return this.renderEmptyState();
 

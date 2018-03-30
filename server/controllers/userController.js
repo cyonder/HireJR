@@ -27,6 +27,11 @@ exports.find = (req, res) => {
                         user._employerId = user.employer._id;
                     }
 
+                    // if(user.employer._jobPostIds){
+                    //     user.employer.jobPosts = user.employer._jobPostIds;
+                    //     user.employer._jobPostIds = user.employer.jobPosts._id;
+                    // }
+
                     res.send(user);
                 }
             })
