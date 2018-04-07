@@ -5,13 +5,13 @@ import Description from './PostJobFormSections/Description';
 
 import jobPostFormValidation from '../../validations/jobPostFormValidation';
 
-import { postJobFormSections } from '../../data/postJobFormSections.json';
+import postJobFormSections from '../../data/postJobFormSections.json';
 
 class PostJobFormTwo extends Component{
     constructor(){
         super();
         this.state = {
-            formSections: postJobFormSections
+            formSections: postJobFormSections.data
         }
     }
 
@@ -37,6 +37,6 @@ class PostJobFormTwo extends Component{
 
 export default reduxForm({
     form: 'postJobForm',
-    // destroyOnUnmount: false,
+    destroyOnUnmount: false,
     // validate: (values) => jobPostFormValidation(values)
 })(PostJobFormTwo);

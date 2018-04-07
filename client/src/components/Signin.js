@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
+import RequireSignout from './HOC/RequireSignout';
 import Card from './Card';
-
-import { CURRENT_USER } from '../constants/config.js'
 
 import { renderTextFieldWithLabel } from './Fields/TextFields';
 import { renderCheckField } from './Fields/ControlFields';
@@ -18,20 +17,29 @@ class Signin extends Component{
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    renderAlert(){
+        if(this.props.errorMessage){
+            return(
+                <div className="auth-error-message">{ this.props.errorMessage }</div>
+            );
+        }
+    }
+
     onSubmit({ loginID, loginPassword, rememberMe}){
         const { pathname } = this.props.location;
 
-        this.props.signinUser({ email: loginID, password: loginPassword, rememberMe: rememberMe },
-            () => {
-                this.props.findCurrentUser(currentUser => {
-                    localStorage.setItem(CURRENT_USER, JSON.stringify(currentUser))
-                });
-                if(pathname === '/jobs/new'){
-                    this.props.setPage(3);
-                }else{
-                    this.props.history.push('/dashboard');
-                }
-            });
+        this.props.signinUser({
+            email: loginID,
+            password: loginPassword,
+            rememberMe: rememberMe },
+        () => {
+            this.props.findCurrentUser();
+            if(pathname === '/jobs/new'){
+                this.props.setPage(3);
+            }else{
+                this.props.history.push('/dashboard');
+            }
+        });
     }
 
     renderForm(){
@@ -51,6 +59,8 @@ class Signin extends Component{
                     id="signin-password"
                     component={renderTextFieldWithLabel}/>
 
+                { this.renderAlert() }
+
                 <div className="flex-center-between">
                     <button type="submit" className="btn btn-primary">Sign in</button>
                     <Field name="rememberMe"
@@ -63,19 +73,21 @@ class Signin extends Component{
     }
 
     render(){
-        return <Card>{this.renderForm()}</Card>
+        return <Card title="Sign into Hirejr">{this.renderForm()}</Card>
     }
 }
 
 const mapStateToProps = state => {
     return{
         errorMessage: state.authentication.signinError,
-        user: state.user
     }
 }
 
 export default reduxForm({
     form: 'signinForm'
 })(
-    connect(mapStateToProps, { signinUser, findCurrentUser })(Signin)
+    connect(mapStateToProps, { signinUser, findCurrentUser })(
+        // RequireSignout(Signin)
+        Signin
+    )
 );

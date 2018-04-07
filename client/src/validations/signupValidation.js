@@ -1,7 +1,9 @@
 import isEmail from 'validator/lib/isEmail';
 
 export default function signupValidation(values){
-    const errors = {};
+    const errors = {
+        employer:{}
+    };
 
     if(!values.firstName){
         errors.firstName = 'Required';
@@ -31,6 +33,17 @@ export default function signupValidation(values){
 
     if(!values.role){
         errors.role = 'Required';
+    }
+
+    if(values.role === 'employer'){
+        if(!values.employer){
+            errors.employer.companyName = 'Required';
+            errors.employer.companyWebsite = 'Required';
+        }else if(!values.employer.companyName){
+            errors.employer.companyName = 'Required';
+        }else if(!values.employer.companyWebsite){
+            errors.employer.companyWebsite = 'Required';
+        }
     }
 
     return errors;

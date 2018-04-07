@@ -38,7 +38,6 @@ const mapStateToProps = state => {
 export default reduxForm({
     form: 'postJobForm',
     destroyOnUnmount: false,
-    // validate
 })(
     connect(mapStateToProps, { createJobPost })(PostJobConfirmation)
 );

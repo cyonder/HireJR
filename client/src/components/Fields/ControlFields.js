@@ -1,10 +1,11 @@
 import React from 'react';
 
-let checkboxStyle = { paddingRight: 0 }
+const style = { paddingRight: 0 }
 
-export const renderCheckField = ({ input, meta, label, type }) => {
+export const renderCheckField = ({ input, meta, type, label }) => {
     return(
-        <label className={meta.error && meta.touched ? 'form-checkbox has-error' : 'form-checkbox'} style={checkboxStyle}>
+        <label className={meta.error && meta.touched ? 'form-checkbox has-error' : 'form-checkbox'}
+            style={style}>
             <input {...input}
                 type={type} />
             <i className="form-icon"></i> {label}

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import moment from 'moment';
 
+import Loading from './Loading';
+
 import { fetchJobPosts } from '../actions/jobPost';
 
 class JobIndex extends Component{
@@ -19,7 +21,7 @@ class JobIndex extends Component{
 
     renderJobs(){
         const jobs = this.props.jobs;
-        if(!jobs) return 'loading...';
+        if(!jobs) return <Loading />;
 
         return Object.keys(jobs).map((key, index) => {
             let createdAt = moment(jobs[key].createdAt).fromNow(true);
@@ -34,7 +36,7 @@ class JobIndex extends Component{
                             <span>{`${jobs[key].city}, ${jobs[key].province}`}</span>
                         </div>
                         <div className="card-subtitle text-gray">
-                            <span>{`${createdAt} by `}</span>
+                            <span>{`${createdAt} by ${jobs[key].employer.companyName}`}</span>
                             <span>
                                 <a href={jobs[key].companyWebsite} target="_blank">{jobs[key].companyName}</a>
                             </span>
@@ -58,7 +60,7 @@ class JobIndex extends Component{
 
 const mapStateToProps = state => {
     return {
-        jobs: state.jobs.index
+        jobs: state.jobPost.jobPosts
     };
 }
 

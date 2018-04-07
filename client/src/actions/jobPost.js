@@ -3,22 +3,22 @@ import axios from 'axios';
 import {
     ROOT_API_URL,
     AUTHENTICATION_TOKEN
-} from '../constants/config.js';
+} from '../constants/systemTypes';
 
 import {
+    UPDATE_EMPLOYER,
     FETCH_JOB_POSTS,
-    CREATE_JOB_POST,
     FIND_JOB_POST
 } from '../constants/actionTypes';
 
-export const createJobPostSuccess = jobPost => {
+export const createJobPostSuccess = employer => {
     return {
-        type: CREATE_JOB_POST,
-        payload: jobPost
+        type: UPDATE_EMPLOYER,
+        payload: employer
     }
 };
 
-export const fetchJobPostsSuccess = jobPosts => {
+export const fetchJobPostsSuccess = jobPosts => {    
     return {
         type: FETCH_JOB_POSTS,
         payload: jobPosts
@@ -38,19 +38,19 @@ export const createJobPost = (values, callback) => {
                 headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
             })
             .then(response => {
-                dispatch(createJobPostSuccess(response.data));
-                callback(response.data._id);
+                const { employer, jobPostId } = response.data;
+                dispatch( createJobPostSuccess({ employer: employer }) );
+                callback(jobPostId);
             })
     }
 };
 
 export const fetchJobPosts = () => {
     return dispatch => {
-        axios.get(`${ROOT_API_URL}/jobs`, {
-                headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN) }
-            })
+        axios.get(`${ROOT_API_URL}/jobs`)
             .then(response => {
-                dispatch( fetchJobPostsSuccess(response.data) );
+                const { jobPosts } = response.data
+                dispatch( fetchJobPostsSuccess(jobPosts) );
             })
     };
 }
@@ -59,7 +59,8 @@ export const findJobPost = id => {
     return dispatch => {
         axios.get(`${ROOT_API_URL}/jobs/${id}`)
             .then(response => {
-                dispatch( findJobPostSuccess(response.data) )
+                const { jobPost } = response.data
+                dispatch( findJobPostSuccess(jobPost) )
             })
     }
 }

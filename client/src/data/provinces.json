@@ -1,5 +1,5 @@
 {
-    "provinces": [
+    "data": [
         { "short": "",   "value": "",                       "label": "Choose a province" },
         { "short": "AB", "value": "Alberta",                "label": "Alberta" },
         { "short": "BC", "value": "British Columbia",       "label": "British Columbia" },

@@ -7,6 +7,6 @@ const User = require('../controllers/userController');
 
 const userRouter = express.Router();
 
-userRouter.get('/current_user', requireAuth, User.find);
+userRouter.get('/', requireAuth, User.find);
 
 module.exports = userRouter;

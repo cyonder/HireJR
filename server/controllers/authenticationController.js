@@ -1,58 +1,40 @@
 const jwt = require('jwt-simple');
-const User = require('../models/user');
 const config = require('../../config');
+
+const { createUserAndEmployer, createUserAndCandidate } = require('../api/user');
 
 const tokenForUser = user => {
     const timeStamp = new Date().getTime();
     return jwt.encode({
-        sub: user.id,
+        sub: user._id,
+        aud: user._employerId || user._candidateId,
         iat: timeStamp
     }, config.secret);
 }
 
-exports.signin = (req, res, next) => {
-    res.send({
-        token: tokenForUser(req.user)
-    });
+exports.signin = (req, res) => {
+    res.send({ token: tokenForUser(req.user) }); // Passport middleware takes care of sign in.
 }
 
-exports.signup = (req, res, next) => {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const email = req.body.email;
-    const password = req.body.password;
-    const role = req.body.role;
+exports.signup = async(req, res) => {
+    const { firstName, lastName, email, password, role, employer } = req.body;
+    const user = { firstName, lastName, email, password, role };
 
-    // Check if email syntax is valid!
-    if(!email || !password){
-        return res.status(422).send({
-            error: 'You must provide email and password!'
-        });
-    }
-
-    User.findOne({ email: email }, (err, existingUser) => {
-        if(err){ return next(err); }
-
-        if(existingUser){
-            return res.status(422).send({
-                error: 'Email is in use!'
-            });
+    if(role === 'employer'){
+        try{
+            const { newUser, newEmployer } = await createUserAndEmployer(user, employer)
+            res.status(200).send({ token: tokenForUser(newUser) })
+        }catch(error){
+            res.status(500).send({ message: error.message, error: error })
         }
-
-        const user = new User({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-            role: role
-        });
-
-        user.save((err, data) => {
-            if(err){ return next(err); }
-
-            res.json({
-                token: tokenForUser(user)
-            });
-        });
-    });
+    }else if(role === 'candidate'){
+        try{
+            const { newUser, newCandidate } = await createUserAndCandidate(user)
+            res.status(200).send({ token: tokenForUser(newUser) })
+        }catch(error){
+            res.status(500).send({ message: error.message, error: error })
+        }
+    }else{
+        throw new Error("User role not found!");
+    }
 }

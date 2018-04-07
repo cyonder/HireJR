@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, FormSection, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
+import RequireSignout from './HOC/RequireSignout';
 import Card from './Card';
-
-import { CURRENT_USER } from '../constants/config.js'
 
 import signupValidation from '../validations/signupValidation';
 
@@ -14,18 +13,28 @@ import { findCurrentUser } from '../actions/user';
 import { renderHorizontalTextField } from './Fields/TextFields';
 import { renderSwitchField } from './Fields/ControlFields';
 
+const formSectionStyle = { flexDirection: 'column' }
+
 class Signup extends Component{
     constructor(){
         super();
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
+        this.state = {
+            displayEmployerSection: false
+        }
     };
 
     renderAlert(){
         if(this.props.errorMessage){
             return(
-                <span>{ this.props.errorMessage }</span>
+                <div className="auth-error-message">{ this.props.errorMessage }</div>
             );
         }
+    }
+
+    handleToggle(value){
+        this.setState({ displayEmployerSection: value })
     }
 
     onSubmit(values){
@@ -33,9 +42,7 @@ class Signup extends Component{
 
         delete values.passwordConfirmation;
         this.props.signupUser(values, () => {
-            this.props.findCurrentUser(currentUser => {
-                localStorage.setItem(CURRENT_USER, JSON.stringify(currentUser))
-            });
+            this.props.findCurrentUser();
             if(pathname === '/jobs/new'){
                 this.props.setPage(3);
             }else{
@@ -88,13 +95,34 @@ class Signup extends Component{
                     type="radio"
                     label="I'm a jr developer"
                     value="candidate"
+                    onChange={() => this.handleToggle(false)}
                     component={renderSwitchField} />
 
                 <Field name="role"
                     type="radio"
                     label="I'm an employer looking for jr's"
                     value="employer"
+                    onChange={() => this.handleToggle(true)}
                     component={renderSwitchField} />
+
+                { this.state.displayEmployerSection ?
+                <FormSection name="employer" className="form-group" style={formSectionStyle}>
+                    <div className="divider" data-content="EMPLOYER"></div>
+
+                    <Field name="companyName"
+                        label="Company Name"
+                        placeholder="Your company name"
+                        id="signup-company-name"
+                        type="text"
+                        component={renderHorizontalTextField} />
+
+                    <Field name="companyWebsite"
+                        label="Company Website"
+                        placeholder="http://"
+                        id="signup-company-website"
+                        type="text"
+                        component={renderHorizontalTextField} />
+                </FormSection> : null }
 
                 { this.renderAlert() }
 
@@ -106,7 +134,7 @@ class Signup extends Component{
     }
 
     render(){
-        return <Card>{this.renderForm()}</Card>
+        return <Card title="Create Account">{this.renderForm()}</Card>
     }
 }
 
@@ -120,5 +148,8 @@ export default reduxForm({
     form: 'signupForm',
     validate: (values) => signupValidation(values)
 })(
-    connect(mapStateToProps, { signupUser, findCurrentUser })(Signup)
+    connect(mapStateToProps, { signupUser, findCurrentUser })(
+        // RequireSignout(Signup)
+        Signup
+    )
 );

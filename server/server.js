@@ -5,8 +5,6 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 
-const routes = require('./routes');
-
 require('./models/user');
 require('./models/candidate');
 require('./models/employer');
@@ -20,6 +18,8 @@ mongoose.connect('mongodb://localhost:27017/HireJR', (err, db) => {
     }
     console.log('Database connection established.');
 });
+
+const routes = require('./routes');
 
 const app = express();
 

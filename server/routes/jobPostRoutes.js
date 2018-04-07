@@ -7,14 +7,18 @@ const JobPost = require('../controllers/jobPostController');
 
 const jobPostRouter = express.Router();
 
-jobPostRouter.post('/jobs', requireAuth, JobPost.create);
+jobPostRouter.post('/', requireAuth, JobPost.create);
 
-jobPostRouter.get('/jobs', JobPost.findAll);
+jobPostRouter.get('/', JobPost.findAll);
 
-jobPostRouter.get('/jobs/:id', JobPost.findOne);
+// jobPostRouter.route('/')
+                // .post(requireAuth, JobPost.create)
+                // .get(JobPost.findAll)
 
-jobPostRouter.put('/jobs/:id', requireAuth, JobPost.update);
+jobPostRouter.get('/:id', JobPost.findOne);
 
-jobPostRouter.delete('/jobs/:id', requireAuth, JobPost.delete);
+jobPostRouter.put('/:id', requireAuth, JobPost.update);
+
+jobPostRouter.delete('/:id', requireAuth, JobPost.delete);
 
 module.exports = jobPostRouter;

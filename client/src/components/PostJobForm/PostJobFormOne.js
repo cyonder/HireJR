@@ -8,22 +8,22 @@ import Questions from './PostJobFormSections/Questions';
 
 import jobPostFormValidation from '../../validations/jobPostFormValidation';
 
-import { postJobFormSections } from '../../data/postJobFormSections.json';
-import { provinces } from '../../data/provinces.json';
-import { schedules } from '../../data/schedules.json';
-import { applyOptions } from '../../data/applyOptions.json';
-import { paymentCycle } from '../../data/paymentCycle.json';
+import postJobFormSections from '../../data/postJobFormSections.json';
+import provinces from '../../data/provinces.json';
+import schedules from '../../data/schedules.json';
+import applyOptions from '../../data/applyOptions.json';
+import paymentCycle from '../../data/paymentCycle.json';
 
 class PostJobFormOne extends Component{
     constructor(){
         super();
         this.state = {
-            formSections: postJobFormSections,
-            provinces: provinces,
-            schedules: schedules,
-            applyOptions: applyOptions,
-            paymentCycle: paymentCycle,
-            displayInternal: true,
+            formSections: postJobFormSections.data,
+            provinces: provinces.data,
+            schedules: schedules.data,
+            applyOptions: applyOptions.data,
+            paymentCycle: paymentCycle.data,
+            displayInternal: false,
             displayExternal: false
         }
         this.handleApplicationOptionChange = this.handleApplicationOptionChange.bind(this);

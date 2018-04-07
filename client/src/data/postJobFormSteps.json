@@ -1,5 +1,5 @@
 {
-    "postJobFormSteps": [
+    "data": [
         { "pageNo": 1, "page": "details", "label": "Job Details", "tooltip": "Enter the job details" },
         { "pageNo": 2, "page": "description", "label": "Job Description", "tooltip": "Describe the job" },
         { "pageNo": 3, "page": "authentication", "label": "Authentication", "tooltip": "Sign up/Sign into an account" },

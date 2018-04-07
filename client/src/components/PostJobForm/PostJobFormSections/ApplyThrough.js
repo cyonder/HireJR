@@ -29,7 +29,7 @@ class ApplyThrough extends Component{
                     label="Where to Email?"
                     placeholder="your@email.com"
                     id="input-internal"
-                    shouldHide={this.props.displayInternal}
+                    shouldHide={!this.props.displayInternal}
                     component={renderHorizontalTextField} />
 
                 <Field name="external"
@@ -37,7 +37,7 @@ class ApplyThrough extends Component{
                     label="Where to Re-direct?"
                     placeholder="http://"
                     id="input-external"
-                    shouldHide={this.props.displayExternal}
+                    shouldHide={!this.props.displayExternal}
                     component={renderHorizontalTextField} />
             </Card>
         );

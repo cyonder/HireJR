@@ -6,8 +6,14 @@ const employerSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    companyName: String,
-    companyWebsite: String,
+    companyName: {
+        type: String,
+        required: true  
+    },
+    companyWebsite: {
+        type: String,
+        required: true  
+    },
     _jobPostIds: [
         { type: Schema.Types.ObjectId, ref: 'JobPost' }
     ]

@@ -6,16 +6,14 @@ import PostJobFormTwo from './PostJobFormTwo';
 import PostJobAuth from './PostJobAuth';
 import PostJobConfirmation from './PostJobConfirmation';
 
-import { postJobFormSteps } from '../../data/postJobFormSteps.json';
-
-// import { AUTHENTICATION_TOKEN } from '../constants/config.js';
+import postJobFormSteps from '../../data/postJobFormSteps.json';
 
 class PostJobForm extends Component{
     constructor(){
         super();
         this.state = {
             page: 1,
-            steps: postJobFormSteps
+            steps: postJobFormSteps.data
         };
 
         this.nextPage = this.nextPage.bind(this);

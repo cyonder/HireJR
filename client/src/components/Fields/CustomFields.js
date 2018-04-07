@@ -4,13 +4,14 @@ import { Field } from 'redux-form';
 import { renderTextField } from './TextFields';
 import { renderSelectField } from './SelectFields';
 
-const style = { marginBottom: 0, paddingRight: '.4rem' }
+const selectStyle = { marginBottom: 0, paddingRight: '.4rem' }
+const deleteButtonIcon = { color: '#FFFFFF' }
 
 export const renderSalaryFields = (fields) => {
     return(
         <div className="d-flex">
             <div className={fields.salary.paymentCycle.meta.error ? 'has-error col-4 col-sm-12' : 'col-4 col-sm-12 form-group'}
-                    style={style}>
+                    style={selectStyle}>
                 <select {...fields.salary.paymentCycle.input} className="form-select">
                     {fields.children}
                 </select>
@@ -30,8 +31,6 @@ export const renderSalaryFields = (fields) => {
 }
 
 const renderQuestionField = ({fields, reduxQuestions}) => {
-    // if(typeof reduxQuestions === 'undefined') return false;
-
     return fields.map((field, index) => {
         return(
             <div className="job-form-question" key={index}>
@@ -39,7 +38,7 @@ const renderQuestionField = ({fields, reduxQuestions}) => {
                     <div className="col-4 col-sm-12 d-flex">
                         <button type="button"
                             className="btn btn-error float-right"
-                            onClick={() => fields.remove(index)} ><i className="icon icon-delete"></i></button>
+                            onClick={() => fields.remove(index)} ><i style={deleteButtonIcon} className="icon icon-delete"></i></button>
 
                         <Field name={`${field}.questionType`}
                             component={renderSelectField}>

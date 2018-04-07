@@ -1,186 +1,60 @@
-const Candidate = require('../models/candidate');
-const User = require('../models/user');
+const {
+    addEducationToCandidate,
+    addWorkExperienceToCandidate,
+    addProjectToCandidate,
+    changeAboutInCandidate
+} = require('../api/candidate')
 
-exports.createEducation = (req, res) => {
-    if(!req.body){
-        return res.status(400).send({
-            message: "Education can not be empty"
-        });
+exports.createEducation = async(req, res) => {
+    const { schoolName, degree, field, startYear, endYear } = req.body;
+    const education = { schoolName, degree, field, startYear, endYear };
+
+    try{
+        const { newCandidate } = await addEducationToCandidate(education, req.user)
+        res.status(200).send({ candidate: newCandidate })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
     }
-
-    Candidate.findOneAndUpdate({_userId: req.user.id},
-        { $push: { education: req.body } },
-        { new: true },
-        (err, candidate) => {
-            if(err){ console.log(err) }
-            if(!candidate){
-                const candidate = new Candidate({
-                    _userId: req.user.id,
-                    education: req.body,
-                });
-
-                candidate.save((err, data) => {
-                    if(err){
-                        console.log(err);
-                        res.status(500).send({
-                            message: "Some error occurred while creating the education!"
-                        });
-                    }
-
-                    User.findByIdAndUpdate(req.user.id,
-                        { _candidateId: data._id },
-                        err => {
-                            if(err){ console.log(err) }
-                        });
-                    res.send(data);
-                });
-            }else{
-                res.send(candidate);
-            }
-        });
 }
 
-exports.createWorkExperience = (req, res) => {
-    if(!req.body){
-        return res.status(400).send({
-            message: "Work experience can not be empty"
-        });
+exports.createWorkExperience = async(req, res) => {
+    const { companyName, title, summary, startYear, endYear } = req.body;
+    const workExperience = { companyName, title, summary, startYear, endYear } 
+
+    try{
+        const { newCandidate } = await addWorkExperienceToCandidate(workExperience, req.user)
+        res.status(200).send({ candidate: newCandidate })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
     }
-
-    Candidate.findOneAndUpdate({_userId: req.user.id},
-        { $push:
-            { workExperience: req.body }
-        },
-        { new: true },
-        (err, candidate) => {
-            if(err){ console.log(err) }
-            if(!candidate){
-                const candidate = new Candidate({
-                    _userId: req.user.id,
-                    workExperience: req.body,
-                });
-
-                candidate.save((err, data) => {
-                    if(err){
-                        console.log(err);
-                        res.status(500).send({
-                            message: "Some error occurred while creating the work experience!"
-                        });
-                    }
-
-                    User.findByIdAndUpdate(req.user.id,
-                        { _candidateId: data._id },
-                        err => {
-                            if(err){ console.log(err) }
-                        }
-                    );
-                    res.send(data);
-                });
-            }else{
-                res.send(candidate);
-            }
-        }
-    )
 }
 
-exports.createProject = (req, res) => {
-    if(!req.body){
-        return res.status(400).send({
-            message: "Project can not be empty"
-        });
-    }
-
+exports.createProject = async(req, res) => {
     const { projectName, url, skills, description } = req.body;
-
-    Candidate.findOneAndUpdate({_userId: req.user.id},
-        { $push:
-            { projects:
-                {
-                    projectName,
-                    url,
-                    skills: skills.split(',').map(skill => skill.trim()),
-                    description
-                }
-            }
-        },
-        { new: true },
-        (err, candidate) => {
-            if(err){ console.log(err) }
-            if(!candidate){
-                const candidate = new Candidate({
-                    _userId: req.user.id,
-                    projects: {
-                        projectName,
-                        url,
-                        skills: skills.split(',').map(skill => skill.trim()),
-                        description
-                    }
-                });
-
-                candidate.save((err, data) => {
-                    if(err){
-                        console.log(err);
-                        res.status(500).send({
-                            message: "Some error occurred while creating the project!"
-                        });
-                    }
-
-                    User.findByIdAndUpdate(req.user.id,
-                        { _candidateId: data._id },
-                        err => {
-                            if(err){ console.log(err) }
-                        }
-                    );
-
-                    res.send(data);
-                });
-            }else{
-                res.send(candidate);
-            }
-        }
-    )
-}
-
-exports.updateAbout = (req, res) => {
-    if(!req.body){
-        return res.status(400).send({
-            message: "About can not be empty"
-        });
+    const project = { 
+        projectName, 
+        url, 
+        skills: skills.split(',').map(skill => skill.trim()),
+        description 
     }
 
+    try{
+        const { newCandidate } = await addProjectToCandidate(project, req.user)
+        res.status(200).send({ candidate: newCandidate })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
+    }
+}
+
+
+exports.updateAbout = async(req, res) => {
     const { city, province, portfolioUrl, githubUrl, linkedInUrl, summary, careerObjective } = req.body;
+    const about = { city, province, portfolioUrl, githubUrl, linkedInUrl, summary, careerObjective };
 
-    Candidate.findOneAndUpdate({_userId: req.user.id},
-        { $set: { about: req.body } },
-        { new: true },
-        (err, candidate) => {
-            if(err){ console.log(err) }
-            if(!candidate){
-                const candidate = new Candidate({
-                    _userId: req.user.id,
-                    about: req.body,
-                });
-
-                candidate.save((err, data) => {
-                    if(err){
-                        console.log(err);
-                        res.status(500).send({
-                            message: "Some error occurred while updating the candidate!"
-                        });
-                    }
-
-                    User.findByIdAndUpdate(req.user.id,
-                        { _candidateId: data._id },
-                        err => {
-                            if(err){ console.log(err) }
-                        }
-                    );
-
-                    res.send(data);
-                });
-            }else{
-                res.send(candidate);
-            }
-        }
-    )
+    try{
+        const { newCandidate } = await changeAboutInCandidate(about, req.user)
+        res.status(200).send({ candidate: newCandidate })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
+    }
 }

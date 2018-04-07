@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 
 import moment from 'moment';
 
+import Loading from './Loading';
 import Card from './Card';
 
 import { findJobPost } from '../actions/jobPost';
@@ -16,10 +17,9 @@ class JobPost extends Component{
     }
 
     renderDescription(details){
-        if(!details) return false;
         return(
             <Card title={details.position}
-                    subtitle={details.companyName}>
+                    subtitle={details.employer.companyName}>
                     <div className="job-post-description">{details.description}</div>
             </Card>
         )
@@ -27,9 +27,7 @@ class JobPost extends Component{
 
 
     renderMenu(job){
-        if(!job)return false
         let active;
-
         let createdAt = moment(job.createdAt).fromNow(true);
 
         if(job.isActive){
@@ -54,15 +52,13 @@ class JobPost extends Component{
                 { this.renderSkills(job.skills) }
                 <li className="divider"></li>
                 <li className="menu-item">
-                    <a href={job.companyWebsite}>Company Website</a>
+                    <a href={job.employer.companyWebsite}>Company Website</a>
                 </li>
             </ul>
         )
     }
 
     renderSkills(skills){
-        if(!skills) return false;
-
         let skillArray;
 
         if(!Array.isArray(skills)){
@@ -77,10 +73,18 @@ class JobPost extends Component{
     }
 
     render(){
+        if(!this.props.job && !this.props.formValues) return <Loading />;
+
         let details, activeClass, buttonTarget, buttonLabel;
 
         if(this.props.formValues){
             details = this.props.formValues;
+            // in render, the company info is nested under employer key but formValues are flat.
+            const employer = {
+                companyName: details.companyName,
+                companyWebsite: details.companyWebsite
+            }
+            details.employer = employer;
             activeClass = 'btn btn-primary btn-block mb8 disabled';
         }else{
             details = this.props.job;
@@ -113,7 +117,7 @@ class JobPost extends Component{
 
 const mapStateToProps = state => {
     return{
-        job: state.jobs.job
+        job: state.jobPost.jobPost
     };
 }
 

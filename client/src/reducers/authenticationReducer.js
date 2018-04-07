@@ -8,10 +8,13 @@ import {
 export default function authenticationReducer(state = {}, action){
     switch(action.type){
         case AUTHENTICATE_USER:
-            return { ...state, authenticated: true, signupError: '', signinError: ''};
+            return { ...state,
+                        authenticated: true,
+                        signupError: '',
+                        signinError: '' };
 
         case DEAUTHENTICATE_USER:
-            return { ...state, authenticated: false, user: '' };
+            return { ...state, authenticated: false };
 
         case SIGNUP_USER_ERROR:
             return { ...state, signupError: action.payload };

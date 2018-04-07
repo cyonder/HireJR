@@ -10,7 +10,7 @@ class Header extends Component{
                 <Link to="/candidates" className="btn btn-link" key={2}>All Candidates</Link>,
                 <Link to="/jobs/new" className="btn btn-link" key={3}>Post a Job</Link>
             ];
-        }else if(this.props.authenticated){
+        }else if(this.props.role === 'candidate'){
             return [
                 <Link to="/dashboard" className="btn btn-link" key={1}>Dashboard</Link>,
                 <Link to="/jobs" className="btn btn-link" key={2}>All Jobs</Link>,
@@ -19,6 +19,7 @@ class Header extends Component{
         }else{
             return [
                 <Link to="/jobs" className="btn btn-link" key={1}>All Jobs</Link>,
+                <Link to="/jobs/new" className="btn btn-link" key={2}>Post a Job</Link>
             ];
         }
     }

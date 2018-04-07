@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
     ROOT_API_URL,
     AUTHENTICATION_TOKEN
-} from '../constants/config.js';
+} from '../constants/systemTypes';
 
 import {
     UPDATE_CANDIDATE

@@ -3165,25 +3165,25 @@ header .btn.btn-link, footer .btn.btn-link {
   box-shadow: none !important; }
 
 .mt8 {
-  margin-top: .8rem; }
+  margin-top: .8rem !important; }
 
 .mr8 {
-  margin-right: .8rem; }
+  margin-right: .8rem !important; }
 
 .mb8 {
-  margin-bottom: .8rem; }
+  margin-bottom: .8rem !important; }
 
 .ml8 {
-  margin-left: .8rem; }
+  margin-left: .8rem !important; }
 
 .mr4 {
-  margin-right: .4rem; }
+  margin-right: .4rem !important; }
 
 .ml4 {
-  margin-left: .4rem; }
+  margin-left: .4rem !important; }
 
 .mt10 {
-  margin-top: 10px; }
+  margin-top: 10px !important; }
 
 .splash {
   height: 300px;
@@ -3221,7 +3221,7 @@ header .btn.btn-link, footer .btn.btn-link {
 
 .job-post-description {
   white-space: pre-wrap;
-  word-break: break-all; }
+  word-break: break-word; }
 
 .holder {
   margin-bottom: .8rem;
@@ -3237,6 +3237,14 @@ header .btn.btn-link, footer .btn.btn-link {
   text-align: center;
   font-weight: 600;
   color: #5752D5; }
+
+.auth-error-message {
+  color: #FFFFFF;
+  padding: .8rem;
+  background: #E6561C;
+  margin: .8rem 0;
+  border-radius: .1rem;
+  text-align: center; }
 
 .popover-button {
   background: white;
@@ -3271,7 +3279,11 @@ header .btn.btn-link, footer .btn.btn-link {
     margin-bottom: 0; }
 
 .panel {
-  background: #FFFFFF; }
+  background: #FFFFFF;
+  border: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+  .panel .tile {
+    margin: .8rem 0; }
 
 .card-title {
   color: #5752D5; }
@@ -3307,9 +3319,6 @@ header .btn.btn-link, footer .btn.btn-link {
   color: #5752D5; }
 
 .icon.icon-search {
-  color: white; }
-
-.icon.icon-delete {
   color: white; }
 
 .d-block {

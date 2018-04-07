@@ -1,5 +1,5 @@
 {
-    "paymentCycle": [
+    "data": [
         { "value": "",        "label": "Payment Cycle" },
         { "value": "Yearly",  "label": "Yearly" },
         { "value": "Monthly", "label": "Monthly" },

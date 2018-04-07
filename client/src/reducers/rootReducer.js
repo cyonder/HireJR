@@ -5,11 +5,21 @@ import authenticationReducer from './authenticationReducer';
 import jobPostReducer from './jobPostReducer';
 import userReducer from './userReducer';
 
-const rootReducer = combineReducers({
+import { DEAUTHENTICATE_USER } from '../constants/actionTypes';
+
+const appReducer = combineReducers({
     form: formReducer,
     authentication: authenticationReducer,
-    jobs: jobPostReducer,
+    jobPost: jobPostReducer,
     user: userReducer
 });
+
+const rootReducer = (state, action) => {
+    if(action.type === DEAUTHENTICATE_USER){
+        state.user = undefined
+    }
+
+    return appReducer(state, action)
+}
 
 export default rootReducer;

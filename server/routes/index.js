@@ -8,8 +8,8 @@ const candidateRoutes = require('./candidateRoutes');
 const router = express.Router();
 
 router.use('/', authRoutes);
-router.use('/', jobPostRoutes);
-router.use('/', userRoutes);
-router.use('/', candidateRoutes);
+router.use('/jobs', jobPostRoutes);
+router.use('/user', userRoutes);
+router.use('/candidate', candidateRoutes);
 
 module.exports = router;

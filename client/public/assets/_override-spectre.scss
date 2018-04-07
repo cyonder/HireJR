@@ -8,6 +8,9 @@
 
 .panel{
     background: $color-component-background;
+    border: none;
+    box-shadow: $box-shadow;
+    .tile{ margin: .8rem 0 }
 }
 
 .card-title{ color: $color-brand }
@@ -48,7 +51,6 @@
 
 .icon{ color: $color-brand }
 .icon.icon-search{ color: white }
-.icon.icon-delete{ color: white }
 
 .d-block{ display: block !important }
 

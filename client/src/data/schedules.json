@@ -1,5 +1,5 @@
 {
-    "schedules": [
+    "data": [
         { "value": "",          "label": "Choose a schedule" } ,
         { "value": "Full Time", "label": "Full Time" },
         { "value": "Part Time", "label": "Part Time" },

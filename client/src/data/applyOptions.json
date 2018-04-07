@@ -1,5 +1,5 @@
 {
-    "applyOptions": [
+    "data": [
         { "value": "",         "label": "Choose an application option"},
         { "value": "internal", "label": "Hire jr (we'll notify you via email)"},
         { "value": "external", "label": "Separate Website"}

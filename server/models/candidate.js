@@ -14,30 +14,69 @@ const aboutSchema = new Schema({
 });
 
 const workExperienceSchema = new Schema({
-    companyName: String,
-    title: String,
-    summary: String,
-    startYear: Number,
-    endYear: Number
+    companyName: {
+        type: String,
+        required: true  
+    },
+    title: {
+        type: String,
+        required: true  
+    },
+    summary: {
+        type: String,
+        required: true  
+    },
+    startYear: {
+        type: Number,
+        required: true  
+    },
+    endYear: {
+        type: Number,
+        required: true  
+    }
 }, {
     timestamps: true
 });
 
 const educationSchema = new Schema({
-    schoolName: String,
-    degree: String,
-    field: String,
-    startYear: Number,
-    endYear: Number
+    schoolName: {
+        type: String,
+        required: true  
+    },
+    degree: {
+        type: String,
+        required: true  
+    },
+    field: {
+        type: String,
+        required: true  
+    },
+    startYear: {
+        type: Number,
+        required: true  
+    },
+    endYear: {
+        type: Number,
+        required: true  
+    }
 }, {
     timestamps: true
 });
 
-const projectsSchema = new Schema({
-    projectName: String,
+const projectSchema = new Schema({
+    projectName: {
+        type: String,
+        required: true  
+    },
     url: String,
-    skills: [String],
-    description: String
+    skills: {
+        type: [String],
+        required: true  
+    },
+    description: {
+        type: String,
+        required: true  
+    }
 }, {
     timestamps: true
 });
@@ -56,7 +95,7 @@ const candidateSchema = new Schema({
     about: aboutSchema,
     workExperience: [workExperienceSchema],
     education: [educationSchema],
-    projects: [projectsSchema],
+    projects: [projectSchema],
     resume: [resumeSchema]
 }, {
     timestamps: true

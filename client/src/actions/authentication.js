@@ -4,7 +4,7 @@ import {
     ROOT_API_URL,
     AUTHENTICATION_TOKEN,
     CURRENT_USER
-} from '../constants/config.js';
+} from '../constants/systemTypes';
 
 import {
     AUTHENTICATE_USER,
@@ -37,7 +37,9 @@ export const signinUser = ({ email, password, rememberMe }, callback) => {
             })
             .catch(error => {
                 if(error.response){
-                    dispatch(signinError(error.response.data));
+                    // !Bug in passportjs. Can't configure custom error message.
+                    // https://github.com/jaredhanson/passport-local/issues/159
+                    dispatch(signinError('Invalid email or password!'));
                 }else{
                     console.error("Something went wrong");
                 }
@@ -55,7 +57,7 @@ export const signupUser = (user, callback) => {
             })
             .catch(error => {
                 if(error.response){
-                    dispatch(signinError(error.response.data));
+                    dispatch(signupError(error.response.data.error));
                 }else{
                     console.error("Something went wrong");
                 }

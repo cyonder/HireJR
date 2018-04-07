@@ -1,6 +1,7 @@
 import {
     FIND_CURRENT_USER,
-    UPDATE_CANDIDATE
+    UPDATE_CANDIDATE,
+    UPDATE_EMPLOYER
 } from '../constants/actionTypes';
 
 export default function userReducer(state = {}, action){
@@ -8,7 +9,9 @@ export default function userReducer(state = {}, action){
         case FIND_CURRENT_USER:
             return { ...state, ...action.payload };
         case UPDATE_CANDIDATE:
-            return { ...state, candidate: action.payload };
+            return { ...state, ...action.payload };
+        case UPDATE_EMPLOYER:
+            return { ...state, ...action.payload };
         default:
             return state;
     }

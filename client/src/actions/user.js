@@ -2,30 +2,31 @@ import axios from 'axios';
 
 import {
     ROOT_API_URL,
-    AUTHENTICATION_TOKEN
-} from '../constants/config.js';
+    AUTHENTICATION_TOKEN,
+    CURRENT_USER
+} from '../constants/systemTypes';
 
 import {
     FIND_CURRENT_USER
 } from '../constants/actionTypes';
 
-export const findCurrentUserSuccess = user => {
+export const findCurrentUserSuccess = currentUser => {
     return {
         type: FIND_CURRENT_USER,
-        payload: user
+        payload: currentUser
     }
 }
 
-export const findCurrentUser = (callback) => {
+export const findCurrentUser = () => {
     return dispatch => {
-        axios.get(`${ROOT_API_URL}/current_user`, {
+        axios.get(`${ROOT_API_URL}/user`, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN) }
         })
         .then(response => {
-            let currentUser = response.data;
+            const currentUser = response.data.currentUser;            
             delete currentUser.password;
+            localStorage.setItem(CURRENT_USER, JSON.stringify(currentUser))
             dispatch(findCurrentUserSuccess(currentUser));
-            callback(response.data);
         })
     }
 }

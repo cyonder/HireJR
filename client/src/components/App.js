@@ -15,16 +15,17 @@ import Footer from './Footer';
 import Dashboard from './Boards/Dashboard';
 import CandidateIndex from './CandidateIndex';
 
-import RequireAuthentication from './RequireAuthentication'; // HOC
-const AuthDashboard = RequireAuthentication(Dashboard);
+import EmptyState from './EmptyState';
 
 style({
     colorSuccess: "#37AC46"
 })
 
-const NoMatch = () => {
-    return <span>Page Not Found</span>
-}
+const NoMatch = () => (
+    <div className="container grid-sm">
+        <EmptyState title="404 Page not found!" subtitle="We can't seem to find the page you are looking for!" icon="icon-cross"/>
+    </div>
+)
 
 class App extends Component{
     render(){
@@ -59,7 +60,7 @@ class App extends Component{
                             () => <div className="container grid-xs"><Signout {...this.props} /></div>
                         }/>
                         <Route path="/dashboard" render={
-                            () => <AuthDashboard {...this.props} />
+                            () => <Dashboard {...this.props} />
                         }/>
                         <Route component={NoMatch} />
                     </Switch>
