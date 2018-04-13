@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const aboutSchema = new Schema({
+const candidateProfileSchema = new Schema({
+    title: String,
+    skills: [String],
     summary: String,
     careerObjective: String,
     city: String,
@@ -92,7 +94,7 @@ const candidateSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    about: aboutSchema,
+    candidateProfile: candidateProfileSchema,
     workExperience: [workExperienceSchema],
     education: [educationSchema],
     projects: [projectSchema],

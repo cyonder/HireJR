@@ -1,9 +1,19 @@
 const {
+    findCandidates,
     addEducationToCandidate,
     addWorkExperienceToCandidate,
     addProjectToCandidate,
-    changeAboutInCandidate
+    changeCandidateProfile
 } = require('../api/candidate')
+
+exports.findAll = async(req, res) => {
+    try{
+        const { candidates } = await findCandidates()
+        res.status(200).send({ candidates: candidates })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
+    }
+}
 
 exports.createEducation = async(req, res) => {
     const { schoolName, degree, field, startYear, endYear } = req.body;
@@ -29,15 +39,10 @@ exports.createWorkExperience = async(req, res) => {
     }
 }
 
-exports.createProject = async(req, res) => {
+exports.createProject = async(req, res) => {    
     const { projectName, url, skills, description } = req.body;
-    const project = { 
-        projectName, 
-        url, 
-        skills: skills.split(',').map(skill => skill.trim()),
-        description 
-    }
-
+    const project = { projectName, url, description }
+    
     try{
         const { newCandidate } = await addProjectToCandidate(project, req.user)
         res.status(200).send({ candidate: newCandidate })
@@ -47,12 +52,20 @@ exports.createProject = async(req, res) => {
 }
 
 
-exports.updateAbout = async(req, res) => {
-    const { city, province, portfolioUrl, githubUrl, linkedInUrl, summary, careerObjective } = req.body;
-    const about = { city, province, portfolioUrl, githubUrl, linkedInUrl, summary, careerObjective };
+exports.updateCandidateProfile = async(req, res) => {
+    const { 
+        title, city, province, portfolioUrl, githubUrl, linkedInUrl, skills, summary, careerObjective 
+    } = req.body;
+    
+    const candidateProfile = { 
+        title, city, province, portfolioUrl, githubUrl, linkedInUrl, summary, careerObjective 
+    };
+
+    let newSkills = skills.toString().replace(/(^[,\s]+)|([,\s]+$)/g, ''); // First converting skills to string. Because 'split' can't split array. 
+    candidateProfile.skills = newSkills.split(',').map(skill => skill.trim())
 
     try{
-        const { newCandidate } = await changeAboutInCandidate(about, req.user)
+        const { newCandidate } = await changeCandidateProfile(candidateProfile, req.user)
         res.status(200).send({ candidate: newCandidate })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })

@@ -1,3 +1,9 @@
+.columns{
+    align-items: flex-start; // Set flexbox children to have different heights to use up available space
+}
+
+.text-bold{ font-weight: 600 }
+
 .card{
     box-shadow: $box-shadow;
     border: 0;

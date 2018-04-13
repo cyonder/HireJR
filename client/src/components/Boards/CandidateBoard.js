@@ -16,7 +16,7 @@ import {
     createProject,
     createWorkExperience,
     createEducation,
-    updateAbout
+    updateCandidateProfile
 } from '../../actions/candidate';
 
 class CandidateBoard extends Component{
@@ -53,7 +53,7 @@ class CandidateBoard extends Component{
         let initialValues;
 
         if(typeof this.props.candidate !== "undefined"){
-            initialValues = this.props.candidate.about;
+            initialValues = this.props.candidate.candidateProfile;
         }else{
             initialValues = null;
         }
@@ -98,7 +98,7 @@ const mapDispatchToProps = dispatch => {
         createProject,
         createWorkExperience,
         createEducation,
-        updateAbout
+        updateCandidateProfile
     }, dispatch)
 }
 

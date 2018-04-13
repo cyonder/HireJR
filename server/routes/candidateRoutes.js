@@ -6,9 +6,10 @@ const Candidate = require('../controllers/candidateController');
 
 const candidateRouter = express.Router();
 
+candidateRouter.get('/', Candidate.findAll);
 candidateRouter.post('/education', requireAuth, Candidate.createEducation);
 candidateRouter.post('/workexperience', requireAuth, Candidate.createWorkExperience);
 candidateRouter.post('/projects', requireAuth, Candidate.createProject);
-candidateRouter.post('/about', requireAuth, Candidate.updateAbout);
+candidateRouter.post('/about', requireAuth, Candidate.updateCandidateProfile);
 
 module.exports = candidateRouter;

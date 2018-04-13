@@ -15,7 +15,7 @@ export const renderTextAreaField = ({ input, meta, rows, placeholder }) => {
     );
 }
 
-export const renderTextAreaFieldWithLabelAndPopover = ({ input, meta, rows, label, placeholder, popover, id }) => {
+export const renderTextAreaFieldWithLabelAndPopover = ({ input, meta, rows, label, placeholder, popover, maxLength, id }) => {
     return(
         <div className={meta.error && meta.touched ? 'has-error form-group d-block' : 'form-group d-block'}>
             <label className="form-label" htmlFor={id}>{label}
@@ -24,6 +24,7 @@ export const renderTextAreaFieldWithLabelAndPopover = ({ input, meta, rows, labe
             <textarea {...input}
                 className="form-input"
                 placeholder={placeholder}
+                maxLength={maxLength}
                 id={id}
                 rows={rows} />
             {meta.error && meta.touched &&

@@ -1,5 +1,25 @@
 const Candidate = require('../models/candidate');
 
+exports.findCandidates = () => {
+    return new Promise(async(resolve, reject) => {
+        try{
+            const candidates = await Candidate.find()
+            .sort({createdAt: 'desc'})
+            .populate('_userId')
+            .lean()
+            const newCandidates = Object.keys(candidates).map((key, index) => {
+                candidates[key].user = candidates[key]._userId;
+                candidates[key]._userId = candidates[key].user._id;
+                delete candidates[key].user.password;
+                return candidates[key];
+            })
+            resolve({ candidates: newCandidates })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
 exports.addEducationToCandidate = (education, { _candidateId }) => {    
     const candidateInstance = new Candidate({ education: education })
     
@@ -42,13 +62,13 @@ exports.addProjectToCandidate = (project, { _candidateId }) => {
     })
 }
 
-exports.changeAboutInCandidate = (about, { _candidateId }) => {
-    const candidateInstance = new Candidate({ about: about })
+exports.changeCandidateProfile = (candidateProfile, { _candidateId }) => {    
+    const candidateInstance = new Candidate({ candidateProfile: candidateProfile })
 
     return new Promise(async(resolve, reject) => {
         try{
             const newCandidate = await Candidate.findByIdAndUpdate(_candidateId,
-            {$set: { about: candidateInstance.about }}, { new: true })
+            {$set: { candidateProfile: candidateInstance.candidateProfile }}, { new: true })
             resolve({ newCandidate: newCandidate })
         }catch(error){
             reject({ message: error.message, error: error })

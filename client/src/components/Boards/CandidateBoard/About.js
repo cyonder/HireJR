@@ -6,7 +6,7 @@ import { renderTextAreaFieldWithLabelAndPopover } from '../../Fields/TextAreaFie
 
 class About extends Component{
     onSubmit(values){
-        this.props.updateAbout(values, () => {
+        this.props.updateCandidateProfile(values, () => {
             this.props.notify();
             this.props.reset();
         })
@@ -14,9 +14,16 @@ class About extends Component{
 
     renderForm(){
         const { handleSubmit } = this.props;
-
+        
         return(
             <form onSubmit={ handleSubmit(this.onSubmit.bind(this)) } className="form-horizontal">
+                <Field name="title"
+                    type="text"
+                    label="Title"
+                    placeholder="Your title"
+                    id="input-title"
+                    component={renderHorizontalTextField} />
+
                 <Field name="city"
                     type="text"
                     label="City"
@@ -52,11 +59,19 @@ class About extends Component{
                     id="input-linkedin"
                     component={renderHorizontalTextField} />
 
+                <Field name="skills"
+                    type="text"
+                    label="Skills"
+                    placeholder="Comma separated skills"
+                    id="input-skills"
+                    component={renderHorizontalTextField} />
+
                 <Field name="summary"
                     rows="4"
                     label="Summary"
                     placeholder="summary..."
                     popover="Summary provides a brief, focused overview of what your specialties are as an employee, and serves as an introduction to the rest of your resume."
+                    maxLength="300"
                     id="input-summary"
                     component={renderTextAreaFieldWithLabelAndPopover} />
 
@@ -65,6 +80,7 @@ class About extends Component{
                     label="Career Objective"
                     placeholder="career objective..."
                     popover="Career objective is helpful if you’re not applying to a specific job posting, but instead are sending out unsolicited applications to potential employers."
+                    maxLength="300"
                     id="input-career-objective"
                     component={renderTextAreaFieldWithLabelAndPopover} />
 
@@ -79,6 +95,6 @@ class About extends Component{
 }
 
 export default reduxForm({
-    form: 'postAboutForm',
+    form: 'postCandidateProfileForm',
     enableReinitialize: true,
 })(About);

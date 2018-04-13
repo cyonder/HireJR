@@ -10,6 +10,6 @@ const router = express.Router();
 router.use('/', authRoutes);
 router.use('/jobs', jobPostRoutes);
 router.use('/user', userRoutes);
-router.use('/candidate', candidateRoutes);
+router.use('/candidates', candidateRoutes);
 
 module.exports = router;

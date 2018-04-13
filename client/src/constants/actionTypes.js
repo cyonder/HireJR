@@ -15,3 +15,7 @@ export const UPDATE_JOB_POST = 'update_job_post';
 export const FIND_CURRENT_USER = 'find_current_user';
 export const UPDATE_CANDIDATE = 'update_candidate';
 export const UPDATE_EMPLOYER = 'update_employer';
+
+// CANDIDATE
+export const FIND_CANDIDATE = 'find_candidate';
+export const FETCH_CANDIDATES = 'fetch_candidates';

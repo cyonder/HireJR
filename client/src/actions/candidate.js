@@ -6,7 +6,8 @@ import {
 } from '../constants/systemTypes';
 
 import {
-    UPDATE_CANDIDATE
+    UPDATE_CANDIDATE,
+    FETCH_CANDIDATES
 } from '../constants/actionTypes';
 
 export const updateCandidateSuccess = candidate => {
@@ -16,9 +17,26 @@ export const updateCandidateSuccess = candidate => {
     }
 };
 
+export const fetchCandidatesSuccess = candidates => {
+    return {
+        type: FETCH_CANDIDATES,
+        payload: candidates
+    }
+}
+
+export const fetchCandidates = () => {
+    return dispatch => {
+        axios.get(`${ROOT_API_URL}/candidates`)
+            .then(response => {                
+                let candidates = response.data.candidates;
+                dispatch(fetchCandidatesSuccess(candidates))
+            })
+    }
+}
+
 export const createEducation = (values, callback) => {
     return dispatch => {
-        axios.post(`${ROOT_API_URL}/candidate/education`, values, {
+        axios.post(`${ROOT_API_URL}/candidates/education`, values, {
                 headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
             })
             .then(response => {
@@ -31,7 +49,7 @@ export const createEducation = (values, callback) => {
 
 export const createWorkExperience = (values, callback) => {
     return dispatch => {
-        axios.post(`${ROOT_API_URL}/candidate/workexperience`, values, {
+        axios.post(`${ROOT_API_URL}/candidates/workexperience`, values, {
                 headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
             })
             .then(response => {
@@ -44,7 +62,7 @@ export const createWorkExperience = (values, callback) => {
 
 export const createProject = (values, callback) => {
     return dispatch => {
-        axios.post(`${ROOT_API_URL}/candidate/projects`, values, {
+        axios.post(`${ROOT_API_URL}/candidates/projects`, values, {
                 headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
             })
             .then(response => {
@@ -55,9 +73,9 @@ export const createProject = (values, callback) => {
     }
 };
 
-export const updateAbout = (values, callback) => {
+export const updateCandidateProfile = (values, callback) => {
     return dispatch => {
-        axios.post(`${ROOT_API_URL}/candidate/about`, values, {
+        axios.post(`${ROOT_API_URL}/candidates/about`, values, {
                 headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
             })
             .then(response => {
