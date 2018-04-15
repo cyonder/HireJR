@@ -15,7 +15,7 @@ exports.createJobPost = (jobPost, { _id, _employerId }) => {
         isActive: jobPost.isActive,
         salary: jobPost.salary,
         description: jobPost.description,
-        questions: jobPost.question
+        questions: jobPost.questions
     });
 
     return new Promise(async(resolve, reject) => {

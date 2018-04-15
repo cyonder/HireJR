@@ -2,9 +2,9 @@ import React from 'react';
 
 const style = { paddingRight: 0 }
 
-export const renderCheckField = ({ input, meta, type, label }) => {
+export const renderCheckField = ({ input, meta, type, label }) => {    
     return(
-        <label className={meta.error && meta.touched ? 'form-checkbox has-error' : 'form-checkbox'}
+        <label className={meta.error && meta.touched ? `form-${type} has-error` : `form-${type}`}
             style={style}>
             <input {...input}
                 type={type} />

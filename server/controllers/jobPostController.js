@@ -9,8 +9,20 @@ exports.create = async(req, res) => {
         position, city, province, schedule, skills, applyThrough,
         internal, external, isActive, salary, description, questions
     } = req.body;
-
+    
     // .replace(/(^[,\s]+)|([,\s]+$)/g, '');
+
+    if(questions){
+        questions.map(question => {
+            if(question.choices){
+                let choices = question.choices;
+                question.choices = choices.split(',').map(choice => choice.trim());
+            }else{
+                question.choices = null;
+            }
+        })
+    }
+    
     const jobPost = {
         position, city, province, schedule,
         skills: skills.split(',').map(skill => skill.trim()),

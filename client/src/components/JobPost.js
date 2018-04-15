@@ -6,10 +6,17 @@ import moment from 'moment';
 
 import Loading from './Loading';
 import Card from './Card';
+import Modal from './Modal';
 
 import { findJobPost } from '../actions/jobPost';
 
 class JobPost extends Component{
+    constructor(){
+        super();
+        this.state = { activeModal: false }
+        this.toggleModal = this.toggleModal.bind(this);
+    }
+
     componentDidMount(){
         if(this.props.match.params.id){
             this.props.findJobPost(this.props.match.params.id);
@@ -24,7 +31,6 @@ class JobPost extends Component{
             </Card>
         )
     }
-
 
     renderMenu(job){
         let active;
@@ -72,7 +78,13 @@ class JobPost extends Component{
         });
     }
 
-    render(){
+    toggleModal(){        
+        this.setState({
+            activeModal: !this.state.activeModal
+        })
+    }
+
+    render(){        
         if(!this.props.job && !this.props.formValues) return <Loading />;
 
         let details, activeClass, buttonTarget, buttonLabel;
@@ -93,7 +105,8 @@ class JobPost extends Component{
 
         if(details){
             if(details.applyThrough === 'internal'){
-                buttonTarget = details.internal; // This should trigger modal
+                // buttonTarget = details.internal; // This should trigger modal
+                buttonTarget = this.toggleModal;
                 buttonLabel = 'Apply on Hirejr';
             }else{
                 buttonTarget = details.external;
@@ -107,9 +120,12 @@ class JobPost extends Component{
                     { this.renderDescription(details) }
                 </div>
                 <div className="column col-4">
-                    <a href={buttonTarget} target="_blank" className={activeClass}>{buttonLabel}</a>
+                    <a onClick={buttonTarget} target="_blank" className={activeClass}>{buttonLabel}</a>
                     { this.renderMenu(details) }
                 </div>
+                <Modal active={this.state.activeModal}
+                    questions={details.questions}
+                    toggleModal={this.toggleModal}>Hello World =)</Modal>
             </div>
         );
     }

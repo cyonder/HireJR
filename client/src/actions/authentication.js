@@ -57,7 +57,7 @@ export const signupUser = (user, callback) => {
             })
             .catch(error => {
                 if(error.response){
-                    dispatch(signupError(error.response.data.error));
+                    dispatch(signupError(error.response.data.message));
                 }else{
                     console.error("Something went wrong");
                 }
