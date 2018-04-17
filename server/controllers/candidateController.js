@@ -1,5 +1,6 @@
 const {
     findCandidates,
+    findCandidate,
     addEducationToCandidate,
     addWorkExperienceToCandidate,
     addProjectToCandidate,
@@ -10,6 +11,15 @@ exports.findAll = async(req, res) => {
     try{
         const { candidates } = await findCandidates()
         res.status(200).send({ candidates: candidates })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
+    }
+}
+
+exports.findOne = async(req, res) => {
+    try{
+        const { candidate } = await findCandidate(req.params.id)
+        res.status(200).send({ candidate: candidate })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }

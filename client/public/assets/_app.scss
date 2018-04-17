@@ -170,3 +170,92 @@
     overflow: visible;
     height: auto;
 }
+
+// Profile
+
+.profile{
+    background: $color-component-background;
+    padding: .8rem;
+    box-shadow: $box-shadow;
+}
+
+.profile-header{
+    display: flex;
+    justify-content: space-between;
+    // background: darkorange;
+}
+
+.profile-section{
+    margin-top: .8rem;
+}
+
+.profile-info{
+    font-size: .85rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-education{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .8rem;
+    &:last-child{
+        margin-bottom: 0;
+    }
+}
+
+.row{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-skills {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-top: -10px;
+}
+.profile-skills .profile-skill {
+    flex: 1 0 200px;
+    box-sizing: border-box;
+    // background: #e0ddd5;
+    color: #171e42;
+    // padding: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+@media (min-width: 410px) {
+    .profile-skills .profile-skill {
+        max-width: calc(50% - 10px);
+    }
+}
+@media (min-width: 620px) {
+    .profile-skills .profile-skill {
+        max-width: calc(33.33333% - 10px);
+    }
+}
+@media (min-width: 830px) {
+    .profile-skills .profile-skill {
+        max-width: calc(25% - 10px);
+    }
+}
+@media (min-width: 1040px) {
+    .profile-skills .profile-skill {
+        max-width: calc(20% - 10px);
+    }
+}
+@media (min-width: 1250px) {
+    .profile-skills .profile-skill {
+        max-width: calc(16.66667% - 10px);
+    }
+}
+@media (min-width: 1460px) {
+    .profile-skills .profile-skill {
+        max-width: calc(14.28571% - 10px);
+    }
+}
+@media (min-width: 1670px) {
+    .profile-skills .profile-skill {
+        min-width: calc(12.5% - 10px);
+    }
+}

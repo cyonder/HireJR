@@ -7,7 +7,8 @@ import {
 
 import {
     UPDATE_CANDIDATE,
-    FETCH_CANDIDATES
+    FETCH_CANDIDATES,
+    FIND_CANDIDATE
 } from '../constants/actionTypes';
 
 export const updateCandidateSuccess = candidate => {
@@ -24,13 +25,30 @@ export const fetchCandidatesSuccess = candidates => {
     }
 }
 
+export const findCandidateSuccess = candidate => {
+    return {
+        type: FIND_CANDIDATE,
+        payload: candidate
+    }
+}
+
 export const fetchCandidates = () => {
     return dispatch => {
         axios.get(`${ROOT_API_URL}/candidates`)
-            .then(response => {                
-                let candidates = response.data.candidates;
-                dispatch(fetchCandidatesSuccess(candidates))
-            })
+        .then(response => {                
+            let candidates = response.data.candidates;
+            dispatch(fetchCandidatesSuccess(candidates))
+        })
+    }
+}
+
+export const findCandidate = userId => {    
+    return dispatch => {
+        axios.get(`${ROOT_API_URL}/candidates/${userId}`)
+        .then(response => {
+            let candidate = response.data.candidate;
+            dispatch(findCandidateSuccess(candidate))
+        })
     }
 }
 

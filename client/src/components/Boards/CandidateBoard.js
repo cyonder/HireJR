@@ -45,7 +45,7 @@ class CandidateBoard extends Component{
                     <Link to="/dashboard/resume">Resume</Link>
                 </li>
             </ul>,
-            <button type="button" className="btn btn-block mt8" key={2}>My Profile</button>
+            <Link to={`/profile/${this.props.candidate._userId}`} className="btn btn-block mt8" key={2}>My Profile</Link>
         ]
     }
 

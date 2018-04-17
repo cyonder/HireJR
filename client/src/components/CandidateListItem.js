@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class CandidateListItem extends Component{
     constructor(){
@@ -65,9 +66,9 @@ const ListItemIcon = () => (
     </div>
 )
 
-const ListItemTitle = ({title}) => (
+const ListItemTitle = ({title, userId}) => (
     <div className="list-item-title">
-        <span className="h4">{title}</span>
+        <span className="h4"><Link to={`/profile/${userId}`}>{title}</Link></span>
     </div>
 )
 

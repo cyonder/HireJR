@@ -3322,6 +3322,75 @@ header .btn.btn-link, footer .btn.btn-link {
   overflow: visible;
   height: auto; }
 
+.profile {
+  background: #FFFFFF;
+  padding: .8rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+
+.profile-header {
+  display: flex;
+  justify-content: space-between; }
+
+.profile-section {
+  margin-top: .8rem; }
+
+.profile-info {
+  font-size: .85rem;
+  display: flex;
+  flex-direction: column; }
+
+.profile-education {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: .8rem; }
+  .profile-education:last-child {
+    margin-bottom: 0; }
+
+.row {
+  display: flex;
+  flex-direction: column; }
+
+.profile-skills {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px;
+  margin-top: -10px; }
+
+.profile-skills .profile-skill {
+  flex: 1 0 200px;
+  box-sizing: border-box;
+  color: #171e42;
+  margin-left: 10px;
+  margin-top: 10px; }
+
+@media (min-width: 410px) {
+  .profile-skills .profile-skill {
+    max-width: calc(50% - 10px); } }
+
+@media (min-width: 620px) {
+  .profile-skills .profile-skill {
+    max-width: calc(33.33333% - 10px); } }
+
+@media (min-width: 830px) {
+  .profile-skills .profile-skill {
+    max-width: calc(25% - 10px); } }
+
+@media (min-width: 1040px) {
+  .profile-skills .profile-skill {
+    max-width: calc(20% - 10px); } }
+
+@media (min-width: 1250px) {
+  .profile-skills .profile-skill {
+    max-width: calc(16.66667% - 10px); } }
+
+@media (min-width: 1460px) {
+  .profile-skills .profile-skill {
+    max-width: calc(14.28571% - 10px); } }
+
+@media (min-width: 1670px) {
+  .profile-skills .profile-skill {
+    min-width: calc(12.5% - 10px); } }
+
 .columns {
   align-items: flex-start; }
 

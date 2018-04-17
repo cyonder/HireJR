@@ -20,6 +20,22 @@ exports.findCandidates = () => {
     })
 }
 
+exports.findCandidate = id => {
+    return new Promise(async(resolve, reject) => {
+        try{
+            const candidate = await Candidate.findOne({'_userId': id})
+            .populate('_userId')
+            .lean()
+            candidate.user = candidate._userId;
+            candidate._userId = candidate.user._id;
+            delete candidate.user.password;
+            resolve({ candidate: candidate })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
 exports.addEducationToCandidate = (education, { _candidateId }) => {    
     const candidateInstance = new Candidate({ education: education })
     

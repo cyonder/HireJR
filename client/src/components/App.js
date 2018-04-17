@@ -14,6 +14,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Dashboard from './Boards/Dashboard';
 import CandidateIndex from './CandidateIndex';
+import CandidateProfile from './CandidateProfile';
 
 import EmptyState from './EmptyState';
 
@@ -38,11 +39,14 @@ class App extends Component{
                         <Route exact path="/" render={
                             () => <div className="container grid-lg"><Home {...this.props} /></div>
                         }/>
-                        <Route exact path="/jobs" render={
-                            () => <div className="container grid-lg"><JobIndex {...this.props} /></div>
+                        <Route exact path="/profile/:id" render={
+                            (props) => <div className="container grid-md"><CandidateProfile {...props} /></div>
                         }/>
                         <Route exact path="/candidates" render={
                             () => <div className="container grid-lg"><CandidateIndex {...this.props} /></div>
+                        }/>
+                        <Route exact path="/jobs" render={
+                            () => <div className="container grid-lg"><JobIndex {...this.props} /></div>
                         }/>
                         <Route path="/jobs/new" render={
                             () => <PostJobForm {...this.props} />

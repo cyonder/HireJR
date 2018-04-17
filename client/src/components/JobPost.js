@@ -91,7 +91,7 @@ class JobPost extends Component{
 
         if(this.props.formValues){
             details = this.props.formValues;
-            // in render, the company info is nested under employer key but formValues are flat.
+            // in render, the company info is nested under employer key but formValues are flat. That's why
             const employer = {
                 companyName: details.companyName,
                 companyWebsite: details.companyWebsite
@@ -105,7 +105,6 @@ class JobPost extends Component{
 
         if(details){
             if(details.applyThrough === 'internal'){
-                // buttonTarget = details.internal; // This should trigger modal
                 buttonTarget = this.toggleModal;
                 buttonLabel = 'Apply on Hirejr';
             }else{

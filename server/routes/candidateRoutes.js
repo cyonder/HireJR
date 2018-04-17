@@ -7,6 +7,7 @@ const Candidate = require('../controllers/candidateController');
 const candidateRouter = express.Router();
 
 candidateRouter.get('/', Candidate.findAll);
+candidateRouter.get('/:id', Candidate.findOne);
 candidateRouter.post('/education', requireAuth, Candidate.createEducation);
 candidateRouter.post('/workexperience', requireAuth, Candidate.createWorkExperience);
 candidateRouter.post('/projects', requireAuth, Candidate.createProject);

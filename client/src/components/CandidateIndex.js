@@ -17,13 +17,14 @@ class CandidateIndex extends Component{
 
         return Object.keys(candidates).map((key, index) => {
             if(candidates[key].candidateProfile == undefined) return null;
-            const { firstName, lastName, email } = candidates[key].user;
+            const { _id, firstName, lastName, email } = candidates[key].user;
             const { 
                 province, city, portfolioUrl, githubUrl, linkedInUrl, 
                 skills, summary, careerObjective 
             } = candidates[key].candidateProfile;
 
             let header = {
+                userId: _id, 
                 resumeLink: null,
                 title: `${firstName} ${lastName}`,
                 portfolioUrl: portfolioUrl,
