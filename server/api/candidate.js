@@ -1,5 +1,7 @@
 const Candidate = require('../models/candidate');
 
+// Find
+
 exports.findCandidates = () => {
     return new Promise(async(resolve, reject) => {
         try{
@@ -36,6 +38,8 @@ exports.findCandidate = id => {
     })
 }
 
+// Education
+
 exports.addEducationToCandidate = (education, { _candidateId }) => {    
     const candidateInstance = new Candidate({ education: education })
     
@@ -49,6 +53,38 @@ exports.addEducationToCandidate = (education, { _candidateId }) => {
         }
     })
 }
+
+exports.updateEducationInCandidate = (education, educationId, { _candidateId }) => {
+    const candidateInstance = new Candidate({ education: education })
+
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newCandidate = await Candidate.findOneAndUpdate({ 
+                '_id': _candidateId, 
+                'education._id': educationId
+            },
+            {$set: { 'education.$': candidateInstance.education }}, { new: true })
+            resolve({ newCandidate: newCandidate })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+exports.deleteEducationInCandidate = (educationId, { _candidateId }) => {
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newCandidate = await Candidate.findOneAndUpdate({ "_id" : _candidateId }, { 
+                $pull: { "education": { "_id": educationId } }
+            }, { new: true })
+            resolve({ newCandidate: newCandidate })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+// Work Experience
 
 exports.addWorkExperienceToCandidate = (workExperience, { _candidateId }) => {
     const candidateInstance = new Candidate({ workExperience: workExperience })
@@ -64,6 +100,38 @@ exports.addWorkExperienceToCandidate = (workExperience, { _candidateId }) => {
     })
 }
 
+exports.updateWorkExperienceInCandidate = (workExperience, workExperienceId, { _candidateId }) => {
+    const candidateInstance = new Candidate({ workExperience: workExperience })
+
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newCandidate = await Candidate.findOneAndUpdate({ 
+                '_id': _candidateId, 
+                'workExperience._id': workExperienceId
+            },
+            {$set: { 'workExperience.$': candidateInstance.workExperience }}, { new: true })
+            resolve({ newCandidate: newCandidate })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+exports.deleteWorkExperienceInCandidate = (workExperienceId, { _candidateId }) => {
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newCandidate = await Candidate.findOneAndUpdate({ "_id" : _candidateId }, { 
+                $pull: { "workExperience": { "_id": workExperienceId } }
+            }, { new: true })
+            resolve({ newCandidate: newCandidate })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+// Project
+
 exports.addProjectToCandidate = (project, { _candidateId }) => {
     const candidateInstance = new Candidate({ projects: project })
 
@@ -77,6 +145,38 @@ exports.addProjectToCandidate = (project, { _candidateId }) => {
         }
     })
 }
+
+exports.updateProjectInCandidate = (project, projectId, { _candidateId }) => {
+    const candidateInstance = new Candidate({ projects: project })
+
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newCandidate = await Candidate.findOneAndUpdate({ 
+                '_id': _candidateId, 
+                'projects._id': projectId
+            },
+            {$set: { 'projects.$': candidateInstance.projects }}, { new: true })
+            resolve({ newCandidate: newCandidate })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+exports.deleteProjectInCandidate = (projectId, { _candidateId }) => {
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newCandidate = await Candidate.findOneAndUpdate({ "_id" : _candidateId }, { 
+                $pull: { "projects": { "_id": projectId } }
+            }, { new: true })
+            resolve({ newCandidate: newCandidate })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+// Profile
 
 exports.changeCandidateProfile = (candidateProfile, { _candidateId }) => {    
     const candidateInstance = new Candidate({ candidateProfile: candidateProfile })

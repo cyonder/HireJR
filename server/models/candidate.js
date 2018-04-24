@@ -75,7 +75,7 @@ const projectSchema = new Schema({
         type: [String],
         required: true  
     },
-    description: {
+    summary: {
         type: String,
         required: true  
     }

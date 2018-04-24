@@ -13,9 +13,15 @@ import Projects from './CandidateBoard/Projects';
 import Resume from './CandidateBoard/Resume';
 
 import {
-    createProject,
-    createWorkExperience,
     createEducation,
+    updateEducation,
+    deleteEducation,
+    createWorkExperience,
+    updateWorkExperience,
+    deleteWorkExperience,
+    createProject,
+    updateProject,
+    deleteProject,
     updateCandidateProfile
 } from '../../actions/candidate';
 
@@ -45,13 +51,16 @@ class CandidateBoard extends Component{
                     <Link to="/dashboard/resume">Resume</Link>
                 </li>
             </ul>,
-            <Link to={`/profile/${this.props.candidate._userId}`} className="btn btn-block mt8" key={2}>My Profile</Link>
+            <div className="info-box mt8" key={2}>
+                Tip: Use <span>*</span> to add points to summary
+            </div>,
+            <Link to={`/profile/${this.props.candidate._userId}`} className="btn btn-block mt8" key={3}>My Profile</Link>
         ]
     }
 
     render(){
         let initialValues;
-
+        
         if(typeof this.props.candidate !== "undefined"){
             initialValues = this.props.candidate.candidateProfile;
         }else{
@@ -95,9 +104,15 @@ class CandidateBoard extends Component{
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        createProject,
-        createWorkExperience,
         createEducation,
+        updateEducation,
+        deleteEducation,
+        createWorkExperience,
+        updateWorkExperience,
+        deleteWorkExperience,
+        createProject,
+        updateProject,
+        deleteProject,
         updateCandidateProfile
     }, dispatch)
 }

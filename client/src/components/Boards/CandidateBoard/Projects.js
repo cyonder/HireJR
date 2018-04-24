@@ -2,32 +2,43 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
 import EmptyState from '../../EmptyState';
-
-import { renderHorizontalTextField } from '../../Fields/TextFields';
-import { renderTextAreaFieldWithLabelAndPopover } from '../../Fields/TextAreaFields';
+import DashboardListItem from '../../DashboardListItem';
+import ProjectForm from '../../Forms/ProjectForm';
 
 class Projects extends Component{
     constructor(){
         super();
         this.state = { displayForm: false }
-        
-        this.handleClick = this.handleClick.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.toggleForm = this.toggleForm.bind(this);
+        this.onSubmitAddProject = this.onSubmitAddProject.bind(this);
+        this.onSubmitEditProject = this.onSubmitEditProject.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
-    handleClick(){
-        this.setState({
-            displayForm: !this.state.displayForm
-        })
+    toggleForm(){
+        this.setState({ displayForm: !this.state.displayForm })
     }
 
-    onSubmit(values){
+    onSubmitAddProject(values){
         this.props.createProject(values, () => {
             this.props.notify();
-            this.props.reset();
+            this.toggleForm();
         })
     }
 
+    onSubmitEditProject(values){       
+        this.props.updateProject(values, () => {
+            this.props.notify();            
+            this.toggleForm();
+        })
+    }
+
+    onDelete(id){
+        this.props.deleteProject(id, () => {
+            this.props.notify();
+        })
+    }
+    
     renderSkills(skills){
         return skills.map((skill, index) => {
             return <span className="chip" key={index}>{skill}</span>
@@ -37,89 +48,60 @@ class Projects extends Component{
     renderProjects(){
         const projects = this.props.candidate.projects;
         return Object.keys(projects).map((key, index) => {
-            return(
-                <div className="holder" key={index}>
-                    <div className="flex-center-between">
-                        <span className="holder-title">{projects[key].projectName}</span>
-                        <span className="">{`${projects[key].url}`}</span>
-                    </div>
-                    <div className="flex-center-between">
-                        <span className="text-italic">{this.renderSkills(projects[key].skills)}</span>
-                    </div>
-                </div>
-            )
+            return <DashboardListItem key={index}
+                {...this.props}
+                title={projects[key].projectName} 
+                meta={projects[key].url}
+                skills={this.renderSkills(projects[key].skills)}
+                summary={projects[key].summary}
+                initialValues={projects[key]}
+                form={projects[key]._id} 
+                onSubmit={this.onSubmitEditProject}
+                onDelete={this.onDelete} />
         });
     }
 
-    renderForm(){
-        const activeClass = this.state.displayForm ? 'btn btn-success btn-block mt8' : 'btn btn-primary btn-block mt8'
-        const { handleSubmit } = this.props;
-
-        return(
-            <form onSubmit={ handleSubmit(this.onSubmit) } className="form-horizontal">
-                <div className={this.state.displayForm ? 'd-block mb8' : 'd-none'}>
-                    <Field name="projectName"
-                        type="text"
-                        label="Project Name"
-                        placeholder="StudentValley"
-                        id="input-project-name"
-                        component={renderHorizontalTextField} />
-
-                    <Field name="url"
-                        type="text"
-                        label="URL"
-                        placeholder="http://"
-                        id="input-url"
-                        component={renderHorizontalTextField} />
-
-                    <Field name="skills"
-                        type="text"
-                        label="Languages"
-                        placeholder="PHP, JavaScript, HTML"
-                        id="input-languages"
-                        component={renderHorizontalTextField} />
-
-                    <Field name="description"
-                        rows="4"
-                        label="Description"
-                        placeholder="description..."
-                        id="input-description"
-                        component={renderTextAreaFieldWithLabelAndPopover} />
-                </div>
-                <button type={this.state.displayForm ? "button" : "submit"}
-                    className={activeClass}
-                    onClick={this.handleClick}>{ !this.state.displayForm ?
-                    'Add Project' : 'Save' }
-                </button>
-            </form>
-        )
-    }
-
     renderEmptyState(){
+        const activeClass = !this.state.displayForm ? 'btn btn-primary btn-block mt8' : 'd-none'
+
         return[
             <EmptyState title="You haven't added any projects"
                         subtitle="Show off your live apps and websites"
                         icon="icon-edit"
-                        shouldHide={this.state.displayForm ? true : false}
+                        shouldHide={this.state.displayForm}
                         key={1}/>,
             <div key={2}>
-                {this.renderForm()}
+                <ProjectForm {...this.props} 
+                    form='postProjectForm'
+                    onSubmit={this.onSubmitAddProject} 
+                    shouldHide={!this.state.displayForm} />
+                
+                <button type="button" 
+                    className={activeClass}
+                    onClick={this.toggleForm}>Add Project</button>
             </div>
         ]
     }
 
     render(){
         if(!this.props.candidate || !this.props.candidate['projects'].length > 0) return this.renderEmptyState();
-
-        return(
+        const activeClass = !this.state.displayForm ? 'btn btn-primary btn-block mt8' : 'd-none'
+        
+        return( 
             <div>
-                {this.renderProjects()}
-                {this.renderForm()}
+                { this.renderProjects() }
+
+                <ProjectForm {...this.props} 
+                    form='postProjectForm' 
+                    onSubmit={this.onSubmitAddProject}
+                    shouldHide={!this.state.displayForm} />
+
+                <button type="button" 
+                    className={activeClass}
+                    onClick={this.toggleForm}>Add Project</button>
             </div>
         )
     }
 }
 
-export default reduxForm({
-    form: 'postProjectForm'
-})(Projects);
+export default Projects;

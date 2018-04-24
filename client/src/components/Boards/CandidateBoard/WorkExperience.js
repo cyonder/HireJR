@@ -2,125 +2,101 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
 import EmptyState from '../../EmptyState';
-
-import { renderHorizontalTextField } from '../../Fields/TextFields';
-import { renderTextAreaFieldWithLabelAndPopover } from '../../Fields/TextAreaFields';
+import DashboardListItem from '../../DashboardListItem';
+import WorkExperienceForm from '../../Forms/WorkExperienceForm';
 
 class WorkExperience extends Component{
     constructor(){
         super();
         this.state = { displayForm: false }
-
-        this.handleClick = this.handleClick.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.toggleForm = this.toggleForm.bind(this);
+        this.onSubmitAddWorkExperience = this.onSubmitAddWorkExperience.bind(this);
+        this.onSubmitEditWorkExperience = this.onSubmitEditWorkExperience.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
-    handleClick(){
-        this.setState({
-            displayForm: !this.state.displayForm
-        })
+    toggleForm(){        
+        this.setState({ displayForm: !this.state.displayForm  })
     }
 
-    onSubmit(values){
+    onSubmitAddWorkExperience(values){
         this.props.createWorkExperience(values, () => {
             this.props.notify();
-            this.props.reset();
+            this.toggleForm();
         })
     }
 
+    onSubmitEditWorkExperience(values){
+        this.props.updateWorkExperience(values, () => {
+            this.props.notify();            
+            this.toggleForm();
+        })
+    }
+
+    onDelete(id){
+        this.props.deleteWorkExperience(id, () => {
+            this.props.notify();
+        })
+    }
+    
     renderWorkExperience(){
         const workExperience = this.props.candidate.workExperience;
-        return Object.keys(workExperience).map((key, index) => {
-            return(
-                <div className="holder" key={index}>
-                    <div className="flex-center-between">
-                        <span className="holder-title">{workExperience[key].companyName}</span>
-                        <span className="">{`${workExperience[key].startYear}-${workExperience[key].endYear}`}</span>
-                    </div>
-                    <div className="flex-center-between">
-                        <span className="text-italic">{workExperience[key].title}</span>
-                    </div>
-                </div>
-            )
+        return Object.keys(workExperience).map((key, index) => {            
+            let date = `${workExperience[key].startYear}-${workExperience[key].endYear}`
+            return <DashboardListItem key={index} 
+                {...this.props}
+                title={workExperience[key].companyName} 
+                subTitle={workExperience[key].title} 
+                meta={date}
+                summary={workExperience[key].summary}
+                initialValues={workExperience[key]}
+                form={workExperience[key]._id}
+                onSubmit={this.onSubmitEditWorkExperience}
+                onDelete={this.onDelete} />
         });
     }
 
-    renderForm(){
-        const activeClass = this.state.displayForm ? 'btn btn-success btn-block mt8' : 'btn btn-primary btn-block mt8'
-        const { handleSubmit } = this.props;
-
-        return(
-            <form onSubmit={ handleSubmit(this.onSubmit) } className="form-horizontal">
-                <div className={this.state.displayForm ? 'd-block mb8' : 'd-none'}>
-                    <Field name="companyName"
-                        type="text"
-                        label="Company Name"
-                        placeholder="Apple inc."
-                        id="input-company-name"
-                        component={renderHorizontalTextField} />
-
-                    <Field name="title"
-                        type="text"
-                        label="Title"
-                        placeholder="Marketing Specialist"
-                        id="input-title"
-                        component={renderHorizontalTextField} />
-
-                    <Field name="startYear"
-                        type="text"
-                        label="Start Year"
-                        placeholder=""
-                        id="input-start-year"
-                        component={renderHorizontalTextField} />
-
-                    <Field name="endYear"
-                        type="text"
-                        label="End Year"
-                        placeholder="Blank if current"
-                        id="input-end-year"
-                        component={renderHorizontalTextField} />
-
-                    <Field name="summary"
-                        rows="4"
-                        label="Summary"
-                        placeholder="Summary..."
-                        id="input-summary"
-                        component={renderTextAreaFieldWithLabelAndPopover} />
-                </div>
-                <button type={this.state.displayForm ? "button" : "submit"}
-                    className={activeClass}
-                    onClick={this.handleClick}>{ !this.state.displayForm ?
-                    'Add Work Experience' : 'Save' }
-                </button>
-            </form>
-        )
-    }
-
     renderEmptyState(){
+        const activeClass = !this.state.displayForm ? 'btn btn-primary btn-block mt8' : 'd-none'
+
         return[
             <EmptyState title="You haven't added any work experience"
                         subtitle="Highlight your experience"
                         icon="icon-edit"
-                        shouldHide={this.state.displayForm ? true : false}
+                        shouldHide={this.state.displayForm}
                         key={1}/>,
             <div key={2}>
-                {this.renderForm()}
+                <WorkExperienceForm {...this.props} 
+                    form='postWorkExperienceForm'
+                    onSubmit={this.onSubmitAddWorkExperience} 
+                    shouldHide={!this.state.displayForm} />
+                
+                <button type="button" 
+                    className={activeClass}
+                    onClick={this.toggleForm}>Add Work Experience</button>
             </div>
         ]
     }
 
     render(){
         if(!this.props.candidate || !this.props.candidate['workExperience'].length > 0) return this.renderEmptyState();
-
-        return(
+        const activeClass = !this.state.displayForm ? 'btn btn-primary btn-block mt8' : 'd-none'
+        
+        return( 
             <div>
-                {this.renderWorkExperience()}
-                {this.renderForm()}
+                { this.renderWorkExperience() }
+
+                <WorkExperienceForm {...this.props} 
+                    form='postWorkExperienceForm' 
+                    onSubmit={this.onSubmitAddWorkExperience}
+                    shouldHide={!this.state.displayForm} />
+
+                <button type="button" 
+                    className={activeClass}
+                    onClick={this.toggleForm}>Add Work Experience</button>
             </div>
         )
     }
 }
 
-export default reduxForm({
-    form: 'postWorkExperienceForm'
-})(WorkExperience);
+export default WorkExperience;
