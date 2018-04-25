@@ -79,9 +79,7 @@ class JobPost extends Component{
     }
 
     toggleModal(){        
-        this.setState({
-            activeModal: !this.state.activeModal
-        })
+        this.setState({ activeModal: !this.state.activeModal })
     }
 
     render(){        

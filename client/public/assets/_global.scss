@@ -45,6 +45,16 @@ header, footer{
     justify-content: space-between;
 }
 
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-space-between{
+    display: flex;
+    justify-content: space-between;
+}
+
 .with-no-background{
     background: none !important;
     border: 0 !important;

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
+import workExperienceValidation from '../../validations/workExperienceValidation';
+
 import { renderHorizontalTextField } from '../Fields/TextFields';
 import { renderTextAreaFieldWithLabelAndPopover } from '../Fields/TextAreaFields';
 
@@ -50,5 +52,6 @@ const WorkExperienceForm = ({ handleSubmit, onSubmit, shouldHide }) => {
 }
 
 export default reduxForm({
-    enableReinitialize: true
+    enableReinitialize: true,
+    validate: (values) => workExperienceValidation(values)
 })(WorkExperienceForm);

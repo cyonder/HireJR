@@ -1,6 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
+import educationValidation from '../../validations/educationValidation';
+
 import { renderHorizontalTextField } from '../Fields/TextFields';
 
 const EducationForm = ({ handleSubmit, onSubmit, shouldHide }) => {
@@ -49,5 +51,6 @@ const EducationForm = ({ handleSubmit, onSubmit, shouldHide }) => {
 }
 
 export default reduxForm({
-    enableReinitialize: true
+    enableReinitialize: true,
+    validate: (values) => educationValidation(values)
 })(EducationForm);

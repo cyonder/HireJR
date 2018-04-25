@@ -1,0 +1,68 @@
+.resume{
+    background: $color-component-background;
+    padding: .8rem;
+    box-shadow: $box-shadow;
+}
+
+.resume-info{
+    font-size: .85rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.resume-item{
+    margin-bottom: .8rem;
+    &:last-child{
+        margin-bottom: 0;
+    }
+}
+
+.resume-skills {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-top: -10px;
+}
+
+.resume-skills .resume-skill {
+    flex: 1 0 200px;
+    box-sizing: border-box;
+    color: #171e42;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+@media (min-width: 410px) {
+    .resume-skills .resume-skill {
+        max-width: calc(50% - 10px);
+    }
+}
+@media (min-width: 620px) {
+    .resume-skills .resume-skill {
+        max-width: calc(33.33333% - 10px);
+    }
+}
+@media (min-width: 830px) {
+    .resume-skills .resume-skill {
+        max-width: calc(25% - 10px);
+    }
+}
+@media (min-width: 1040px) {
+    .resume-skills .resume-skill {
+        max-width: calc(20% - 10px);
+    }
+}
+@media (min-width: 1250px) {
+    .resume-skills .resume-skill {
+        max-width: calc(16.66667% - 10px);
+    }
+}
+@media (min-width: 1460px) {
+    .resume-skills .resume-skill {
+        max-width: calc(14.28571% - 10px);
+    }
+}
+@media (min-width: 1670px) {
+    .resume-skills .resume-skill {
+        min-width: calc(12.5% - 10px);
+    }
+}

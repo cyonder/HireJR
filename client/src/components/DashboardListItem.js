@@ -23,8 +23,21 @@ class DashboardListItem extends Component{
             <div className="btn-group btn-group-block list-item-buttons">
                 <button className={this.state.displayForm ? 'btn btn-primary' : 'btn btn-warning' } 
                     onClick={this.toggleForm}>{this.state.displayForm ? 'Cancel' : 'Edit'}</button>
+                    
                 <button className={this.state.displayForm ? 'd-none' : 'btn btn-error' } 
-                    onClick={() => this.props.onDelete(id)}>Delete</button>
+                    onClick={() => {
+                        let confirmed = window.confirm('Are you sure you want to delete this?')
+                        if(confirmed){this.props.onDelete(id)}
+                    }}>Delete</button>
+            </div>
+        )
+    }
+
+    renderListItem(header, body){
+        return(
+            <div className={this.state.displayForm ? 'd-none' : '' }>
+                { this.renderListItemHeader(header) }
+                { body.summary ? this.renderListItemBody(body) : null }
             </div>
         )
     }
@@ -45,7 +58,7 @@ class DashboardListItem extends Component{
     }
     
     renderListItemBody({ summary, skills }){
-        let newSummary = summary.replace(/[*]/g, '<i class="text-primary far fa-dot-circle"></i>');
+        let newSummary = summary.replace(/[*]/g, '<i class="text-primary far fa-dot-circle mr4"></i>');
     
         return(
             <div className="dashboard-list-item-body">
@@ -83,8 +96,7 @@ class DashboardListItem extends Component{
         return(
             <div className="holder">
                 { this.renderButtons() }
-                { this.renderListItemHeader(header) }
-                { summary ? this.renderListItemBody(body) : null }
+                { this.renderListItem(header, body) }
                 { this.renderForm() }
             </div>
         )

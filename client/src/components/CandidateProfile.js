@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Loading from './Loading';
-import Profile from './Profile';
+import Resume from './Resume';
 
 import { findCandidate } from '../actions/candidate';
 
@@ -14,7 +14,7 @@ class CandidateProfile extends Component{
     render(){        
         const candidate = this.props.candidate;
         if(!candidate) return <Loading />;
-        return <Profile candidate={candidate} />
+        return <Resume candidate={candidate} />
     }
 }
 

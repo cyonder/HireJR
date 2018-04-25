@@ -29,7 +29,6 @@ class WorkExperience extends Component{
     onSubmitEditWorkExperience(values){
         this.props.updateWorkExperience(values, () => {
             this.props.notify();            
-            this.toggleForm();
         })
     }
 

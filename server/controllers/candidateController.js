@@ -155,7 +155,7 @@ exports.updateCandidateProfile = async(req, res) => {
         title, city, province, portfolioUrl, githubUrl, linkedInUrl, summary, careerObjective 
     };
 
-    if(skills){
+    if(skills.toString()){        
         let newSkills = skills.toString().replace(/^[,\s]+|[,\s]+$/g, '').replace(/,[,\s]*,/g, ',');
         candidateProfile.skills = newSkills.split(',').map(skill => skill.trim())   
     }

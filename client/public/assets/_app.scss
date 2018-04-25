@@ -45,7 +45,7 @@
     border-radius: .1rem;
 }
 
-.job-post-description{
+.job-post-description{ // Needs to be renamed
     white-space: pre-wrap;
     word-break: break-word;
 }
@@ -65,6 +65,8 @@
 }
 
 .list-item-buttons{
+    box-shadow: $box-shadow;
+    z-index: 1;
     width: 35%;
     left: 50%;
     transform: translateX(-50%);
@@ -132,31 +134,6 @@
     cursor: help;
 }
 
-.btn.btn-warning{
-    background: $color-warning;
-    border-color: darken($color-warning, 3%);
-    color: #FFFFFF;
-    &:focus {
-        box-shadow: 0 0 0 .1rem rgba($color-warning, .2);
-    }
-    &:focus, &:hover {
-        background: darken($color-warning, 2%);
-        border-color: darken($color-warning, 5%);
-        color: #FFFFFF;
-    }
-    &:active, &.active {
-        background: darken($color-warning, 7%);
-        border-color: darken($color-warning, 10%);
-        color: #FFFFFF;
-    }
-    &.loading {
-        &::after {
-            border-bottom-color: #FFFFFF;
-            border-left-color: #FFFFFF;
-        }
-    }
-}
-
 .list-item{
     background: $color-component-background;
     box-shadow: $box-shadow;
@@ -215,107 +192,4 @@
 .expandable.expanded{
     overflow: visible;
     height: auto;
-}
-
-// .dashboard-expandable{
-//     overflow: hidden;
-//     height: 1.2rem;
-// }
-
-// .dashboard-expandable.collapsed{
-//     overflow: hidden;
-// }
-
-// .dashboard-expandable.expanded{
-//     overflow: visible;
-//     height: auto;
-// }
-
-// Profile
-
-.profile{
-    background: $color-component-background;
-    padding: .8rem;
-    box-shadow: $box-shadow;
-}
-
-.profile-header{
-    display: flex;
-    justify-content: space-between;
-    // background: darkorange;
-}
-
-.profile-section{
-    margin-top: .8rem;
-}
-
-.profile-info{
-    font-size: .85rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.profile-education{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: .8rem;
-    &:last-child{
-        margin-bottom: 0;
-    }
-}
-
-.row{
-    display: flex;
-    flex-direction: column;
-}
-
-.profile-skills {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -10px;
-    margin-top: -10px;
-}
-.profile-skills .profile-skill {
-    flex: 1 0 200px;
-    box-sizing: border-box;
-    // background: #e0ddd5;
-    color: #171e42;
-    // padding: 10px;
-    margin-left: 10px;
-    margin-top: 10px;
-}
-@media (min-width: 410px) {
-    .profile-skills .profile-skill {
-        max-width: calc(50% - 10px);
-    }
-}
-@media (min-width: 620px) {
-    .profile-skills .profile-skill {
-        max-width: calc(33.33333% - 10px);
-    }
-}
-@media (min-width: 830px) {
-    .profile-skills .profile-skill {
-        max-width: calc(25% - 10px);
-    }
-}
-@media (min-width: 1040px) {
-    .profile-skills .profile-skill {
-        max-width: calc(20% - 10px);
-    }
-}
-@media (min-width: 1250px) {
-    .profile-skills .profile-skill {
-        max-width: calc(16.66667% - 10px);
-    }
-}
-@media (min-width: 1460px) {
-    .profile-skills .profile-skill {
-        max-width: calc(14.28571% - 10px);
-    }
-}
-@media (min-width: 1670px) {
-    .profile-skills .profile-skill {
-        min-width: calc(12.5% - 10px);
-    }
 }

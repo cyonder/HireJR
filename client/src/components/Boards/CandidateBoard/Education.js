@@ -29,7 +29,6 @@ class Education extends Component{
     onSubmitEditEducation(values){
         this.props.updateEducation(values, () => {
             this.props.notify();            
-            this.toggleForm();
         })
     }
 
@@ -88,8 +87,8 @@ class Education extends Component{
 
                 <EducationForm {...this.props} 
                     form="postEducationForm" 
-                    onSubmit={this.onSubmitAddEducation}
-                    shouldHide={!this.state.displayForm} />
+                    shouldHide={!this.state.displayForm}
+                    onSubmit={this.onSubmitAddEducation} />
 
                 <button type="button" 
                     className={activeClass}

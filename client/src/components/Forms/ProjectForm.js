@@ -1,6 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
+import projectValidation from '../../validations/projectValidation';
+
 import { renderHorizontalTextField } from '../Fields/TextFields';
 import { renderTextAreaFieldWithLabelAndPopover } from '../Fields/TextAreaFields';
 
@@ -43,5 +45,6 @@ const ProjectForm = ({ handleSubmit, onSubmit, shouldHide }) => {
 }
 
 export default reduxForm({
-    enableReinitialize: true
+    enableReinitialize: true,
+    validate: (values) => projectValidation(values)
 })(ProjectForm);

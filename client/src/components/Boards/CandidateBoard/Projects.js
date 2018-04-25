@@ -29,7 +29,6 @@ class Projects extends Component{
     onSubmitEditProject(values){       
         this.props.updateProject(values, () => {
             this.props.notify();            
-            this.toggleForm();
         })
     }
 
