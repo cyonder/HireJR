@@ -43,7 +43,7 @@ const ListItemBody = body => (
             <span className="ml4">{body.email}</span>
         </div>
         <div className={`${body.province && body.city ? 'list-item-location' : 'd-none'}`}>
-            <i className="fas fa-map-marker text-primary"></i>
+            <i className="fas fa-location-arrow text-primary"></i>
             <span className="ml4">{`${body.city}, ${body.province}`}</span>
         </div>
     </div>

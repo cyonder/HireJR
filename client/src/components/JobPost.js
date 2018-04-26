@@ -7,6 +7,7 @@ import moment from 'moment';
 import Loading from './Loading';
 import Card from './Card';
 import Modal from './Modal';
+import JobPostMenu from './JobPostMenu';
 
 import { findJobPost } from '../actions/jobPost';
 
@@ -21,61 +22,6 @@ class JobPost extends Component{
         if(this.props.match.params.id){
             this.props.findJobPost(this.props.match.params.id);
         }
-    }
-
-    renderDescription(details){
-        return(
-            <Card title={details.position}
-                    subtitle={details.employer.companyName}>
-                    <div className="job-post-description">{details.description}</div>
-            </Card>
-        )
-    }
-
-    renderMenu(job){
-        let active;
-        let createdAt = moment(job.createdAt).fromNow(true);
-
-        if(job.isActive){
-            active = 'Active'
-        }else{
-            active = 'Non-active'
-        }
-
-        return(
-            <ul className="menu">
-                <li className="divider" data-content="SHORT"></li>
-                <li className="menu-item">
-                    <i className="icon icon-shutdown"></i>{`${active} since ${createdAt}`}
-                </li>
-                <li className="menu-item">
-                    <i className="icon icon-location"></i>{`${job.city}, ${job.province}`}
-                </li>
-                <li className="menu-item">
-                    <i className="icon icon-time"></i>{job.schedule}
-                </li>
-                <li className="divider" data-content="SKILLS"></li>
-                { this.renderSkills(job.skills) }
-                <li className="divider"></li>
-                <li className="menu-item">
-                    <a href={job.employer.companyWebsite}>Company Website</a>
-                </li>
-            </ul>
-        )
-    }
-
-    renderSkills(skills){
-        let skillArray;
-
-        if(!Array.isArray(skills)){
-            skillArray = skills.split(',').map(skill => skill.trim());
-        }else{
-            skillArray = skills;
-        }
-
-        return skillArray.map((skill, index) => {
-            return <li className="chip" key={index}>{skill}</li>
-        });
     }
 
     toggleModal(){        
@@ -105,7 +51,7 @@ class JobPost extends Component{
             if(details.applyThrough === 'internal'){
                 buttonTarget = this.toggleModal;
                 buttonLabel = 'Apply on Hirejr';
-            }else{
+            }else{ // Needs fix for confirmation comp
                 buttonTarget = details.external;
                 buttonLabel = 'Apply on Website';
             }
@@ -114,15 +60,19 @@ class JobPost extends Component{
         return(
             <div className="columns">
                 <div className="column col-8">
-                    { this.renderDescription(details) }
+                    <Card title={details.position}
+                        subtitle={details.employer.companyName}>
+                        <div className="job-post-description">{details.description}</div>
+                    </Card>
                 </div>
                 <div className="column col-4">
                     <a onClick={buttonTarget} target="_blank" className={activeClass}>{buttonLabel}</a>
-                    { this.renderMenu(details) }
+                    <JobPostMenu job={details} />
                 </div>
-                <Modal active={this.state.activeModal}
+                { this.state.activeModal ? 
+                    <Modal active={this.state.activeModal}
                     questions={details.questions}
-                    toggleModal={this.toggleModal}>Hello World =)</Modal>
+                    toggleModal={this.toggleModal} /> : null }
             </div>
         );
     }

@@ -1,31 +1,74 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 
 import EmptyState from '../EmptyState';
 import Loading from '../Loading';
 
+import { deleteJobPost, deactivateJobPost } from '../../actions/jobPost';
+
 const deleteButtonIcon = { color: '#E6561C' }
 
 class EmployerBoard extends Component{
+    constructor(){
+        super();
+        this.state = {
+            selectedTab: 'all',
+            computedJobPosts: []
+        }
+        this.computeJobPosts = this.computeJobPosts.bind(this);
+        this.handleTabChange = this.handleTabChange.bind(this);
+    }
+
+    componentDidMount(){
+        this.computeJobPosts();
+    }
+
+    computeJobPosts(){
+        const jobPosts = this.props.employer.jobPosts;
+
+        let computedJobPosts = jobPosts.filter(jobPost => {            
+            if(this.state.selectedTab === 'all'){
+                return true
+            }else if(this.state.selectedTab === 'active'){
+                return jobPost.isActive === true
+            }else if(this.state.selectedTab === 'non-active'){
+                return jobPost.isActive === false
+            }else{
+                return false
+            }
+        });
+    
+        this.setState({ computedJobPosts: computedJobPosts });
+    }
+
+    handleTabChange(selectedTab){
+        this.setState(
+            { selectedTab: selectedTab }, 
+            () => { this.computeJobPosts() }
+        )
+    }
+
     renderTabs(){
         return(
             <ul className="tab tab-block">
-                <li className="tab-item active">
-                    <a href="#">All</a>
+                <li className={`tab-item c-hand ${this.state.selectedTab === 'all' ? 'active' : null }`}>
+                    <a onClick={() => this.handleTabChange('all')}>All</a>
                 </li>
-                <li className="tab-item">
-                    <a href="#">Active</a>
+                <li className={`tab-item c-hand ${this.state.selectedTab === 'active' ? 'active' : null }`}>
+                    <a onClick={() => this.handleTabChange('active')}>Active</a>
                 </li>
-                <li className="tab-item">
-                    <a href="#">Non-Active</a>
+                <li className={`tab-item c-hand ${this.state.selectedTab === 'non-active' ? 'active' : null }`}>
+                    <a onClick={() => this.handleTabChange('non-active')}>Non-Active</a>
                 </li>
             </ul>
         )
     }
 
-    renderJobPosts(){
-        const jobPosts = this.props.employer.jobPosts;
+    renderJobPosts(){        
+        const jobPosts = this.state.computedJobPosts;
+        
         return Object.keys(jobPosts).map((key, index) => {
             return(
                 <div className="tile tile-centered" key={index}>
@@ -34,6 +77,7 @@ class EmployerBoard extends Component{
                             <Link to={`jobs/${jobPosts[key]._id}`}>
                                 {jobPosts[key].position}
                             </Link>
+                            <span className={`ml4 label ${jobPosts[key].isActive ? 'label-success' : 'label-error'}`}>{jobPosts[key].isActive ? 'Active' : 'Non-active'}</span>
                         </div>
                         <div className="tile-subtitle">
                             {`${jobPosts[key].city}, ${jobPosts[key].province}`}
@@ -46,11 +90,21 @@ class EmployerBoard extends Component{
                     </div>
                     <div className="tile-action">
                         <button className="btn btn-link btn-action btn-lg tooltip tooltip-left"
-                            data-tooltip="Edit"><i className="icon icon-edit"></i></button>
+                            data-tooltip="Edit"><i className="fas fa-pencil-alt"></i></button>
+
                         <button className="btn btn-link btn-action btn-lg tooltip tooltip-left"
-                            data-tooltip="Freeze"><i className="icon icon-time"></i></button>
+                            data-tooltip={jobPosts[key].isActive ? 'Deactivate' : 'Activate'}
+                            onClick={() => {
+                                let confirmed = window.confirm(`Are you sure you want to ${jobPosts[key].isActive ? 'deactivate' : 'activate'} this job post?`)
+                                if(confirmed){this.props.deactivateJobPost(jobPosts[key]._id, !jobPosts[key].isActive)}
+                            }}><i className="fas fa-snowflake"></i></button>
+
                         <button className="btn btn-link btn-action btn-lg tooltip tooltip-left"
-                            data-tooltip="Delete"><i className="icon icon-delete" style={deleteButtonIcon}></i></button>
+                            data-tooltip="Delete"
+                            onClick={() => {
+                                let confirmed = window.confirm('Are you sure you want to delete this job post?')
+                                if(confirmed){this.props.deleteJobPost(jobPosts[key]._id)}
+                            }}><i className="fas fa-trash-alt" style={deleteButtonIcon}></i></button>
                     </div>
                 </div>
             );
@@ -76,9 +130,16 @@ class EmployerBoard extends Component{
         )
     }
 
-    render(){
+    render(){                
         return this.renderJobBoardPanel();
     }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ 
+        deleteJobPost,
+        deactivateJobPost
+    }, dispatch)
 }
 
 const mapStateToProps = state => {
@@ -89,4 +150,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(EmployerBoard);
+export default connect(mapStateToProps, mapDispatchToProps)(EmployerBoard);

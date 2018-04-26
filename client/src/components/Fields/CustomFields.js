@@ -38,7 +38,7 @@ const renderQuestionField = ({fields, reduxQuestions}) => {
                     <div className="col-4 col-sm-12 d-flex">
                         <button type="button"
                             className="btn btn-error float-right"
-                            onClick={() => fields.remove(index)} ><i style={deleteButtonIcon} className="icon icon-delete"></i></button>
+                            onClick={() => fields.remove(index)} ><i style={deleteButtonIcon} className="fas fa-trash-alt"></i></button>
 
                         <Field name={`${field}.questionType`}
                             component={renderSelectField}>

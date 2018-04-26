@@ -31,6 +31,8 @@
 
 .form-radio{ cursor: pointer }
 
+.label{ font-size: .7rem }
+
 .card{
     box-shadow: $box-shadow;
     border: 0;
@@ -40,6 +42,7 @@
 }
 
 .panel{
+    max-height: 63vh;
     background: $color-component-background;
     border: none;
     box-shadow: $box-shadow;

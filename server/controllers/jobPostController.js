@@ -1,7 +1,9 @@
 const {
-    createJobPost,
     findJobPosts,
-    findJobPost
+    findJobPost,
+    createJobPost,
+    deleteJobPost,
+    deactivateJobPost
 } = require('../api/jobPost');
 
 exports.create = async(req, res) => {
@@ -10,13 +12,11 @@ exports.create = async(req, res) => {
         internal, external, isActive, salary, description, questions
     } = req.body;
     
-    // .replace(/(^[,\s]+)|([,\s]+$)/g, '');
-
     if(questions){
         questions.map(question => {
             if(question.choices){
-                let choices = question.choices;
-                question.choices = choices.split(',').map(choice => choice.trim());
+                let choices = question.choices.toString().replace(/^[,\s]+|[,\s]+$/g, '').replace(/,[,\s]*,/g, ',');
+                question.choices = choices.split(',').map(choice => choice.trim())
             }else{
                 question.choices = null;
             }
@@ -25,10 +25,12 @@ exports.create = async(req, res) => {
     
     const jobPost = {
         position, city, province, schedule,
-        skills: skills.split(',').map(skill => skill.trim()),
         applyThrough, internal, external, isActive, salary,
         description, questions
     };
+
+    let newSkills = skills.toString().replace(/^[,\s]+|[,\s]+$/g, '').replace(/,[,\s]*,/g, ',');
+    jobPost.skills = newSkills.split(',').map(skill => skill.trim())
 
     try{
         const { newJobPost, newEmployer } = await createJobPost(jobPost, req.user)
@@ -58,4 +60,21 @@ exports.findOne = async(req, res) => {
 
 exports.update = (req, res) => {}
 
-exports.delete = (req, res) => {}
+exports.delete = async(req, res) => {
+    try{
+        const { newEmployer } = await deleteJobPost(req.params.id, req.user)
+        res.status(200).send({ employer: newEmployer })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
+    }
+}
+    
+exports.deactivateJobPost = async(req, res) => {    
+    const { isActive } = req.body;
+    try{
+        const { newEmployer } = await deactivateJobPost(req.params.id, req.user, isActive)
+        res.status(200).send({ employer: newEmployer })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
+    }
+}

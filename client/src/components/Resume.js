@@ -64,13 +64,13 @@ const Information = ({city, province, email, portfolioUrl, githubUrl, linkedInUr
 
     return(
         <div className="resume-info">
-            <div className={!city && !province ? 'd-none' : 'd-flex' }>
-                <i className="text-primary fa-lg mr4 fas fa-map-marker"></i>
-                { address }
-            </div>
             <div className={!email ? 'd-none' : 'd-flex' }>
                 <i className="text-primary fa-lg mr4 far fa-envelope-open"></i>
                 <span>{email}</span>
+            </div>
+            <div className={!city && !province ? 'd-none' : 'd-flex' }>
+                <i className="text-primary fa-lg mr4 fas fa-location-arrow"></i>
+                { address }
             </div>
             <div className={!portfolioUrl ? 'd-none' : 'd-flex' }>
                 <i className="text-primary fa-lg mr4 fas fa-link"></i>

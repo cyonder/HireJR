@@ -69,6 +69,71 @@ exports.findJobPost = (jobPostId) => {
     });
 };
 
+exports.deleteJobPost = (jobPostId, { _id }) => {    
+    return new Promise(async(resolve, reject) => {
+        try{
+            const deletedJobPost = await JobPost.findByIdAndRemove(jobPostId)
+            const { newEmployer } = await removeJobPostIdFromEmployer(deletedJobPost._id, _id)
+            resolve({ newEmployer: newEmployer })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+exports.deactivateJobPost = (jobPostId, { _employerId }, isActive) => {        
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newJobPost = await JobPost.findByIdAndUpdate(jobPostId, {
+                $set: {'isActive': isActive}
+            }, { new: true })
+            
+            const newEmployer = await Employer.findById(_employerId)
+            .populate({
+                path: '_jobPostIds',
+                options: {
+                    sort: { createdAt: 'desc' }
+                }
+            })
+            .lean()
+            if(newEmployer._jobPostIds){
+                const jobPosts = newEmployer._jobPostIds;
+                const _jobPostIds = jobPosts.map(jobPost => jobPost._id)
+                newEmployer.jobPosts = jobPosts
+                newEmployer._jobPostIds = _jobPostIds
+            }
+            resolve({ newEmployer: newEmployer })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+const removeJobPostIdFromEmployer = (jobPostId, userId) => {    
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newEmployer = await Employer.findOneAndUpdate({ _userId: userId },
+            { $pull: { _jobPostIds: jobPostId }}, { new: true })
+            .populate({
+                path: '_jobPostIds',
+                options: {
+                    sort: { createdAt: 'desc' }
+                }
+            })
+            .lean()
+            if(newEmployer._jobPostIds){
+                const jobPosts = newEmployer._jobPostIds;
+                const _jobPostIds = jobPosts.map(jobPost => jobPost._id)
+                newEmployer.jobPosts = jobPosts
+                newEmployer._jobPostIds = _jobPostIds
+            }
+            resolve({ newEmployer: newEmployer })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    });
+}
+
 const updateEmployerWithJobPostId = (jobPostId, userId) => {
     return new Promise(async(resolve, reject) => {
         try{
