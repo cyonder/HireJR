@@ -28,7 +28,7 @@ class JobPost extends Component{
         this.setState({ activeModal: !this.state.activeModal })
     }
 
-    render(){        
+    render(){                
         if(!this.props.job && !this.props.formValues) return <Loading />;
 
         let details, activeClass, buttonTarget, buttonLabel;
@@ -70,9 +70,11 @@ class JobPost extends Component{
                     <JobPostMenu job={details} />
                 </div>
                 { this.state.activeModal ? 
-                    <Modal active={this.state.activeModal}
-                    questions={details.questions}
-                    toggleModal={this.toggleModal} /> : null }
+                    <Modal {...this.props} 
+                        active={this.state.activeModal}
+                        toggleModal={this.toggleModal}
+                        questions={details.questions}
+                        toggleModal={this.toggleModal} /> : null }
             </div>
         );
     }
@@ -80,7 +82,7 @@ class JobPost extends Component{
 
 const mapStateToProps = state => {
     return{
-        job: state.jobPost.jobPost
+        job: state.job.jobPost
     };
 }
 

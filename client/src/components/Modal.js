@@ -12,10 +12,10 @@ const Modal = props => {
                     <div className="modal-title h5">A few questions... =)</div>
                 </div>
                 <div className="modal-body">
-                    <ApplyJobForm questions={props.questions} />
+                    <ApplyJobForm {...props} questions={props.questions} toggleModal={props.toggleModal} />
                 </div>
                 <div className="modal-footer">
-                    <button className="btn btn-primary">Apply</button>
+                    <label type="submit" tabIndex="0" htmlFor="submit-apply-job-form" className="btn btn-primary">Apply</label>
                 </div>
             </div>
         </div>

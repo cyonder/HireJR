@@ -8,7 +8,10 @@ import {
 import {
     FETCH_JOB_POSTS,
     FIND_JOB_POST,
-    UPDATE_EMPLOYER
+    FETCH_JOB_APPLICATIONS, 
+    FETCH_JOB_APPLICANTS, 
+    UPDATE_EMPLOYER,
+    UPDATE_JOB_APPLICATION
 } from '../constants/actionTypes';
 
 export const updateEmployerSuccess = employer => {
@@ -25,6 +28,20 @@ export const fetchJobPostsSuccess = jobPosts => {
     }
 };
 
+export const fetchJobApplicationsSuccess = jobApplications => {    
+    return {
+        type: FETCH_JOB_APPLICATIONS,
+        payload: jobApplications
+    }
+};
+
+export const fetchJobApplicantsSuccess = jobApplicants => {    
+    return {
+        type: FETCH_JOB_APPLICANTS,
+        payload: jobApplicants
+    }
+};
+
 export const findJobPostSuccess = jobPost => {
     return {
         type: FIND_JOB_POST,
@@ -32,22 +49,29 @@ export const findJobPostSuccess = jobPost => {
     }
 };
 
+export const updateJobApplicationSuccess = jobApplication => {
+    return {
+        type: UPDATE_JOB_APPLICATION,
+        payload: jobApplication
+    }
+}
+
 export const fetchJobPosts = () => {
     return dispatch => {
         axios.get(`${ROOT_API_URL}/jobs`)
         .then(response => {
             const { jobPosts } = response.data
-            dispatch( fetchJobPostsSuccess(jobPosts) );
+            dispatch( fetchJobPostsSuccess({ jobPosts: jobPosts }) );
         })
     };
 }
 
-export const findJobPost = id => {
+export const findJobPost = jobPostId => {
     return dispatch => {
-        axios.get(`${ROOT_API_URL}/jobs/${id}`)
+        axios.get(`${ROOT_API_URL}/jobs/${jobPostId}`)
         .then(response => {
             const { jobPost } = response.data
-            dispatch( findJobPostSuccess(jobPost) )
+            dispatch( findJobPostSuccess({ jobPost: jobPost }) )
         })
     }
 }
@@ -65,21 +89,21 @@ export const createJobPost = (values, callback) => {
     }
 };
 
-export const deleteJobPost = id => {
+export const deleteJobPost = jobPostId => {
     return dispatch => {
-        axios.delete(`${ROOT_API_URL}/jobs/${id}`, {
+        axios.delete(`${ROOT_API_URL}/jobs/${jobPostId}`, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
         .then(response => {                        
-            const { employer } = response.data
+            const { employer } = response.data;
             dispatch( updateEmployerSuccess({ employer: employer }) );
         })
     }
 }
 
-export const deactivateJobPost = (id, isActive) => {    
+export const updateJobPostActivation = (jobPostId, isActive) => {    
     return dispatch => {
-        axios.put(`${ROOT_API_URL}/jobs/deactivate/${id}`, {isActive}, {
+        axios.put(`${ROOT_API_URL}/jobs/activation/${jobPostId}`, { isActive }, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
         .then(response => {                                    
@@ -87,4 +111,43 @@ export const deactivateJobPost = (id, isActive) => {
             dispatch( updateEmployerSuccess({ employer: employer }) );
         })
     }
+}
+
+// Job Application
+
+export const createJobApplication = (jobPostId, values, callback) => {
+    return dispatch => {
+        axios.post(`${ROOT_API_URL}/jobs/apply/${jobPostId}`, values, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
+        .then(response => {                                                
+            const { jobApplication } = response.data
+            dispatch( updateJobApplicationSuccess({ jobApplication: jobApplication }) );
+            callback();
+        })
+    }
+}
+
+export const fetchJobApplications = () => {
+    return dispatch => {
+        axios.get(`${ROOT_API_URL}/jobs/applications`, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
+        .then(response => {
+            const { jobApplications } = response.data;
+            dispatch(fetchJobApplicationsSuccess({ jobApplications: jobApplications }))
+        })
+    };
+}
+
+export const fetchJobApplicants = () => {    
+    return dispatch => {
+        axios.get(`${ROOT_API_URL}/jobs/applicants`, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
+        .then(response => {
+            const { jobApplicants } = response.data;
+            dispatch(fetchJobApplicantsSuccess({ jobApplicants: jobApplicants }))
+        })
+    };
 }

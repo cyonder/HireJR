@@ -11,16 +11,18 @@ jobPostRouter.post('/', requireAuth, JobPost.create);
 
 jobPostRouter.get('/', JobPost.findAll);
 
+jobPostRouter.get('/applications', requireAuth, JobPost.fetchJobApplications);
+
+jobPostRouter.get('/applicants', requireAuth, JobPost.fetchJobApplicants);
+
 jobPostRouter.get('/:id', JobPost.findOne);
 
 jobPostRouter.put('/:id', requireAuth, JobPost.update);
 
-jobPostRouter.put('/deactivate/:id', requireAuth, JobPost.deactivateJobPost);
-
 jobPostRouter.delete('/:id', requireAuth, JobPost.delete);
 
-module.exports = jobPostRouter;
+jobPostRouter.put('/activation/:id', requireAuth, JobPost.updateActivation);
 
-// jobPostRouter.route('/')
-                // .post(requireAuth, JobPost.create)
-                // .get(JobPost.findAll)
+jobPostRouter.post('/apply/:id', requireAuth, JobPost.createJobApplication);
+
+module.exports = jobPostRouter;

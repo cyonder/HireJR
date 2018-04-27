@@ -2,4 +2,3 @@
 export const ROOT_URL = 'http://localhost:5000';
 export const ROOT_API_URL = 'http://localhost:5000/api';
 export const AUTHENTICATION_TOKEN = 'authentication_token';
-export const CURRENT_USER = 'current_user';

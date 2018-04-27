@@ -39,9 +39,9 @@ export const findCandidateSuccess = candidate => {
 export const fetchCandidates = () => {
     return dispatch => {
         axios.get(`${ROOT_API_URL}/candidates`)
-        .then(response => {                
-            let candidates = response.data.candidates;
-            dispatch(fetchCandidatesSuccess(candidates))
+        .then(response => {        
+            const { candidates } = response.data;
+            dispatch(fetchCandidatesSuccess({ candidates: candidates }))
         })
     }
 }
@@ -50,8 +50,8 @@ export const findCandidate = userId => {
     return dispatch => {
         axios.get(`${ROOT_API_URL}/candidates/${userId}`)
         .then(response => {
-            let candidate = response.data.candidate;
-            dispatch(findCandidateSuccess(candidate))
+            const { candidate } = response.data;
+            dispatch(findCandidateSuccess({ candidate: candidate }))
         })
     }
 }
@@ -63,35 +63,36 @@ export const createEducation = (values, callback) => {
         axios.post(`${ROOT_API_URL}/candidates/education`, values, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
-        .then(response => {
-            let candidate = response.data;
-            dispatch(updateCandidateSuccess(candidate));
+        .then(response => {            
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }
 };
 
 export const updateEducation = (values, callback) => {
+    const candidateId = values._id;
     return dispatch => {
-        axios.put(`${ROOT_API_URL}/candidates/education/${values._id}`, values, {
+        axios.put(`${ROOT_API_URL}/candidates/education/${candidateId}`, values, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
         .then(response => {
-            let candidate = response.data;
-            dispatch(updateCandidateSuccess(candidate));
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }
 }
 
-export const deleteEducation = (id, callback) => {    
+export const deleteEducation = (candidateId, callback) => {    
     return dispatch => {
-        axios.delete(`${ROOT_API_URL}/candidates/education/${id}`, {
+        axios.delete(`${ROOT_API_URL}/candidates/education/${candidateId}`, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
         .then(response => {            
-            let candidate = response.data;            
-            dispatch(updateCandidateSuccess(candidate));
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }
@@ -105,34 +106,35 @@ export const createWorkExperience = (values, callback) => {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
         .then(response => {
-            let candidate = response.data;
-            dispatch(updateCandidateSuccess(candidate));
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }
 };
 
 export const updateWorkExperience = (values, callback) => {
+    const candidateId = values._id;
     return dispatch => {
-        axios.put(`${ROOT_API_URL}/candidates/workexperience/${values._id}`, values, {
+        axios.put(`${ROOT_API_URL}/candidates/workexperience/${candidateId}`, values, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
         .then(response => {
-            let candidate = response.data;
-            dispatch(updateCandidateSuccess(candidate));
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }
 }
 
-export const deleteWorkExperience = (id, callback) => {    
+export const deleteWorkExperience = (candidateId, callback) => {    
     return dispatch => {
-        axios.delete(`${ROOT_API_URL}/candidates/workexperience/${id}`, {
+        axios.delete(`${ROOT_API_URL}/candidates/workexperience/${candidateId}`, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
         .then(response => {            
-            let candidate = response.data;            
-            dispatch(updateCandidateSuccess(candidate));
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }
@@ -146,34 +148,35 @@ export const createProject = (values, callback) => {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
         .then(response => {
-            let candidate = response.data;
-            dispatch(updateCandidateSuccess(candidate));
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }
 };
 
 export const updateProject = (values, callback) => {
+    const candidateId = values._id;
     return dispatch => {
-        axios.put(`${ROOT_API_URL}/candidates/projects/${values._id}`, values, {
+        axios.put(`${ROOT_API_URL}/candidates/projects/${candidateId}`, values, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
         .then(response => {
-            let candidate = response.data;
-            dispatch(updateCandidateSuccess(candidate));
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }
 }
 
-export const deleteProject = (id, callback) => {    
+export const deleteProject = (candidateId, callback) => {    
     return dispatch => {
-        axios.delete(`${ROOT_API_URL}/candidates/projects/${id}`, {
+        axios.delete(`${ROOT_API_URL}/candidates/projects/${candidateId}`, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
-        .then(response => {            
-            let candidate = response.data;            
-            dispatch(updateCandidateSuccess(candidate));
+        .then(response => { 
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }
@@ -183,12 +186,12 @@ export const deleteProject = (id, callback) => {
 
 export const updateCandidateProfile = (values, callback) => {
     return dispatch => {
-        axios.post(`${ROOT_API_URL}/candidates/candidateprofile`, values, {
+        axios.post(`${ROOT_API_URL}/candidates/profile`, values, {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
         })
-        .then(response => {
-            let candidate = response.data;
-            dispatch(updateCandidateSuccess(candidate));
+        .then(response => {            
+            const { candidate } = response.data;
+            dispatch(updateCandidateSuccess({ candidate: candidate }));
             callback();
         })
     }

@@ -3,12 +3,9 @@ import axios from 'axios';
 import {
     ROOT_API_URL,
     AUTHENTICATION_TOKEN,
-    CURRENT_USER
 } from '../constants/systemTypes';
 
-import {
-    FIND_CURRENT_USER
-} from '../constants/actionTypes';
+import { FIND_CURRENT_USER } from '../constants/actionTypes';
 
 export const findCurrentUserSuccess = currentUser => {
     return {
@@ -23,10 +20,10 @@ export const findCurrentUser = () => {
             headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN) }
         })
         .then(response => {
-            const currentUser = response.data.currentUser;            
-            delete currentUser.password;
-            localStorage.setItem(CURRENT_USER, JSON.stringify(currentUser))
-            dispatch(findCurrentUserSuccess(currentUser));
+            const { user } = response.data;
+            delete user.password;
+            localStorage.setItem(FIND_CURRENT_USER, JSON.stringify(user))
+            dispatch(findCurrentUserSuccess(user));
         })
     }
 }

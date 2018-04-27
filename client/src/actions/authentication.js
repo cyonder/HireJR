@@ -2,15 +2,15 @@ import axios from 'axios';
 
 import {
     ROOT_API_URL,
-    AUTHENTICATION_TOKEN,
-    CURRENT_USER
+    AUTHENTICATION_TOKEN
 } from '../constants/systemTypes';
 
 import {
     AUTHENTICATE_USER,
     DEAUTHENTICATE_USER,
     SIGNUP_USER_ERROR,
-    SIGNIN_USER_ERROR
+    SIGNIN_USER_ERROR,
+    FIND_CURRENT_USER
 } from '../constants/actionTypes';
 
 export const signupError = error => {
@@ -68,7 +68,7 @@ export const signupUser = (user, callback) => {
 
 export const signoutUser = () => {
     localStorage.removeItem(AUTHENTICATION_TOKEN);
-    localStorage.removeItem(CURRENT_USER);
+    localStorage.removeItem(FIND_CURRENT_USER);
     return{ type: DEAUTHENTICATE_USER };
 };
 

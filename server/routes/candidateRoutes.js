@@ -21,6 +21,6 @@ candidateRouter.post('/projects', requireAuth, Candidate.createProject);
 candidateRouter.put('/projects/:id', requireAuth, Candidate.updateProject);
 candidateRouter.delete('/projects/:id', requireAuth, Candidate.deleteProject);
 
-candidateRouter.post('/candidateprofile', requireAuth, Candidate.updateCandidateProfile);
+candidateRouter.post('/profile', requireAuth, Candidate.updateCandidateProfile);
 
 module.exports = candidateRouter;

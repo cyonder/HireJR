@@ -1,17 +1,42 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
 import { renderTextField } from './Fields/TextFields';
 import { renderCheckField } from './Fields/ControlFields';
 
+import { createJobApplication } from '../actions/jobPost';
+
 import Loading from './Loading';
 
 class ApplyJobForm extends Component{
+    constructor(){
+        super();
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onSubmit(values){
+        const jobPostId = this.props.match.params.id;
+        const employerId = this.props.job.employer._id;
+        let questions = Object.keys(values).map((key, index) => {
+            return { question: this.props.questions[index].question, answer: values[key] }
+        })
+
+        const jobApplication = {
+            employerId: employerId,
+            questions: questions
+        }
+        
+        this.props.createJobApplication(jobPostId, jobApplication, () => {
+            this.props.toggleModal();
+            // display success toast
+        })
+    }
+
     renderAnswers(choices, questionId){
         if(!choices) return <Loading />
         // Choices comes as array from db and as string from confirmation. Convert to string always!
         // let newChoices = choices.toString().split(',').map(choice => choice.trim());
-
         return choices.map((choice, index) => {            
             return(
                 <div key={index}>
@@ -19,7 +44,8 @@ class ApplyJobForm extends Component{
                         type="radio"
                         label={choice}
                         value={choice}
-                        component={renderCheckField} />
+                        component={renderCheckField} 
+                        validate={value => (value ? undefined : 'Required')}/>
                 </div>
             )
         })
@@ -53,7 +79,8 @@ class ApplyJobForm extends Component{
                             <Field name={question._id}
                                 type="text"
                                 placeholder="Type your answer..."
-                                component={renderTextField} />
+                                component={renderTextField} 
+                                validate={value => (value ? undefined : 'Required')}/>
                         </div>
                     </div>
                 )
@@ -61,11 +88,12 @@ class ApplyJobForm extends Component{
         })
     }
 
-    renderForm(){
+    renderForm(){                        
         const { handleSubmit } = this.props;
         return(
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(this.onSubmit)}>
                 { this.renderQuestions() }
+                <input type="submit" id="submit-apply-job-form" className="d-none"/>
             </form>   
         )     
     }
@@ -78,4 +106,6 @@ class ApplyJobForm extends Component{
 export default reduxForm({
     form: 'applyJobForm',
     destroyOnUnmount: false
-})(ApplyJobForm);
+})(
+    connect(null, { createJobApplication })(ApplyJobForm)
+);

@@ -13,6 +13,8 @@ import Signout from './Signout';
 import Header from './Header';
 import Footer from './Footer';
 import Dashboard from './Boards/Dashboard';
+import EmployerApplicants from './EmployerApplicants';
+import CandidateApplications from './CandidateApplications';
 import CandidateIndex from './CandidateIndex';
 import CandidateProfile from './CandidateProfile';
 
@@ -52,7 +54,7 @@ class App extends Component{
                             () => <PostJobForm {...this.props} />
                         }/>
                         <Route path="/jobs/:id" render={
-                            () => <div className="container grid-md"><JobPost {...this.props} /></div>
+                            (props) => <div className="container grid-md"><JobPost {...props} /></div>
                         }/>
                         <Route exact path="/signup" render={
                             () => <div className="container grid-xs"><Signup {...this.props} /></div>
@@ -65,6 +67,12 @@ class App extends Component{
                         }/>
                         <Route path="/dashboard" render={
                             () => <Dashboard {...this.props} />
+                        }/>
+                        <Route path="/applications" render={
+                            () => <div className="container grid-sm"><CandidateApplications {...this.props} /></div>
+                        }/>
+                        <Route path="/applicants" render={
+                            () => <div className="container grid-sm"><EmployerApplicants {...this.props} /></div>
                         }/>
                         <Route component={NoMatch} />
                     </Switch>

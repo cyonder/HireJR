@@ -4,11 +4,15 @@ const { Schema } = mongoose;
 const jobApplicationSchema = new Schema({
     _candidateId: {
         type: Schema.Types.ObjectId,
-        ref: 'JobApplication'
+        ref: 'Candidate'
     },
     _employerId: {
         type: Schema.Types.ObjectId,
         ref: 'Employer'
+    },
+    _jobPostId: {
+        type: Schema.Types.ObjectId,
+        ref: 'JobPost'
     },
     questions: [
         {

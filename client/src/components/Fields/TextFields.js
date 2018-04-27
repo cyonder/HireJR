@@ -3,7 +3,7 @@ import React from 'react';
 export const renderTextField = ({input, meta, type, placeholder, shouldHide}) => {
     if(shouldHide === false) return false;
     return(
-        <div className="form-group">
+        <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
             <input {...input}
                 type={type}
                 className="form-input"
@@ -18,7 +18,7 @@ export const renderTextField = ({input, meta, type, placeholder, shouldHide}) =>
 export const renderTextFieldWithLabel = ({ input, meta, type, label, placeholder, id, shouldHide }) => {
     if(shouldHide) return false;
     return(
-        <div className="form-group">
+        <div className={meta.error && meta.touched ? 'form-group has-error' : 'form-group'}>
             <label className="form-label" htmlFor={id}>{label}</label>
             <input {...input}
                 type={type}

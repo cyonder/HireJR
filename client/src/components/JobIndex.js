@@ -60,7 +60,7 @@ class JobIndex extends Component{
 
 const mapStateToProps = state => {
     return {
-        jobs: state.jobPost.jobPosts
+        jobs: state.job.jobPosts
     };
 }
 

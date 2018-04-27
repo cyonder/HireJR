@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import EmptyState from '../EmptyState';
 import Loading from '../Loading';
 
-import { deleteJobPost, deactivateJobPost } from '../../actions/jobPost';
+import { deleteJobPost, updateJobPostActivation } from '../../actions/jobPost';
 
 const deleteButtonIcon = { color: '#E6561C' }
 
@@ -96,7 +96,7 @@ class EmployerBoard extends Component{
                             data-tooltip={jobPosts[key].isActive ? 'Deactivate' : 'Activate'}
                             onClick={() => {
                                 let confirmed = window.confirm(`Are you sure you want to ${jobPosts[key].isActive ? 'deactivate' : 'activate'} this job post?`)
-                                if(confirmed){this.props.deactivateJobPost(jobPosts[key]._id, !jobPosts[key].isActive)}
+                                if(confirmed){this.props.updateJobPostActivation(jobPosts[key]._id, !jobPosts[key].isActive)}
                             }}><i className="fas fa-snowflake"></i></button>
 
                         <button className="btn btn-link btn-action btn-lg tooltip tooltip-left"
@@ -138,7 +138,7 @@ class EmployerBoard extends Component{
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         deleteJobPost,
-        deactivateJobPost
+        updateJobPostActivation
     }, dispatch)
 }
 

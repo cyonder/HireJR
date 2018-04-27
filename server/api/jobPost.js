@@ -1,33 +1,6 @@
 const JobPost = require('../models/jobPost');
 const Employer = require('../models/employer');
-
-exports.createJobPost = (jobPost, { _id, _employerId }) => {
-    const jobPostInstance = new JobPost({
-        _employerId: _employerId,
-        position: jobPost.position,
-        city: jobPost.city,
-        province: jobPost.province,
-        schedule: jobPost.schedule,
-        skills: jobPost.skills,
-        applyThrough: jobPost.applyThrough,
-        internal: jobPost.internal,
-        external: jobPost.external,
-        isActive: jobPost.isActive,
-        salary: jobPost.salary,
-        description: jobPost.description,
-        questions: jobPost.questions
-    });
-
-    return new Promise(async(resolve, reject) => {
-        try{
-            const newJobPost = await jobPostInstance.save()
-            const { newEmployer } = await updateEmployerWithJobPostId(newJobPost._id, _id)
-            resolve({ newJobPost: newJobPost, newEmployer: newEmployer })
-        }catch(error){
-            reject({ message: error.message, error: error })
-        }
-    });
-};
+const JobApplication = require('../models/jobApplication');
 
 exports.findJobPosts = () => {
     return new Promise(async(resolve, reject) => {
@@ -69,6 +42,35 @@ exports.findJobPost = (jobPostId) => {
     });
 };
 
+
+exports.createJobPost = (jobPost, { _id, _employerId }) => {
+    const jobPostInstance = new JobPost({
+        _employerId: _employerId,
+        position: jobPost.position,
+        city: jobPost.city,
+        province: jobPost.province,
+        schedule: jobPost.schedule,
+        skills: jobPost.skills,
+        applyThrough: jobPost.applyThrough,
+        internal: jobPost.internal,
+        external: jobPost.external,
+        isActive: jobPost.isActive,
+        salary: jobPost.salary,
+        description: jobPost.description,
+        questions: jobPost.questions
+    });
+
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newJobPost = await jobPostInstance.save()
+            const { newEmployer } = await updateEmployerWithJobPostId(newJobPost._id, _id)
+            resolve({ newJobPost: newJobPost, newEmployer: newEmployer })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    });
+};
+
 exports.deleteJobPost = (jobPostId, { _id }) => {    
     return new Promise(async(resolve, reject) => {
         try{
@@ -81,7 +83,7 @@ exports.deleteJobPost = (jobPostId, { _id }) => {
     })
 }
 
-exports.deactivateJobPost = (jobPostId, { _employerId }, isActive) => {        
+exports.updateJobPostActivation = (jobPostId, { _employerId }, isActive) => {        
     return new Promise(async(resolve, reject) => {
         try{
             const newJobPost = await JobPost.findByIdAndUpdate(jobPostId, {
@@ -107,6 +109,68 @@ exports.deactivateJobPost = (jobPostId, { _employerId }, isActive) => {
             reject({ message: error.message, error: error })
         }
     })
+}
+
+// Job Application
+
+exports.createJobApplication = (jobPostId, { employerId, questions }, { _candidateId }) => {  
+    const jobApplicationInstance = new JobApplication({ 
+        _candidateId: _candidateId,
+        _employerId: employerId,
+        _jobPostId: jobPostId,
+        questions: questions
+    })
+    
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newJobApplication = await jobApplicationInstance.save()
+            resolve({ newJobApplication: newJobApplication })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+exports.fetchJobApplications = ({ _candidateId }) => {    
+    return new Promise(async(resolve, reject) => {
+        try{
+            const jobApplications = await JobApplication.aggregate([ 
+                { $match : { '_candidateId' : _candidateId } },
+                { $lookup: { from: 'employers', localField: '_employerId', foreignField: '_id', as: 'employer' } },
+                { $unwind: { path: '$employer', preserveNullAndEmptyArrays: true} }
+            ])            
+            const newJobApplications = Object.keys(jobApplications).map((key, index) => {
+                delete jobApplications[key].employer._jobPostIds;
+                return jobApplications[key];
+            })
+
+            resolve({ jobApplications: newJobApplications })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    });
+}
+
+exports.fetchJobApplicants = ({ _employerId }) => {
+    return new Promise(async(resolve, reject) => {
+        try{
+            const jobApplicants = await JobApplication.aggregate([ 
+                { $match : { '_employerId' : _employerId } },
+                { $lookup: { from: 'users', localField: '_candidateId', foreignField: '_candidateId', as: 'user' } },
+                { $lookup: { from: 'candidates', localField: '_candidateId', foreignField: '_id', as: 'candidate' } },
+                { $unwind: { path: '$user', preserveNullAndEmptyArrays: true} },
+                { $unwind: { path: '$candidate', preserveNullAndEmptyArrays: true} }
+            ])            
+            const newJobApplicants = Object.keys(jobApplicants).map((key, index) => {
+                delete jobApplicants[key].user.password;
+                return jobApplicants[key];
+            })
+
+            resolve({ jobApplicants: newJobApplicants })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    });
 }
 
 const removeJobPostIdFromEmployer = (jobPostId, userId) => {    

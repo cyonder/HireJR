@@ -40,7 +40,7 @@ exports.findCandidate = id => {
 
 // Education
 
-exports.addEducationToCandidate = (education, { _candidateId }) => {    
+exports.createEducationInCandidate = (education, { _candidateId }) => {    
     const candidateInstance = new Candidate({ education: education })
     
     return new Promise(async(resolve, reject) => {
@@ -86,7 +86,7 @@ exports.deleteEducationInCandidate = (educationId, { _candidateId }) => {
 
 // Work Experience
 
-exports.addWorkExperienceToCandidate = (workExperience, { _candidateId }) => {
+exports.createWorkExperienceInCandidate = (workExperience, { _candidateId }) => {
     const candidateInstance = new Candidate({ workExperience: workExperience })
 
     return new Promise(async(resolve, reject) => {
@@ -132,7 +132,7 @@ exports.deleteWorkExperienceInCandidate = (workExperienceId, { _candidateId }) =
 
 // Project
 
-exports.addProjectToCandidate = (project, { _candidateId }) => {
+exports.createProjectInCandidate = (project, { _candidateId }) => {
     const candidateInstance = new Candidate({ projects: project })
 
     return new Promise(async(resolve, reject) => {
@@ -178,7 +178,7 @@ exports.deleteProjectInCandidate = (projectId, { _candidateId }) => {
 
 // Profile
 
-exports.changeCandidateProfile = (candidateProfile, { _candidateId }) => {    
+exports.updateCandidateProfileInCandidate = (candidateProfile, { _candidateId }) => {    
     const candidateInstance = new Candidate({ candidateProfile: candidateProfile })
 
     return new Promise(async(resolve, reject) => {

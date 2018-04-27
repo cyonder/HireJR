@@ -8,8 +8,8 @@ import {findCurrentUser} from './actions/user';
 import rootReducer from './reducers/rootReducer';
 import Root from './components/Root';
 
-import { AUTHENTICATE_USER } from './constants/actionTypes';
-import { AUTHENTICATION_TOKEN, CURRENT_USER } from './constants/systemTypes';
+import { AUTHENTICATE_USER, FIND_CURRENT_USER } from './constants/actionTypes';
+import { AUTHENTICATION_TOKEN } from './constants/systemTypes';
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -21,7 +21,7 @@ let store = createStore(rootReducer, compose(
 const token = localStorage.getItem(AUTHENTICATION_TOKEN);
 if(token){ store.dispatch({ type: AUTHENTICATE_USER }) }
 
-const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER))
+const currentUser = JSON.parse(localStorage.getItem(FIND_CURRENT_USER))
 if(currentUser){
     store.dispatch(findCurrentUser(() => {}));
 }
