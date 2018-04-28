@@ -1,4 +1,4 @@
-import { axiosInstance as axios } from '../constants/axiosInstance'; 
+import axios from '../constants/axiosInstance'; 
 
 import {
     ROOT_API_URL,
@@ -30,7 +30,7 @@ export const signinError = error => {
 export const signinUser = ({ email, password, rememberMe }, callback) => {
     return dispatch => {
         axios.post(`${ROOT_API_URL}/signin`, { email, password })
-            .then(response => {
+            .then(response => {                
                 localStorage.setItem(AUTHENTICATION_TOKEN, response.data.token);
                 dispatch({ type: AUTHENTICATE_USER });
                 callback();

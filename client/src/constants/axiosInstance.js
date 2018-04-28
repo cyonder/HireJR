@@ -5,7 +5,10 @@ import {
     AUTHENTICATION_TOKEN
 } from '../constants/systemTypes';
 
-export const axiosInstance = axios.create({
-    baseURL: ROOT_API_URL,
-    headers: {'authorization': localStorage.getItem(AUTHENTICATION_TOKEN)}
+const axiosInstance = axios.create({
+    baseURL: ROOT_API_URL
 });
+
+axiosInstance.defaults.headers.common['authorization'] = localStorage.getItem(AUTHENTICATION_TOKEN);
+
+export default axiosInstance;
