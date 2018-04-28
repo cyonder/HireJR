@@ -8,7 +8,7 @@ class Header extends Component{
             return [
                 <Link to="/dashboard" className="btn btn-link" key={1}>Dashboard</Link>,
                 <Link to="/candidates" className="btn btn-link" key={2}>All Candidates</Link>,
-                <Link to="/applications" className="btn btn-link" key={3}>All Applications</Link>,
+                <Link to="/applicants" className="btn btn-link" key={3}>All Applicants</Link>,
                 <Link to="/jobs/new" className="btn btn-link" key={4}>Post a Job</Link>
             ];
         }else if(this.props.role === 'candidate'){

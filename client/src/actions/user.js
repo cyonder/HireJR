@@ -1,9 +1,6 @@
-import axios from 'axios';
+import { axiosInstance as axios } from '../constants/axiosInstance'; 
 
-import {
-    ROOT_API_URL,
-    AUTHENTICATION_TOKEN,
-} from '../constants/systemTypes';
+import { ROOT_API_URL } from '../constants/systemTypes';
 
 import { FIND_CURRENT_USER } from '../constants/actionTypes';
 
@@ -16,9 +13,7 @@ export const findCurrentUserSuccess = currentUser => {
 
 export const findCurrentUser = () => {
     return dispatch => {
-        axios.get(`${ROOT_API_URL}/user`, {
-            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN) }
-        })
+        axios.get(`${ROOT_API_URL}/user`)
         .then(response => {
             const { user } = response.data;
             delete user.password;

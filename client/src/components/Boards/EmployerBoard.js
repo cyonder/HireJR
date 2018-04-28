@@ -96,14 +96,22 @@ class EmployerBoard extends Component{
                             data-tooltip={jobPosts[key].isActive ? 'Deactivate' : 'Activate'}
                             onClick={() => {
                                 let confirmed = window.confirm(`Are you sure you want to ${jobPosts[key].isActive ? 'deactivate' : 'activate'} this job post?`)
-                                if(confirmed){this.props.updateJobPostActivation(jobPosts[key]._id, !jobPosts[key].isActive)}
+                                if(confirmed){
+                                    this.props.updateJobPostActivation(jobPosts[key]._id, !jobPosts[key].isActive, () => {
+                                        this.computeJobPosts()
+                                    })
+                                }
                             }}><i className="fas fa-snowflake"></i></button>
 
                         <button className="btn btn-link btn-action btn-lg tooltip tooltip-left"
                             data-tooltip="Delete"
                             onClick={() => {
                                 let confirmed = window.confirm('Are you sure you want to delete this job post?')
-                                if(confirmed){this.props.deleteJobPost(jobPosts[key]._id)}
+                                if(confirmed){
+                                    this.props.deleteJobPost(jobPosts[key]._id, () => {
+                                        this.computeJobPosts()
+                                    })
+                                }
                             }}><i className="fas fa-trash-alt" style={deleteButtonIcon}></i></button>
                     </div>
                 </div>

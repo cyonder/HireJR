@@ -56,8 +56,8 @@ exports.create = async(req, res) => {
     jobPost.skills = newSkills.split(',').map(skill => skill.trim())
 
     try{
-        const { newJobPost, newEmployer } = await createJobPost(jobPost, req.user)
-        res.status(200).send({ employer: newEmployer, jobPostId: newJobPost._id })
+        const { newJobPosts, newJobPostId } = await createJobPost(jobPost, req.user)
+        res.status(200).send({ jobPosts: newJobPosts, jobPostId: newJobPostId })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -69,8 +69,8 @@ exports.delete = async(req, res) => {
     const jobPostId = req.params.id;
 
     try{
-        const { newEmployer } = await deleteJobPost(jobPostId, req.user)
-        res.status(200).send({ employer: newEmployer })
+        const { newJobPosts } = await deleteJobPost(jobPostId, req.user)
+        res.status(200).send({ jobPosts: newJobPosts })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -81,24 +81,14 @@ exports.updateActivation = async(req, res) => {
     const { isActive } = req.body;
 
     try{
-        const { newEmployer } = await updateJobPostActivation(jobPostId, req.user, isActive)
-        res.status(200).send({ employer: newEmployer })
+        const { newJobPosts } = await updateJobPostActivation(jobPostId, req.user, isActive)
+        res.status(200).send({ jobPosts: newJobPosts })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
 }
 
 // Job Application
-
-exports.createJobApplication = async(req, res) => {    
-    const jobApplication = req.body;
-    try{
-        const { newJobApplication } = await createJobApplication(req.params.id, jobApplication, req.user)
-        res.status(200).send({ jobApplication: newJobApplication })
-    }catch(error){
-        res.status(500).send({ message: error.message, error: error })
-    }
-}
 
 exports.fetchJobApplications = async(req, res) => {
     try{
@@ -113,6 +103,16 @@ exports.fetchJobApplicants = async(req, res) => {
     try{
         const { jobApplicants } = await fetchJobApplicants(req.user)
         res.status(200).send({ jobApplicants: jobApplicants })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
+    }
+}
+
+exports.createJobApplication = async(req, res) => {    
+    const jobApplication = req.body;
+    try{
+        const { newJobApplications } = await createJobApplication(req.params.id, jobApplication, req.user)
+        res.status(200).send({ jobApplications: newJobApplications })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }

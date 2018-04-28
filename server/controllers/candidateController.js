@@ -34,8 +34,8 @@ exports.createEducation = async(req, res) => {
     const education = req.body;
 
     try{
-        const { newCandidate } = await createEducationInCandidate(education, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newEducation } = await createEducationInCandidate(education, req.user)
+        res.status(200).send({ education: newEducation })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -46,8 +46,8 @@ exports.updateEducation = async(req, res) => {
     const candidateId = req.params.id;
 
     try{
-        const { newCandidate } = await updateEducationInCandidate(education, candidateId, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newEducation } = await updateEducationInCandidate(education, candidateId, req.user)        
+        res.status(200).send({ education: newEducation })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -57,8 +57,8 @@ exports.deleteEducation = async(req, res) => {
     const candidateId = req.params.id;
 
     try{
-        const { newCandidate } = await deleteEducationInCandidate(candidateId, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newEducation } = await deleteEducationInCandidate(candidateId, req.user)
+        res.status(200).send({ education: newEducation })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -70,8 +70,8 @@ exports.createWorkExperience = async(req, res) => {
     const workExperience = req.body;
 
     try{
-        const { newCandidate } = await createWorkExperienceInCandidate(workExperience, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newWorkExperience } = await createWorkExperienceInCandidate(workExperience, req.user)
+        res.status(200).send({ workExperience: newWorkExperience })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -82,8 +82,8 @@ exports.updateWorkExperience = async(req, res) => {
     const candidateId = req.params.id;
 
     try{
-        const { newCandidate } = await updateWorkExperienceInCandidate(workExperience, candidateId, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newWorkExperience } = await updateWorkExperienceInCandidate(workExperience, candidateId, req.user)
+        res.status(200).send({ workExperience: newWorkExperience })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -93,8 +93,8 @@ exports.deleteWorkExperience = async(req, res) => {
     const candidateId = req.params.id;
 
     try{
-        const { newCandidate } = await deleteWorkExperienceInCandidate(candidateId, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newWorkExperience } = await deleteWorkExperienceInCandidate(candidateId, req.user)
+        res.status(200).send({ workExperience: newWorkExperience })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -109,8 +109,8 @@ exports.createProject = async(req, res) => {
     project.skills = newSkills.split(',').map(skill => skill.trim())
 
     try{
-        const { newCandidate } = await createProjectInCandidate(project, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newProjects } = await createProjectInCandidate(project, req.user)
+        res.status(200).send({ projects: newProjects })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -124,8 +124,8 @@ exports.updateProject = async(req, res) => {
     project.skills = newSkills.split(',').map(skill => skill.trim()) 
     
     try{
-        const { newCandidate } = await updateProjectInCandidate(project, req.params.id, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newProjects } = await updateProjectInCandidate(project, req.params.id, req.user)
+        res.status(200).send({ projects: newProjects })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -135,8 +135,8 @@ exports.deleteProject = async(req, res) => {
     const candidateId = req.params.id;
 
     try{
-        const { newCandidate } = await deleteProjectInCandidate(candidateId, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newProjects } = await deleteProjectInCandidate(candidateId, req.user)
+        res.status(200).send({ projects: newProjects })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }
@@ -160,8 +160,8 @@ exports.updateCandidateProfile = async(req, res) => {
     }
 
     try{
-        const { newCandidate } = await updateCandidateProfileInCandidate(candidateProfile, req.user)
-        res.status(200).send({ candidate: newCandidate })
+        const { newCandidateProfile } = await updateCandidateProfileInCandidate(candidateProfile, req.user)
+        res.status(200).send({ candidateProfile: newCandidateProfile })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
     }

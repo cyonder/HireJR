@@ -6,9 +6,9 @@ import {
 export default function candidateReducer(state = {}, action){
     switch(action.type){
         case FETCH_CANDIDATES:
-            return { ...state, ...action.payload };
+            return { ...state, candidates: action.payload };
         case FIND_CANDIDATE:
-            return { ...state, ...action.payload };
+            return { ...state, candidate: action.payload };
         default:
             return state;
     }

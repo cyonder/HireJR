@@ -47,7 +47,7 @@ exports.createEducationInCandidate = (education, { _candidateId }) => {
         try{
             const newCandidate = await Candidate.findByIdAndUpdate(_candidateId,
             {$push: { education: candidateInstance.education }}, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newEducation: newCandidate.education })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -64,7 +64,7 @@ exports.updateEducationInCandidate = (education, educationId, { _candidateId }) 
                 'education._id': educationId
             },
             {$set: { 'education.$': candidateInstance.education }}, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newEducation: newCandidate.education })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -77,7 +77,7 @@ exports.deleteEducationInCandidate = (educationId, { _candidateId }) => {
             const newCandidate = await Candidate.findOneAndUpdate({ "_id" : _candidateId }, { 
                 $pull: { "education": { "_id": educationId } }
             }, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newEducation: newCandidate.education })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -93,7 +93,7 @@ exports.createWorkExperienceInCandidate = (workExperience, { _candidateId }) => 
         try{
             const newCandidate = await Candidate.findByIdAndUpdate(_candidateId,
             {$push: { workExperience: candidateInstance.workExperience }}, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newWorkExperience: newCandidate.workExperience })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -110,7 +110,7 @@ exports.updateWorkExperienceInCandidate = (workExperience, workExperienceId, { _
                 'workExperience._id': workExperienceId
             },
             {$set: { 'workExperience.$': candidateInstance.workExperience }}, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newWorkExperience: newCandidate.workExperience })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -123,7 +123,7 @@ exports.deleteWorkExperienceInCandidate = (workExperienceId, { _candidateId }) =
             const newCandidate = await Candidate.findOneAndUpdate({ "_id" : _candidateId }, { 
                 $pull: { "workExperience": { "_id": workExperienceId } }
             }, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newWorkExperience: newCandidate.workExperience })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -139,7 +139,7 @@ exports.createProjectInCandidate = (project, { _candidateId }) => {
         try{
             const newCandidate = await Candidate.findByIdAndUpdate(_candidateId,
             {$push: { projects: candidateInstance.projects }}, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newProjects: newCandidate.projects })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -156,7 +156,7 @@ exports.updateProjectInCandidate = (project, projectId, { _candidateId }) => {
                 'projects._id': projectId
             },
             {$set: { 'projects.$': candidateInstance.projects }}, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newProjects: newCandidate.projects })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -169,7 +169,7 @@ exports.deleteProjectInCandidate = (projectId, { _candidateId }) => {
             const newCandidate = await Candidate.findOneAndUpdate({ "_id" : _candidateId }, { 
                 $pull: { "projects": { "_id": projectId } }
             }, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newProjects: newCandidate.projects })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -185,7 +185,7 @@ exports.updateCandidateProfileInCandidate = (candidateProfile, { _candidateId })
         try{
             const newCandidate = await Candidate.findByIdAndUpdate(_candidateId,
             {$set: { candidateProfile: candidateInstance.candidateProfile }}, { new: true })
-            resolve({ newCandidate: newCandidate })
+            resolve({ newCandidateProfile: newCandidate.candidateProfile })
         }catch(error){
             reject({ message: error.message, error: error })
         }
