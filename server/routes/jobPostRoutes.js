@@ -25,4 +25,6 @@ jobPostRouter.put('/activation/:id', requireAuth, JobPost.updateActivation);
 
 jobPostRouter.post('/apply/:id', requireAuth, JobPost.createJobApplication);
 
+jobPostRouter.delete('/applications/:id', requireAuth, JobPost.deleteJobApplication);
+
 module.exports = jobPostRouter;

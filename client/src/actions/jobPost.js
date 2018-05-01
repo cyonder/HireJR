@@ -1,4 +1,4 @@
-import axios from '../constants/axiosInstance'; 
+import axios from 'axios';
 
 import {
     ROOT_API_URL,
@@ -69,7 +69,7 @@ export const fetchJobPosts = () => {
 export const findJobPost = jobPostId => {
     return dispatch => {
         axios.get(`${ROOT_API_URL}/jobs/${jobPostId}`)
-        .then(response => {
+        .then(response => {            
             const { jobPost } = response.data
             dispatch( findJobPostSuccess(jobPost) )
         })
@@ -78,7 +78,10 @@ export const findJobPost = jobPostId => {
 
 export const createJobPost = (values, callback) => {    
     return dispatch => {
-        axios.post(`${ROOT_API_URL}/jobs`, values)
+        // Token not ready after signing in, while creating a job post. That's why set the header additionaly.
+        axios.post(`${ROOT_API_URL}/jobs`, values, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
         .then(response => {
             const { jobPosts, jobPostId } = response.data;            
             dispatch( updateJobPostsSuccess(jobPosts) );
@@ -89,7 +92,9 @@ export const createJobPost = (values, callback) => {
 
 export const deleteJobPost = (jobPostId, callback) => {
     return dispatch => {
-        axios.delete(`${ROOT_API_URL}/jobs/${jobPostId}`)
+        axios.delete(`${ROOT_API_URL}/jobs/${jobPostId}`, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
         .then(response => {                        
             const { jobPosts } = response.data;            
             dispatch( updateJobPostsSuccess(jobPosts) );
@@ -100,7 +105,9 @@ export const deleteJobPost = (jobPostId, callback) => {
 
 export const updateJobPostActivation = (jobPostId, isActive, callback) => {    
     return dispatch => {
-        axios.put(`${ROOT_API_URL}/jobs/activation/${jobPostId}`, { isActive })
+        axios.put(`${ROOT_API_URL}/jobs/activation/${jobPostId}`, { isActive }, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
         .then(response => {                                    
             const { jobPosts } = response.data;            
             dispatch( updateJobPostsSuccess(jobPosts) );
@@ -113,9 +120,11 @@ export const updateJobPostActivation = (jobPostId, isActive, callback) => {
 
 export const fetchJobApplications = () => {
     return dispatch => {
-        axios.get(`${ROOT_API_URL}/jobs/applications`)
+        axios.get(`${ROOT_API_URL}/jobs/applications`, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
         .then(response => {
-            const { jobApplications } = response.data;
+            const { jobApplications } = response.data;            
             dispatch(fetchJobApplicationsSuccess(jobApplications))
         })
     };
@@ -123,7 +132,9 @@ export const fetchJobApplications = () => {
 
 export const fetchJobApplicants = () => {    
     return dispatch => {
-        axios.get(`${ROOT_API_URL}/jobs/applicants`)
+        axios.get(`${ROOT_API_URL}/jobs/applicants`, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
         .then(response => {
             const { jobApplicants } = response.data;
             dispatch(fetchJobApplicantsSuccess(jobApplicants))
@@ -133,7 +144,22 @@ export const fetchJobApplicants = () => {
 
 export const createJobApplication = (jobPostId, values, callback) => {
     return dispatch => {
-        axios.post(`${ROOT_API_URL}/jobs/apply/${jobPostId}`, values)
+        axios.post(`${ROOT_API_URL}/jobs/apply/${jobPostId}`, values, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
+        .then(response => {                                                
+            const { jobApplications } = response.data;                        
+            dispatch( updateJobApplicationSuccess(jobApplications) );
+            callback();
+        })
+    }
+}
+
+export const deleteJobApplication = (jobApplicationId, callback) => {
+    return dispatch => {
+        axios.delete(`${ROOT_API_URL}/jobs/applications/${jobApplicationId}`, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
         .then(response => {                                                
             const { jobApplications } = response.data;                        
             dispatch( updateJobApplicationSuccess(jobApplications) );

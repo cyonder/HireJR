@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 import Loading from './Loading';
 import Card from './Card';
 import Modal from './Modal';
+import NotFound from './NotFound';
 import JobPostMenu from './JobPostMenu';
 
-import { findJobPost } from '../actions/jobPost';
+import { findJobPost, fetchJobApplications } from '../actions/jobPost';
 
 class JobPost extends Component{
     constructor(){
@@ -21,6 +23,7 @@ class JobPost extends Component{
     componentDidMount(){
         if(this.props.match.params.id){
             this.props.findJobPost(this.props.match.params.id);
+            this.props.fetchJobApplications();
         }
     }
 
@@ -28,10 +31,36 @@ class JobPost extends Component{
         this.setState({ activeModal: !this.state.activeModal })
     }
 
-    render(){                
-        if(!this.props.job && !this.props.formValues) return <Loading />;
+    renderButtons(internalButton, externalButton, activeClass){
+        const { jobApplications } = this.props;
+        // Check if eligible to apply
+        if(!this.props.candidate.candidateProfile) return <button className="btn btn-error btn-block mb8 disabled">Complete Your Profile!</button>
+        // Check for confirmation component
+        if(!jobApplications) return <button className="btn btn-primary btn-block mb8 disabled">Apply</button>
+        
+        const jobApplicationIds = jobApplications.map(jobApplication => jobApplication._jobPostId)
+        const newJobApplicationIds = new Set(jobApplicationIds);
+        const jobPostId = this.props.match.params.id;
+
+        // Check if already applied
+        if(!newJobApplicationIds.has(jobPostId)){
+            if(Object.keys(internalButton).length !== 0){
+                return <button onClick={internalButton.target} className={activeClass}>{internalButton.label}</button>
+            }else{
+                return <a href={`http://${externalButton.target}`} target="_blank" className={activeClass}>{externalButton.label}</a>
+            }
+        }else{
+            return <button className="btn btn-primary btn-block mb8 disabled">Applied</button>
+        }
+    }
+
+    render(){                        
+        if(!this.props.job && !this.props.formValues) return <NotFound />;
+        if(!this.props.candidate) return <Loading />;
 
         let details, activeClass, buttonTarget, buttonLabel;
+        let internalButton = {};
+        let externalButton = {};
 
         if(this.props.formValues){
             details = this.props.formValues;
@@ -49,12 +78,16 @@ class JobPost extends Component{
 
         if(details){
             if(details.applyThrough === 'internal'){
-                buttonTarget = this.toggleModal;
-                buttonLabel = 'Apply on Hirejr';
+                internalButton = {
+                    target: this.toggleModal,
+                    label: 'Apply on Hirejr'
+                }
             }else{ // Needs fix for confirmation comp
-                buttonTarget = details.external;
-                buttonLabel = 'Apply on Website';
-            }
+                externalButton = {
+                    target: details.external,
+                    label: 'Apply on Company Website'
+                }
+            }            
         }
 
         return(
@@ -66,7 +99,7 @@ class JobPost extends Component{
                     </Card>
                 </div>
                 <div className="column col-4">
-                    <a onClick={buttonTarget} target="_blank" className={activeClass}>{buttonLabel}</a>
+                     { this.renderButtons(internalButton, externalButton, activeClass) }
                     <JobPostMenu job={details} />
                 </div>
                 { this.state.activeModal ? 
@@ -82,10 +115,12 @@ class JobPost extends Component{
 
 const mapStateToProps = state => {
     return{
-        job: state.job.jobPost
+        job: state.job.jobPost,
+        jobApplications: state.job.jobApplications,
+        candidate: state.user.candidate
     };
 }
 
 export default withRouter(
-    connect(mapStateToProps, { findJobPost })(JobPost)
+    connect(mapStateToProps, { findJobPost, fetchJobApplications })(JobPost)
 );

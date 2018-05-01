@@ -4,23 +4,23 @@ import { Link } from 'react-router-dom';
 
 class Header extends Component{
     renderNavLinks(){
+        const { pathname } = this.props.location;
         if(this.props.role === 'employer'){
             return [
-                <Link to="/dashboard" className="btn btn-link" key={1}>Dashboard</Link>,
-                <Link to="/candidates" className="btn btn-link" key={2}>All Candidates</Link>,
-                <Link to="/applicants" className="btn btn-link" key={3}>All Applicants</Link>,
-                <Link to="/jobs/new" className="btn btn-link" key={4}>Post a Job</Link>
+                <Link to="/dashboard" className={`${pathname === '/dashboard' ? 'active btn btn-link' : 'btn btn-link' }`} key={1}>Dashboard</Link>,
+                <Link to="/candidates" className={`${pathname === '/candidates' ? 'active btn btn-link' : 'btn btn-link' }`} key={2}>All Candidates</Link>,
+                <Link to="/applicants" className={`${pathname === '/applicants' ? 'active btn btn-link' : 'btn btn-link' }`} key={3}>All Applicants</Link>,
+                <Link to="/jobs/new" className={`${pathname === '/jobs/new' ? 'active btn btn-link' : 'btn btn-link' }`} key={4}>Post a Job</Link>
             ];
         }else if(this.props.role === 'candidate'){
             return [
-                <Link to="/dashboard" className="btn btn-link" key={1}>Dashboard</Link>,
-                <Link to="/jobs" className="btn btn-link" key={2}>All Jobs</Link>,
-                <Link to="/applications" className="btn btn-link" key={3}>My Applications</Link>
+                <Link to="/dashboard" className={`${pathname === '/dashboard' ? 'active btn btn-link' : 'btn btn-link' }`} key={1}>Dashboard</Link>,
+                <Link to="/jobs" className={`${pathname === '/jobs' ? 'active btn btn-link' : 'btn btn-link' }`} key={2}>All Jobs</Link>
             ];
         }else{
             return [
-                <Link to="/jobs" className="btn btn-link" key={1}>All Jobs</Link>,
-                <Link to="/jobs/new" className="btn btn-link" key={2}>Post a Job</Link>
+                <Link to="/jobs" className={`${pathname === '/jobs' ? 'active btn btn-link' : 'btn btn-link' }`} key={1}>All Jobs</Link>,
+                <Link to="/jobs/new" className={`${pathname === '/jobs/new' ? 'active btn btn-link' : 'btn btn-link' }`} key={2}>Post a Job</Link>
             ];
         }
     }

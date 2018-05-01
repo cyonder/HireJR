@@ -22,7 +22,7 @@ const token = localStorage.getItem(AUTHENTICATION_TOKEN);
 if(token){ store.dispatch({ type: AUTHENTICATE_USER }) }
 
 const currentUser = JSON.parse(localStorage.getItem(FIND_CURRENT_USER))
-if(currentUser){
+if(currentUser){    
     store.dispatch(findCurrentUser(() => {}));
 }
 

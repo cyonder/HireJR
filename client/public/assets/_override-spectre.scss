@@ -23,6 +23,18 @@
     }
 }
 
+.btn.btn-link:focus{
+    box-shadow: none
+}
+
+a:focus{
+    box-shadow: none
+}
+
+.btn.btn-link.active{
+    border-bottom: 1px solid $color-brand;
+}
+
 .columns{
     align-items: flex-start; // Set flexbox children to have different heights to use up available space
 }
@@ -32,6 +44,11 @@
 .form-radio{ cursor: pointer }
 
 .label{ font-size: .7rem }
+
+.accordion-header{
+    margin-bottom: .8rem;
+    border-bottom: 1px solid $color-brand;
+}
 
 .card{
     box-shadow: $box-shadow;

@@ -101,7 +101,7 @@ exports.updateJobPostActivation = (jobPostId, { _employerId }, isActive) => {
 
 // Job Application
 
-exports.fetchJobApplications = ({ _candidateId }) => {    
+exports.fetchJobApplications = ({ _candidateId }) => {
     return new Promise(async(resolve, reject) => {
         try{
             const jobApplications = await JobApplication.aggregate([ 
@@ -111,13 +111,40 @@ exports.fetchJobApplications = ({ _candidateId }) => {
                 { $unwind: { path: '$employer', preserveNullAndEmptyArrays: true} },
                 { $unwind: { path: '$jobPost', preserveNullAndEmptyArrays: true } }
             ]).sort({createdAt: 'desc'})       
-                 
+
             const newJobApplications = Object.keys(jobApplications).map((key, index) => {
                 delete jobApplications[key].employer._jobPostIds;
                 return jobApplications[key];
             })
             
             resolve({ jobApplications: newJobApplications })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    });
+}
+
+exports.deleteJobApplication = (jobApplicationId, { _candidateId }) => {    
+    return new Promise(async(resolve, reject) => {
+        try{
+            const deletedJobApplication = await JobApplication.findByIdAndRemove(jobApplicationId)
+            const jobApplications = await JobApplication.find({ '_candidateId': _candidateId })
+            .sort({createdAt: 'desc'})
+            .populate('_employerId')
+            .populate('_jobPostId')
+            .lean()
+        
+            const newJobApplications = jobApplications.map((jobApplication, index) => {
+                jobApplication.employer = jobApplication._employerId;
+                jobApplication._employerId = jobApplication.employer._id
+
+                jobApplication.jobPost = jobApplication._jobPostId;
+                jobApplication._jobPostId = jobApplication.jobPost._id
+                
+                return jobApplication;
+            })
+
+            resolve({ newJobApplications: newJobApplications })
         }catch(error){
             reject({ message: error.message, error: error })
         }
@@ -131,17 +158,17 @@ exports.fetchJobApplicants = ({ _employerId }) => {
                 { $match : { '_employerId' : _employerId } },
                 { $lookup: { from: 'users', localField: '_candidateId', foreignField: '_candidateId', as: 'user' } },
                 { $lookup: { from: 'candidates', localField: '_candidateId', foreignField: '_id', as: 'candidate' } },
-                { $lookup: { from: 'jobposts', localField: '_employerId', foreignField: '_employerId', as: 'jobPost' } },
+                { $lookup: { from: 'jobposts', localField: '_jobPostId', foreignField: '_id', as: 'jobPost' } },
                 { $unwind: { path: '$user', preserveNullAndEmptyArrays: true } },
                 { $unwind: { path: '$candidate', preserveNullAndEmptyArrays: true } },
                 { $unwind: { path: '$jobPost', preserveNullAndEmptyArrays: true } }
             ]).sort({createdAt: 'desc'}) 
-            
+
             const newJobApplicants = Object.keys(jobApplicants).map((key, index) => {
                 delete jobApplicants[key].user.password;
                 return jobApplicants[key];
             })
-
+            
             resolve({ jobApplicants: newJobApplicants })
         }catch(error){
             reject({ message: error.message, error: error })

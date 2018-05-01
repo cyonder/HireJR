@@ -1,4 +1,4 @@
-import axios from '../constants/axiosInstance'; 
+import axios from 'axios';
 
 import {
     ROOT_API_URL,

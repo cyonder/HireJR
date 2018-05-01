@@ -184,7 +184,9 @@ exports.updateCandidateProfileInCandidate = (candidateProfile, { _candidateId })
     return new Promise(async(resolve, reject) => {
         try{
             const newCandidate = await Candidate.findByIdAndUpdate(_candidateId,
-            {$set: { candidateProfile: candidateInstance.candidateProfile }}, { new: true })
+                { $set: { candidateProfile: candidateInstance.candidateProfile } }, 
+                { new: true }
+            )            
             resolve({ newCandidateProfile: newCandidate.candidateProfile })
         }catch(error){
             reject({ message: error.message, error: error })

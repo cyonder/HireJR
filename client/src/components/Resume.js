@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { runInDebugContext } from 'vm';
+
+import EmptyState from './EmptyState';
 
 class Resume extends Component{
     render(){
@@ -10,6 +11,15 @@ class Resume extends Component{
             workExperience,
             projects
         } = this.props.candidate;
+
+        if( !candidateProfile || 
+            !candidateProfile.city ||
+            !candidateProfile.province ||
+            !candidateProfile.skills ||
+            !candidateProfile.summary
+        ) return <EmptyState title="This profile is incomplete!"
+                    subtitle="Please update required fields for your profile"
+                    icon="icon-edit" />
 
         const header = {
             firstName: user.firstName,

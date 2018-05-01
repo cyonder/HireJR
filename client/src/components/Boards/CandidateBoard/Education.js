@@ -21,20 +21,20 @@ class Education extends Component{
 
     onSubmitAddEducation(values){
         this.props.createEducation(values, () => {
-            this.props.notify();
+            this.props.notify("Saved successfully!");
             this.toggleForm();
         })
     }
 
     onSubmitEditEducation(values){
         this.props.updateEducation(values, () => {
-            this.props.notify();            
+            this.props.notify("Updated successfully!"); 
         })
     }
 
     onDelete(id){
         this.props.deleteEducation(id, () => {
-            this.props.notify();
+            this.props.notify("Deleted successfully!");
         })
     }
     

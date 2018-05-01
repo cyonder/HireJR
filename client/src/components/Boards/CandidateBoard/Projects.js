@@ -21,20 +21,20 @@ class Projects extends Component{
 
     onSubmitAddProject(values){
         this.props.createProject(values, () => {
-            this.props.notify();
+            this.props.notify("Saved successfully!");
             this.toggleForm();
         })
     }
 
     onSubmitEditProject(values){       
         this.props.updateProject(values, () => {
-            this.props.notify();            
+            this.props.notify("Updated successfully!");
         })
     }
 
     onDelete(id){
         this.props.deleteProject(id, () => {
-            this.props.notify();
+            this.props.notify("Deleted successfully!");
         })
     }
     

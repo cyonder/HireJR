@@ -38,5 +38,5 @@ class PostJobFormTwo extends Component{
 export default reduxForm({
     form: 'postJobForm',
     destroyOnUnmount: false,
-    // validate: (values) => jobPostFormValidation(values)
+    validate: (values) => jobPostFormValidation(values)
 })(PostJobFormTwo);

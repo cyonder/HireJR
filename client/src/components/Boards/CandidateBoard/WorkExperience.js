@@ -21,20 +21,20 @@ class WorkExperience extends Component{
 
     onSubmitAddWorkExperience(values){
         this.props.createWorkExperience(values, () => {
-            this.props.notify();
+            this.props.notify("Saved successfully!");
             this.toggleForm();
         })
     }
 
     onSubmitEditWorkExperience(values){
         this.props.updateWorkExperience(values, () => {
-            this.props.notify();            
+            this.props.notify("Updated successfully!");    
         })
     }
 
     onDelete(id){
         this.props.deleteWorkExperience(id, () => {
-            this.props.notify();
+            this.props.notify("Deleted successfully!");
         })
     }
     

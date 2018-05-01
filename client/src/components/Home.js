@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 import Hero from './Hero';
-import JobIndex from './JobIndex';
+import JobPostIndex from './JobPostIndex';
 
 class Home extends Component{
     render(){
         return [
             <Hero key={1} />,
-            <JobIndex key={2} />
+            <JobPostIndex key={2} />
         ];
     }
 }

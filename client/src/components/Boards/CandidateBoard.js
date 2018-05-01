@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 
-import About from './CandidateBoard/About';
+import CandidateApplications from './CandidateBoard/CandidateApplications';
+import Profile from './CandidateBoard/Profile';
 import Education from './CandidateBoard/Education';
 import WorkExperience from './CandidateBoard/WorkExperience';
 import Projects from './CandidateBoard/Projects';
@@ -26,9 +27,10 @@ import {
 } from '../../actions/candidate';
 
 class CandidateBoard extends Component{
-    notify = () => toast.success("Saved successfully!");
+    notify = (text) => toast.success(text);
 
     renderMenu(){
+        const { pathname } = this.props.location;
         return[
             <ul className="menu" key={1}>
                 <li className="menu-item">
@@ -36,19 +38,19 @@ class CandidateBoard extends Component{
                 </li>
                 <li className="divider"></li>
                 <li className="menu-item">
-                    <Link to="/dashboard/about">About Me</Link>
+                    <Link to="/dashboard/profile" className={`${pathname === '/dashboard/profile' ? 'active' : null }`}>Profile</Link>
                 </li>
                 <li className="menu-item">
-                    <Link to="/dashboard/education">Education</Link>
+                    <Link to="/dashboard/education" className={`${pathname === '/dashboard/education' ? 'active' : null }`}>Education</Link>
                 </li>
                 <li className="menu-item">
-                    <Link to="/dashboard/experience">Work Experience</Link>
+                    <Link to="/dashboard/experience" className={`${pathname === '/dashboard/experience' ? 'active' : null }`}>Work Experience</Link>
                 </li>
                 <li className="menu-item">
-                    <Link to="/dashboard/projects">Projects</Link>
+                    <Link to="/dashboard/projects" className={`${pathname === '/dashboard/projects' ? 'active' : null }`}>Projects</Link>
                 </li>
                 <li className="menu-item">
-                    <Link to="/dashboard/resume">Resume</Link>
+                    <Link to="/dashboard/resume" className={`${pathname === '/dashboard/resume' ? 'active' : null }`}>Resume</Link>
                 </li>
             </ul>,
             <div className="info-box mt8" key={2}>
@@ -58,7 +60,7 @@ class CandidateBoard extends Component{
         ]
     }
 
-    render(){
+    render(){        
         let initialValues;
         
         if(typeof this.props.candidate !== "undefined"){
@@ -74,8 +76,12 @@ class CandidateBoard extends Component{
                 </div>
                 <div className="column col-8">
                     <Switch>
-                        <Route exact path="/dashboard/about" render={
-                            () => <About {...this.props}
+                        <Route exact path="/dashboard" render={
+                            () => <CandidateApplications {...this.props}
+                                    notify={this.notify}/>
+                        }/>
+                        <Route exact path="/dashboard/profile" render={
+                            () => <Profile {...this.props}
                                     initialValues={initialValues}
                                     notify={this.notify}/>
                         }/>

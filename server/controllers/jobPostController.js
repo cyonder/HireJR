@@ -6,7 +6,8 @@ const {
     updateJobPostActivation,
     createJobApplication,
     fetchJobApplications,
-    fetchJobApplicants
+    fetchJobApplicants,
+    deleteJobApplication
 } = require('../api/jobPost');
 
 exports.findAll = async(req, res) => {
@@ -92,7 +93,7 @@ exports.updateActivation = async(req, res) => {
 
 exports.fetchJobApplications = async(req, res) => {
     try{
-        const { jobApplications } = await fetchJobApplications(req.user)
+        const { jobApplications } = await fetchJobApplications(req.user)     
         res.status(200).send({ jobApplications: jobApplications })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })
@@ -112,6 +113,16 @@ exports.createJobApplication = async(req, res) => {
     const jobApplication = req.body;
     try{
         const { newJobApplications } = await createJobApplication(req.params.id, jobApplication, req.user)
+        res.status(200).send({ jobApplications: newJobApplications })
+    }catch(error){
+        res.status(500).send({ message: error.message, error: error })
+    }
+}
+
+exports.deleteJobApplication = async(req, res) => {   
+    const jobApplicationId = req.params.id; 
+    try{
+        const { newJobApplications } = await deleteJobApplication(jobApplicationId, req.user)
         res.status(200).send({ jobApplications: newJobApplications })
     }catch(error){
         res.status(500).send({ message: error.message, error: error })

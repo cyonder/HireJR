@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import { renderTextField } from './Fields/TextFields';
 import { renderCheckField } from './Fields/ControlFields';
@@ -18,8 +19,11 @@ class ApplyJobForm extends Component{
     onSubmit(values){
         const jobPostId = this.props.match.params.id;
         const employerId = this.props.job.employer._id;
+        const newQuestions = this.props.questions;
+        
+        // TODO: Sometimes throws -> TypeError: Cannot read property 'question' of undefined
         let questions = Object.keys(values).map((key, index) => {
-            return { question: this.props.questions[index].question, answer: values[key] }
+            return { question: newQuestions[index].question, answer: values[key] }
         })
 
         const jobApplication = {
@@ -29,7 +33,7 @@ class ApplyJobForm extends Component{
         
         this.props.createJobApplication(jobPostId, jobApplication, () => {
             this.props.toggleModal();
-            // display success toast
+            toast.success('Application sent successfully!');
         })
     }
 
@@ -37,7 +41,7 @@ class ApplyJobForm extends Component{
         if(!choices) return <Loading />
         // Choices comes as array from db and as string from confirmation. Convert to string always!
         // let newChoices = choices.toString().split(',').map(choice => choice.trim());
-        return choices.map((choice, index) => {            
+        return choices.map((choice, index) => {
             return(
                 <div key={index}>
                     <Field name={questionId}

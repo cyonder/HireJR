@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import Loading from './Loading';
+import EmptyState from './EmptyState';
 
 import { fetchJobPosts } from '../actions/jobPost';
 
-class JobIndex extends Component{
+class JobPostIndex extends Component{
     componentDidMount(){
         this.props.fetchJobPosts();
     }
@@ -54,6 +55,7 @@ class JobIndex extends Component{
     }
 
     render(){
+        if(!this.props.jobs) return <EmptyState title="There is no job post to display" subtitle="Maybe something went wrong =)" icon="icon-edit"/>
         return this.renderJobs();
     }
 }
@@ -64,4 +66,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps, { fetchJobPosts })(JobIndex);
+export default connect(mapStateToProps, { fetchJobPosts })(JobPostIndex);

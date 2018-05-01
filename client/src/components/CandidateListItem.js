@@ -53,8 +53,8 @@ const ListItemFooter = (footer, togglable, toggle) => (
     <div className="list-item-footer mt4">
         <div className={ togglable ? 'expandable expanded' : 'expandable collapsed' }>
             {renderSkills(footer.skills)}
-            {renderSummary(footer.summary)}
-            {renderCareerObjective(footer.careerObjective)}
+            { footer.summary ? renderSummary(footer.summary) : null}
+            { footer.careerObjective ? renderCareerObjective(footer.careerObjective) : null}
         </div>
         <a onClick={toggle} className="float-right mt4 c-hand">{ togglable ? 'Collapse' : 'Read More...' }</a>
     </div>

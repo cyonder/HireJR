@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import EmptyState from './EmptyState';
 import Loading from './Loading';
 import CandidateListItem from './CandidateListItem';
 
@@ -14,9 +15,20 @@ class CandidateIndex extends Component{
 
     renderCandidates(){
         const candidates = this.props.candidates;
-
+        
         return Object.keys(candidates).map((key, index) => {
-            if(candidates[key].candidateProfile == undefined) return null;
+            if(candidates[key].candidateProfile == undefined){ 
+                return null
+            }else if(
+                !candidates[key].candidateProfile || 
+                !candidates[key].candidateProfile.city ||
+                !candidates[key].candidateProfile.province ||
+                !candidates[key].candidateProfile.skills ||
+                !candidates[key].candidateProfile.summary
+            ){ 
+                return null;
+            }
+
             const { _id, firstName, lastName, email } = candidates[key].user;
             const { 
                 province, city, portfolioUrl, githubUrl, linkedInUrl, 

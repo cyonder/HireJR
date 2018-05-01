@@ -92,7 +92,7 @@ const mapStateToProps = state => {
 export default reduxForm({
     form: 'postJobForm',
     destroyOnUnmount: false,
-    // validate: (values) => jobPostFormValidation(values)
+    validate: (values) => jobPostFormValidation(values)
 })(
     connect(mapStateToProps)(PostJobFormOne)
 );

@@ -1,6 +1,6 @@
-import axios from '../constants/axiosInstance'; 
+import axios from 'axios'; 
 
-import { ROOT_API_URL } from '../constants/systemTypes';
+import { ROOT_API_URL, AUTHENTICATION_TOKEN } from '../constants/systemTypes';
 
 import { FIND_CURRENT_USER } from '../constants/actionTypes';
 
@@ -13,7 +13,10 @@ export const findCurrentUserSuccess = currentUser => {
 
 export const findCurrentUser = () => {
     return dispatch => {
-        axios.get(`${ROOT_API_URL}/user`)
+        // Token not ready after sign in. That's why set the header additionaly.
+        axios.get(`${ROOT_API_URL}/user`, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN) }
+        })
         .then(response => {
             const { user } = response.data;
             delete user.password;
