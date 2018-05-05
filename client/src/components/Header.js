@@ -28,7 +28,7 @@ class Header extends Component{
     renderAuthLinks(){
         if(this.props.authenticated){
             return [
-                <Link to="/settings" className="btn btn-link" key={1}>Settings</Link>,
+                <Link to="/settings" className="btn btn-link disabled" key={1}>Settings</Link>,
                 <Link to="/signout" className="btn btn-link" key={2}>Sign out</Link>
             ];
         }else{

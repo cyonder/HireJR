@@ -62,6 +62,8 @@ class EmployerApplicants extends Component{
     }
 
     render(){        
+        const { user } = this.props;
+        if(Object.keys(user).length === 0 || user.role === 'candidate') this.props.history.push('/dashboard')
         if(!this.props.jobApplicants) return <Loading />
         let candidateGroups = this.returnCandidatesGroupedByJobPost();
         const groupedJobApplicants = this.groupApplicantsByPosition(this.props.jobApplicants, 'jobPost')
@@ -70,7 +72,7 @@ class EmployerApplicants extends Component{
         return candidateGroups.map((candidateGroup, index) => {                        
             return (
                 <div className="accordion" key={index}>
-                    <input type="radio" id={index} name="accordion-radio" checked={index === 0 ? 'checked' : null} hidden/>
+                    <input type="radio" id={index} name="accordion-radio" hidden />
                     <label className="accordion-header c-hand" htmlFor={index}>
                         <i className="icon icon-arrow-right mr-1"></i>{jobPostPositions[index]}
                     </label>
@@ -87,6 +89,7 @@ class EmployerApplicants extends Component{
 
 const mapStateToProps = state => {
     return {
+        user: state.user,
         jobApplicants: state.job.jobApplicants
     }
 }

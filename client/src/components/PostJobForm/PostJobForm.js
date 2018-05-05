@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Steps from '../Steps';
 import PostJobFormOne from './PostJobFormOne';
@@ -34,6 +35,7 @@ class PostJobForm extends Component{
     }
 
     renderAStep(){
+        const { user } = this.props;
         const { page } = this.state;
         const authenticated = localStorage.getItem('authentication_token');
 
@@ -48,6 +50,8 @@ class PostJobForm extends Component{
                 if(!authenticated)
                     return <div className="container grid-md">
                                 <PostJobAuth {...this.props} setPage={this.setPage} /></div>;
+                else if(user.role === 'candidate') // candidate can't post a job
+                    return this.props.history.push('/dashboard')                
                 else
                     return <div className="container grid-md">
                                 <PostJobConfirmation {...this.props} previousPage={this.previousPage} /></div>;
@@ -71,4 +75,10 @@ class PostJobForm extends Component{
     }
 }
 
-export default PostJobForm;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(PostJobForm);

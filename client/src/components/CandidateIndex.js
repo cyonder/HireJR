@@ -59,7 +59,8 @@ class CandidateIndex extends Component{
     }
 
     render(){
-        const candidates = this.props.candidates;
+        const { user, candidates } = this.props;
+        if(Object.keys(user).length === 0 || user.role === 'candidate') this.props.history.push('/dashboard')
         if(!candidates) return <Loading />;
         return <div className="columns">{this.renderCandidates()}</div>
     }
@@ -67,6 +68,7 @@ class CandidateIndex extends Component{
 
 const mapStateToProps = state => {
     return {
+        user: state.user,
         candidates: state.candidate.candidates
     }
 }

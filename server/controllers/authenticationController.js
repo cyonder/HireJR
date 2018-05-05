@@ -1,5 +1,5 @@
+require('dotenv').config();
 const jwt = require('jwt-simple');
-const config = require('../../config');
 
 const { createUserAndEmployer, createUserAndCandidate } = require('../api/user');
 
@@ -9,7 +9,7 @@ const tokenForUser = user => {
         sub: user._id,
         aud: user._employerId || user._candidateId,
         iat: timeStamp
-    }, config.secret);
+    }, process.env.JWT_SECRET);
 }
 
 exports.signin = (req, res) => {

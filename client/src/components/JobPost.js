@@ -32,9 +32,13 @@ class JobPost extends Component{
     }
 
     renderButtons(internalButton, externalButton, activeClass){
-        const { jobApplications } = this.props;
-        // Check if eligible to apply
-        if(!this.props.candidate.candidateProfile) return <button className="btn btn-error btn-block mb8 disabled">Complete Your Profile!</button>
+        const { user, jobApplications } = this.props;
+        // User not logged in, don't display the apply button
+        if(Object.keys(user).length === 0) return null
+        // Employer shouldn't see the apply button
+        if(user.role === 'employer') return null
+        // Check if user is a candidate and eligible to apply        
+        if(user.role === 'candidate' && !user.candidate.candidateProfile) return <button className="btn btn-error btn-block mb8 disabled">Complete Your Profile!</button>
         // Check for confirmation component
         if(!jobApplications) return <button className="btn btn-primary btn-block mb8 disabled">Apply</button>
         
@@ -54,10 +58,9 @@ class JobPost extends Component{
         }
     }
 
-    render(){                        
-        if(!this.props.job && !this.props.formValues) return <NotFound />;
-        if(!this.props.candidate) return <Loading />;
-
+    render(){                     
+        if(!this.props.job && !this.props.formValues) return <NotFound />;        
+        
         let details, activeClass, buttonTarget, buttonLabel;
         let internalButton = {};
         let externalButton = {};
@@ -82,7 +85,7 @@ class JobPost extends Component{
                     target: this.toggleModal,
                     label: 'Apply on Hirejr'
                 }
-            }else{ // Needs fix for confirmation comp
+            }else{
                 externalButton = {
                     target: details.external,
                     label: 'Apply on Company Website'
@@ -117,7 +120,7 @@ const mapStateToProps = state => {
     return{
         job: state.job.jobPost,
         jobApplications: state.job.jobApplications,
-        candidate: state.user.candidate
+        user: state.user
     };
 }
 
