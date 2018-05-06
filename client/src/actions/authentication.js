@@ -10,7 +10,7 @@ import {
     DEAUTHENTICATE_USER,
     SIGNUP_USER_ERROR,
     SIGNIN_USER_ERROR,
-    FIND_CURRENT_USER
+    CURRENT_USER
 } from '../constants/actionTypes';
 
 export const signupError = error => {
@@ -68,7 +68,7 @@ export const signupUser = (user, callback) => {
 
 export const signoutUser = () => {
     localStorage.removeItem(AUTHENTICATION_TOKEN);
-    localStorage.removeItem(FIND_CURRENT_USER);
+    localStorage.removeItem(CURRENT_USER);
     return{ type: DEAUTHENTICATE_USER };
 };
 

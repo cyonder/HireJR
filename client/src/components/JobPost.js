@@ -34,7 +34,7 @@ class JobPost extends Component{
     renderButtons(internalButton, externalButton, activeClass){
         const { user, jobApplications } = this.props;
         // User not logged in, don't display the apply button
-        if(Object.keys(user).length === 0) return null
+        if(Object.keys(user).length === 0) return <button className="btn btn-primary btn-block mb8 disabled">Sign in to Apply</button>
         // Employer shouldn't see the apply button
         if(user.role === 'employer') return null
         // Check if user is a candidate and eligible to apply        

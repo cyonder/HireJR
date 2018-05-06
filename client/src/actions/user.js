@@ -2,11 +2,11 @@ import axios from 'axios';
 
 import { ROOT_API_URL, AUTHENTICATION_TOKEN } from '../constants/systemTypes';
 
-import { FIND_CURRENT_USER } from '../constants/actionTypes';
+import { CURRENT_USER } from '../constants/actionTypes';
 
 export const findCurrentUserSuccess = currentUser => {
     return {
-        type: FIND_CURRENT_USER,
+        type: CURRENT_USER,
         payload: currentUser
     }
 }
@@ -20,7 +20,7 @@ export const findCurrentUser = () => {
         .then(response => {
             const { user } = response.data;
             delete user.password;
-            localStorage.setItem(FIND_CURRENT_USER, JSON.stringify(user))
+            localStorage.setItem(CURRENT_USER, JSON.stringify(user))
             dispatch(findCurrentUserSuccess(user));
         })
     }

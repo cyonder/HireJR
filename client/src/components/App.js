@@ -60,9 +60,9 @@ class App extends Component{
                         <Route path="/dashboard" render={
                             () => <Dashboard {...this.props} />
                         }/>
-                        <Route path="/applicants" render={
+                        {/* <Route path="/applicants" render={
                             () => <div className="container grid-lg"><EmployerApplicants {...this.props} /></div>
-                        }/>
+                        }/> */}
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </main>

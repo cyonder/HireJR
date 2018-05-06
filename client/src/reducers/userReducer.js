@@ -1,5 +1,5 @@
 import {
-    FIND_CURRENT_USER,
+    CURRENT_USER,
     UPDATE_JOB_POSTS,
     UPDATE_EDUCATION,
     UPDATE_WORK_EXPERIENCE,
@@ -9,7 +9,7 @@ import {
 
 export default function userReducer(state = {}, action){    
     switch(action.type){
-        case FIND_CURRENT_USER:
+        case CURRENT_USER:
             return { ...state, ...action.payload };
         case UPDATE_JOB_POSTS:
             return { 

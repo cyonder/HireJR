@@ -10,7 +10,7 @@ export const FETCH_JOB_POSTS = 'fetch_job_posts';
 export const UPDATE_JOB_POSTS = 'update_job_posts';
 
 // USER
-export const FIND_CURRENT_USER = 'find_current_user';
+export const CURRENT_USER = 'current_user';
 
 // CANDIDATE
 export const FIND_CANDIDATE = 'find_candidate';

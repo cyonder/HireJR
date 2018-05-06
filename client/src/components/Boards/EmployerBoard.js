@@ -3,10 +3,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
+import ApplicantIndex from '../ApplicantIndex';
 import EmptyState from '../EmptyState';
 import Loading from '../Loading';
 
-import { deleteJobPost, updateJobPostActivation } from '../../actions/jobPost';
+import { 
+    deleteJobPost, 
+    updateJobPostActivation,
+    fetchJobApplicants 
+} from '../../actions/jobPost';
 
 const deleteButtonIcon = { color: '#E6561C' }
 
@@ -14,7 +19,7 @@ class EmployerBoard extends Component{
     constructor(){
         super();
         this.state = {
-            selectedTab: 'all',
+            selectedTab: 'active',
             computedJobPosts: []
         }
         this.computeJobPosts = this.computeJobPosts.bind(this);
@@ -22,6 +27,7 @@ class EmployerBoard extends Component{
     }
 
     componentDidMount(){
+        this.props.fetchJobApplicants();
         this.computeJobPosts();
     }
 
@@ -53,14 +59,14 @@ class EmployerBoard extends Component{
     renderTabs(){
         return(
             <ul className="tab tab-block">
-                <li className={`tab-item c-hand ${this.state.selectedTab === 'all' ? 'active' : null }`}>
-                    <a onClick={() => this.handleTabChange('all')}>All</a>
-                </li>
                 <li className={`tab-item c-hand ${this.state.selectedTab === 'active' ? 'active' : null }`}>
                     <a onClick={() => this.handleTabChange('active')}>Active</a>
                 </li>
                 <li className={`tab-item c-hand ${this.state.selectedTab === 'non-active' ? 'active' : null }`}>
                     <a onClick={() => this.handleTabChange('non-active')}>Non-Active</a>
+                </li>
+                <li className={`tab-item c-hand ${this.state.selectedTab === 'all' ? 'active' : null }`}>
+                    <a onClick={() => this.handleTabChange('all')}>All</a>
                 </li>
             </ul>
         )
@@ -87,12 +93,15 @@ class EmployerBoard extends Component{
                             `Apply Through: ${jobPosts[key].internal}` :
                             jobPosts[key].external}
                         </div>
+                        <div>
+                            <ApplicantIndex {...this.props} jobPostId={jobPosts[key]._id} />
+                        </div>    
                     </div>
                     <div className="tile-action">
-                        <button className="btn btn-link btn-action btn-lg tooltip tooltip-left"
+                        <button className="btn btn-link btn-action btn-lg tooltip tooltip-top"
                             data-tooltip="Edit"><i className="fas fa-pencil-alt"></i></button>
 
-                        <button className="btn btn-link btn-action btn-lg tooltip tooltip-left"
+                        <button className="btn btn-link btn-action btn-lg tooltip tooltip-top"
                             data-tooltip={jobPosts[key].isActive ? 'Deactivate' : 'Activate'}
                             onClick={() => {
                                 let confirmed = window.confirm(`Are you sure you want to ${jobPosts[key].isActive ? 'deactivate' : 'activate'} this job post?`)
@@ -103,7 +112,7 @@ class EmployerBoard extends Component{
                                 }
                             }}><i className="fas fa-snowflake"></i></button>
 
-                        <button className="btn btn-link btn-action btn-lg tooltip tooltip-left"
+                        <button className="btn btn-link btn-action btn-lg tooltip tooltip-top"
                             data-tooltip="Delete"
                             onClick={() => {
                                 let confirmed = window.confirm('Are you sure you want to delete this job post?')
@@ -146,7 +155,8 @@ class EmployerBoard extends Component{
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({ 
         deleteJobPost,
-        updateJobPostActivation
+        updateJobPostActivation,
+        fetchJobApplicants
     }, dispatch)
 }
 
@@ -154,7 +164,9 @@ const mapStateToProps = state => {
     return {
         firstName: state.user.firstName,
         lastName: state.user.lastName,
-        employer: state.user.employer
+        employer: state.user.employer,
+        jobApplicants: state.job.jobApplicants,
+        user: state.user
     }
 }
 
