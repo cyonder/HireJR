@@ -10,6 +10,7 @@ import JobPost from './JobPost';
 import Signup from './Signup';
 import Signin from './Signin';
 import Signout from './Signout';
+import Settings from './Settings';
 import Header from './Header';
 import Footer from './Footer';
 import Dashboard from './Boards/Dashboard';
@@ -57,12 +58,12 @@ class App extends Component{
                         <Route exact path="/signout" render={
                             () => <div className="container grid-xs"><Signout {...this.props} /></div>
                         }/>
+                        <Route exact path="/settings" render={
+                            () => <div className="container grid-xs"><Settings {...this.props} /></div>
+                        }/>
                         <Route path="/dashboard" render={
                             () => <Dashboard {...this.props} />
                         }/>
-                        {/* <Route path="/applicants" render={
-                            () => <div className="container grid-lg"><EmployerApplicants {...this.props} /></div>
-                        }/> */}
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </main>

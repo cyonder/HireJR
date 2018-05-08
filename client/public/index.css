@@ -3290,6 +3290,11 @@ header .btn.btn-link, footer .btn.btn-link {
   font-weight: 600;
   color: #5752D5; }
 
+.settings > div {
+  margin-bottom: .8rem; }
+  .settings > div:last-child {
+    margin-bottom: 0; }
+
 .auth-error-message {
   color: #FFFFFF;
   padding: .8rem;

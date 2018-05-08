@@ -115,6 +115,15 @@
     color: $color-brand;
 }
 
+.settings{
+    & > div {
+        margin-bottom: .8rem;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+}
+
 .auth-error-message{
     color: #FFFFFF;
     padding: .8rem;

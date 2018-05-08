@@ -42,6 +42,56 @@ exports.findCurrentUser = ({ _id }) => {
     })
 }
 
+exports.updateUserPassword = ({_id}, passObj) => {
+    const userId = _id;
+    
+    if(passObj.newPassword !== passObj.passwordConfirmation){
+        throw new Error('New password and confirmation do not match!');
+    }
+
+    return new Promise(async(resolve, reject) => {
+        try{
+            await User.update({ _id: userId }, {
+                $set: { password: passObj.newPassword }
+            })            
+            resolve({})
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+exports.updateUser = ({_id}, user) => {
+    const userId = _id;
+
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newUser = await User.findByIdAndUpdate(userId, {
+                $set: user
+            }, { new: true })
+            resolve({ newUser: newUser })
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
+exports.updateEmployer = ({_employerId}, employer) => {
+    const employerId = _employerId;
+
+    return new Promise(async(resolve, reject) => {
+        try{
+            const newEmployer = await Employer.findByIdAndUpdate(employerId, {
+                $set: employer
+            }, { new: true })
+            // resolve({ newUser: newUser })
+            resolve({})
+        }catch(error){
+            reject({ message: error.message, error: error })
+        }
+    })
+}
+
 exports.createUserAndEmployer = (user, employer) => {
     return new Promise(async(resolve, reject) => {
         try{

@@ -13,6 +13,9 @@ const userSchema = new Schema({
         type: String,
         required: true  
     },
+    username: {
+        type: String
+    },
     email: {
         type: String,
         required: true,
@@ -72,6 +75,20 @@ userSchema.pre('save', function(next){
             next();
         });
     });
+});
+
+userSchema.pre("update", function(next) {    
+    const password = this.getUpdate().$set.password;
+    if(!password){ return next() }
+    
+    try{
+        const salt = bcrypt.genSaltSync();
+        const hash = bcrypt.hashSync(password, salt);
+        this.getUpdate().$set.password = hash;
+        next();
+    }catch(error){
+        return next(error);
+    }
 });
 
 userSchema.methods.comparePassword = function(candidatePassword, callback){

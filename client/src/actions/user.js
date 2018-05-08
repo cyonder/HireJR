@@ -25,3 +25,40 @@ export const findCurrentUser = () => {
         })
     }
 }
+
+export const updateUserPassword = (password, callback) => {
+    return dispatch => {
+        axios.put(`${ROOT_API_URL}/user/password`, password, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
+        .then(response => {
+            callback()
+        })
+    }
+}
+
+export const updateUser = (values, callback) => {
+    return dispatch => {
+        axios.put(`${ROOT_API_URL}/user`, values, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
+        .then(response => {
+            console.log(response.data);
+            
+            callback();
+        })
+    }
+}
+
+export const updateEmployer = (values, callback) => {
+    return dispatch => {
+        axios.put(`${ROOT_API_URL}/user/employer`, values, {
+            headers: { authorization: localStorage.getItem(AUTHENTICATION_TOKEN)}
+        })
+        .then(response => {
+            console.log(response.data);
+            
+            callback();
+        })
+    }
+}
