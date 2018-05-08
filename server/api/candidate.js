@@ -1,4 +1,5 @@
 const Candidate = require('../models/candidate');
+const User = require('../models/user');
 
 // Find
 
@@ -22,10 +23,26 @@ exports.findCandidates = () => {
     })
 }
 
-exports.findCandidate = id => {
+exports.findCandidate = userId => {
     return new Promise(async(resolve, reject) => {
+        let query = {};
+
+        // If id is mongo id, then run the query.
+        // else find the id by username and run the query.
+        if(userId.match(/^[0-9a-fA-F]{24}$/)){ 
+            query._userId = userId;
+        }else{ // Matched username
+            let username = userId;   
+            try{
+                var newUserId = await User.findOne({'username': username}).select('_id')  
+                query._userId = newUserId._id
+            }catch(error){
+                reject({ message: error.message, error: error })
+            }
+        }
+
         try{
-            const candidate = await Candidate.findOne({'_userId': id})
+            const candidate = await Candidate.findOne(query)
             .populate('_userId')
             .lean()
             candidate.user = candidate._userId;

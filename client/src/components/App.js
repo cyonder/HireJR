@@ -34,7 +34,7 @@ class App extends Component{
                         <Route exact path="/" render={
                             () => <div className="container grid-lg"><Home {...this.props} /></div>
                         }/>
-                        <Route exact path="/profile/:id" render={
+                        <Route exact path="/jr/:id" render={
                             (props) => <div className="container grid-md"><CandidateProfile {...props} /></div>
                         }/>
                         <Route exact path="/candidates" render={

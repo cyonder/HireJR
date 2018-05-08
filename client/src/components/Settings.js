@@ -36,21 +36,22 @@ class Settings extends Component{
     }
 
     render(){
+        const { user } = this.props;
         return(
             <div className="settings">
                 <Card title="Account">
                     <AccountSettingsForm {...this.props} 
                         form="accountSettingsForm"
-                        hideUsername={true}
+                        hideUsername={ user.role === 'employer' ? true : false }
                         initialValues={this.props.user}
                         onSubmit={this.onSubmitUpdateAccount.bind(this)} />
                 </Card>
                 {
-                    this.props.user.role === 'employer' ? 
+                    user.role === 'employer' ? 
                     <Card title="Employer">
                         <EmployerSettingsForm {...this.props} 
                             form="employerSettingsForm"
-                            initialValues={this.props.user.employer}
+                            initialValues={user.employer}
                             onSubmit={this.onSubmitUpdateEmployer.bind(this)} />
                     </Card> : null
                 }

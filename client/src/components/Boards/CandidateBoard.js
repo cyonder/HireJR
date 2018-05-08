@@ -30,6 +30,7 @@ class CandidateBoard extends Component{
     notify = (text) => toast.success(text);
 
     renderMenu(){
+        const { candidate, user } = this.props;
         const { pathname } = this.props.location;
         return[
             <ul className="menu" key={1}>
@@ -56,7 +57,7 @@ class CandidateBoard extends Component{
             <div className="info-box mt8" key={2}>
                 Tip: Use <span>*</span> to add points to summary
             </div>,
-            <Link to={`/profile/${this.props.candidate._userId}`} className="btn btn-block mt8" key={3}>My Profile</Link>
+            <Link to={`/jr/${user.username ? user.username : candidate._userId}`} className="btn btn-block mt8" key={3}>My Profile</Link>
         ]
     }
 
@@ -125,7 +126,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
     return {
-        candidate: state.user.candidate
+        candidate: state.user.candidate,
+        user: state.user
     }
 }
 
