@@ -48,7 +48,9 @@ class Header extends Component{
                         { this.renderNavLinks() }
                     </div>
                     <div className="navbar-center">
-                        <img id="logo" src="/images/hirejr_logo.svg" alt="Hirejr Logo"/>
+                        <Link to="/" className="d-flex">
+                            <img id="logo" src="/images/hirejr_logo.svg" alt="Hirejr Logo"/>
+                        </Link>
                     </div>
                     <div className="navbar-section">
                         { this.renderAuthLinks() }
